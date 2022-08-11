@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Sunalyzer</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="lib/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Logo -->
+        <a class="navbar-brand ps-3" href="index.html"><img src="favicon.ico" width="22" height="22"> Sunalyzer</a>
+        <!-- Sidebar Toggle -->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_language" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Language
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="javascript:switchLanguageToEnglish();">English</a></li>
+                    <li><a class="dropdown-item" href="javascript:switchLanguageToGerman();">Deutsch</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Sidebar -->
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+
+                        <!-- Dashboard -->
+                        <div class="sb-sidenav-menu-heading" id="sidebar_headline_overview">Overview</div>
+                        <a class="nav-link" href="javascript:showViewDashboard();">
+                            <div class="sb-nav-link-icon"><i class="fas fa-grip"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="javascript:showViewHistory(histories.TODAY);">
+                            <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
+                            <div id="sidebar_today">Today</div>
+                        </a>
+
+                        <!-- History -->
+                        <div class="sb-sidenav-menu-heading" id="sidebar_headline_history">History</div>
+                        <a class="nav-link" href="javascript:showViewHistory(histories.DAY);">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-day"></i></div>
+                            <div id="sidebar_by_day">By Day</div>
+                        </a>
+                        <a class="nav-link" href="javascript:showViewHistory(histories.MONTH);">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-days"></i></div>
+                            <div id="sidebar_by_month">By Month</div>
+                        </a>
+                        <a class="nav-link" href="javascript:showViewHistory(histories.YEAR);">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
+                            <div id="sidebar_by_year">By Year</div>
+                        </a>
+                        <a class="nav-link" href="javascript:showViewHistory(histories.ALL);">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
+                            <div id="sidebar_all_time">All Time</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Version 0.0.1</div>
+                    <div id="time">...</div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+
+                <!-- Dashbord View -->
+                <div class="container-fluid px-4" id="view_dashboard">
+                    <h1 class="mt-4">Dashboard</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active"><span id="dashboard_subtitle">Last updated:</span><span id="dashboard_subtitle_time">...</span></li>
+                    </ol>
+
+                    <div class="row">
+
+                        <!-- Column Current -->
+                        <div class="col-xl-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-bolt me-1"></i>
+                                    <span id="dash_card_current">Current</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_currently_produced">Currently produced</td>
+                                                <td id="dash_currently_produced">0.0</td>
+                                                <td>kW</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_currently_consumed">Currently consumed</td>
+                                                <td id="dash_currently_consumed">0.0</td>
+                                                <td>kW</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_currently_fed_in">Currently fed in</td>
+                                                <td id="dash_currently_fed_in">0.0</td>
+                                                <td>kW</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Today -->
+                        <div class="col-xl-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-bolt me-1"></i>
+                                    <span id="dash_card_today">Today</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_today_produced">Produced</td>
+                                                <td id="dash_today_produced">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_today_consumed">Consumed</td>
+                                                <td id="dash_today_consumed">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_today_fed_in">Fed in</td>
+                                                <td id="dash_today_fed_in">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_today_earned">Earnings</td>
+                                                <td id="dash_today_earned">0.0</td>
+                                                <td>€</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column All Time -->
+                        <div class="col-xl-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-bolt me-1"></i>
+                                    <span id="dash_card_all_time">All Time</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_all_time_produced">Produced</td>
+                                                <td id="dash_all_time_produced">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_all_time_consumed">Consumed</td>
+                                                <td id="dash_all_time_consumed">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_all_time_fed_in">Fed in</td>
+                                                <td id="dash_all_time_fed_in">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="dash_text_all_time_earned">Earnings</td>
+                                                <td id="dash_all_time_earned">0.0</td>
+                                                <td>€</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line me-1"></i>
+                            <span id="dash_card_24h">All Time</span>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chart_dashboard" width="100%" height="30"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History View -->
+                <div class="container-fluid px-4" id="view_history">
+                    <h1 class="mt-4" id="headline_history">...</h1>
+
+                    <div class="row py-4">
+                        <div class="col-xl-6">
+                            <div class="d-flex flex-row">
+                                <!-- Year -->
+                                <div id="selection_year">
+                                    <select class="form-select" aria-label="Default select example" id="selection_year2"
+                                        onchange="updateHistoryStats();">
+                                    </select>
+                                </div>
+                                <!-- Month -->
+                                <div id="selection_month">
+                                    <select class="form-select" aria-label="Default select example"
+                                        id="selection_month2" onchange="updateHistoryStats();">
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                                <!-- Day -->
+                                <div id="selection_day">
+                                    <select class="form-select" aria-label="Default select example" id="selection_day2"
+                                        onchange="updateHistoryStats();">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="row_history_data">
+                        <div class="row ">
+                            <div class="col-xl-4">
+
+                                <!-- Card Production -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-book me-1"></i>
+                                        <span id="history_card_production">PV Production</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                    <td id="history_text_produced">Energy produced</td>
+                                                    <td id="history_stat_produced">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Card Earnings -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-sack-dollar me-1"></i>
+                                        <span id="history_card_earned">Earnings</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td><i class="fas fa-plug-circle-plus me-1"></i></td>
+                                                    <td id="history_text_earned_feedin">Earned with feed-in</td>
+                                                    <td id="history_stat_earned_feedin">0.0</td>
+                                                    <td>€</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                    <td id="history_text_earned_self">Saved via self-consumption</td>
+                                                    <td id="history_stat_earned_self">0.0</td>
+                                                    <td>€</td>
+                                                </tr>
+                                                <tr class="fw-bold">
+                                                    <td><i class="fas fa-sack-dollar me-1"></i></td>
+                                                    <td id="history_text_earned_total">Total</td>
+                                                    <td id="history_stat_earned_total">0.0</td>
+                                                    <td>€</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Energy Usage -->
+                            <div class="col-xl-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-book me-1"></i>
+                                        <span id="history_card_usage">Usage of Produced Energy</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container pe-5 justify-content-center">
+                                            <canvas id="chart_usage"></canvas>
+                                        </div>
+                                        <table class="table table-borderless mt-4">
+                                            <tbody>
+                                                <tr>
+                                                    <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                    <td id="history_text_fedin">Fed into the grid</td>
+                                                    <td id="history_stat_fedin">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                    <td id="history_text_self_consumed">Self consumed</td>
+                                                    <td id="history_stat_self_consumed">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Consumption -->
+                            <div class="col-xl-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-book me-1"></i>
+                                        <span id="history_card_consumption">Power Consumption</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container pe-5 justify-content-center">
+                                            <canvas id="chart_consumption"></canvas>
+                                        </div>
+                                        <table class="table table-borderless mt-4">
+                                            <tbody>
+                                                <tr>
+                                                    <td><i class="fas fa-plug-circle-plus me-1"></i></td>
+                                                    <td id="history_text_consumption_grid">Consumption from grid</td>
+                                                    <td id="history_stat_consumption_grid">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                    <td id="history_text_consumption_self">Consumption from PV</td>
+                                                    <td id="history_stat_consumption_self">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                                <tr class="fw-bold">
+                                                    <td><i class="fas fa-sack-dollar me-1"></i></td>
+                                                    <td id="history_text_consumption_total">Total consumption</td>
+                                                    <td id="history_stat_consumption_total">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card mb-4" id="history_card_graph">
+                            <div class="card-header">
+                                <i class="fas fa-chart-line me-1"></i>
+                                <span id="history_card_graph_text">Details</span>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chart_history_details" width="100%" height="30"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- No data -->
+                    <div class="row" id="row_error_banner">
+                        <div class="alert alert-primary" role="alert">
+                            <i class="fas fa-circle-info me-1"></i>
+                            <span id="info_no_data">No data is available for the selected time span.</span>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="lib/bootstrap.bundle.min.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/localization.js"></script>
+    <script src="lib/chart.min.js" crossorigin="anonymous"></script>
+    <script src="lib/chartjs-plugin-labels.min.js"></script>
+    <script src="js/chart_factory.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
