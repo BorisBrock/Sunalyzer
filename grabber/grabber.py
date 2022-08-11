@@ -138,6 +138,12 @@ def main():
     # Grabber main loop
     print("Grabber: Entering main loop")
     while True:
+        global has_real_time_data
+        global real_time_seconds_counter
+        global last_real_time_produced
+        global last_real_time_consumed
+        global last_real_time_fed_in
+
         print("Grabber: Updating SQLite data base")
         device.update()
 

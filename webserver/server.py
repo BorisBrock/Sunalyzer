@@ -6,6 +6,10 @@ import traceback
 from flask import Flask, request, send_from_directory
 
 
+# Globals
+config = None
+
+
 # Main Flask web server application
 app = Flask(__name__)
 
@@ -221,6 +225,8 @@ def handle_request():
 # Main loop
 def main():
     '''Todo: add documentation.'''
+
+    global config
 
     # Read the configuration from disk
     try:
