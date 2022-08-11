@@ -1,8 +1,7 @@
 name: Docker build and test
 
 on:
-  workflow_dispatch 
-# you can trigger on anything you want
+  on: [push]
 
 jobs:
   build:
