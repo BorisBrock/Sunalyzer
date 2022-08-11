@@ -20,7 +20,7 @@ last_real_time_fed_in = 0.0
 
 # Helper function to insert new values into the DB
 def insert_historical_values(cursor, table_name, date_string, produced, consumed, fed_in):
-    '''Todo: add documentation.'''
+    '''Helper function to insert new values into the DB.'''
     cursor.execute(f"SELECT * FROM {table_name} WHERE date='{date_string}'")
     rows = cursor.fetchall()
 
@@ -38,9 +38,9 @@ def insert_historical_values(cursor, table_name, date_string, produced, consumed
             fed_in_b = {str(fed_in)} WHERE date='{date_string}'""")
 
 
-# Helper function to insert new values into the DB
+# Helper function to insert current values into the DB
 def insert_current_values(cursor, produced, consumed, fed_in):
-    '''Todo: add documentation.'''
+    '''Helper function to insert current values into the DB.'''
     cursor.execute("SELECT * FROM current WHERE date='cur'")
     rows = cursor.fetchall()
 
@@ -58,7 +58,7 @@ def insert_current_values(cursor, produced, consumed, fed_in):
 
 # Helper function to insert new values into the DB
 def insert_real_time_values(cursor, time_string2, produced, consumed, fed_in):
-    '''Todo: add documentation.'''
+    '''Helper function to insert new values into the DB.'''
     # Insert new data
     query = f"""INSERT INTO real_time (time, produced, consumed, fed_in) VALUES
         ('{time_string2}', {produced}, {consumed}, {fed_in})"""
@@ -73,7 +73,7 @@ def insert_real_time_values(cursor, time_string2, produced, consumed, fed_in):
 
 # Helper function to create a new DB
 def create_new_db():
-    '''Todo: add documentation.'''
+    '''Helper function to create a new DB.'''
     new_con = sqlite3.connect("data/db.sqlite")
     new_cur = new_con.cursor()
 
@@ -105,7 +105,7 @@ def create_new_db():
 
 # Main loop
 def main():
-    '''Todo: add documentation.'''
+    '''Main loop.'''
 
     # Read the configuration from disk
     try:
@@ -115,7 +115,6 @@ def main():
     except Exception:
         print("Error: opening the configuration file failed")
         exit()
-
 
     # Dynamically load the device
     try:
@@ -128,12 +127,10 @@ def main():
         print("Grabber: Error: creating the device adapter failed")
         exit()
 
-
     # Prepare the data base
     print("Grabber: Checking if data base exists")
     if not exists("data/db.sqlite"):
         create_new_db()
-
 
     # Grabber main loop
     print("Grabber: Entering main loop")
@@ -244,5 +241,5 @@ def main():
 
 
 # Main entry point of the application
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
