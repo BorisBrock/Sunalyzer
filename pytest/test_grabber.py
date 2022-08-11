@@ -1,10 +1,8 @@
 import sys
 import pytest
 
-sys.path.append('../')
-sys.path.append('../grabber/')
 
-from grabber import insert_current_values
+from .grabber.graabber import insert_current_values
 
 
 def test_equality():
