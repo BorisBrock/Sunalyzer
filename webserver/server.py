@@ -17,19 +17,20 @@ app = Flask(__name__)
 @app.route('/')
 # Serves the index.html
 def get_index():
-    '''Todo: add documentation.'''
+    '''Serves the index.html.'''
     return send_from_directory("../site", "index.html")
 
 
 @app.route('/<path:path>')
 # Serves all other static files
 def get_file(path):
-    '''Todo: add documentation.'''
+    '''Serves all other static files.'''
     return send_from_directory("../site", path)
 
 
+# Returns JSON response containing current data
 def get_json_data_current():
-    '''Todo: add documentation.'''
+    '''Returns JSON response containing current data'''
     con = sqlite3.connect("../data/db.sqlite")
     cur = con.cursor()
     # Current
@@ -70,8 +71,9 @@ def get_json_data_current():
     return json.dumps(data)
 
 
+# Returns JSON response containing available years
 def get_json_data_dates():
-    '''Todo: add documentation.'''
+    '''Returns JSON response containing available years.'''
     con = sqlite3.connect("../data/db.sqlite")
     cur = con.cursor()
     cur.execute("SELECT min(date) FROM years")
@@ -86,8 +88,9 @@ def get_json_data_dates():
     return json.dumps(data)
 
 
+# Returns JSON response containing daily data for a month
 def get_json_data_days_in_month(year_and_month):
-    '''Todo: add documentation.'''
+    '''Returns JSON response containing daily data for a month.'''
     con = sqlite3.connect("../data/db.sqlite")
     cur = con.cursor()
     cur.execute(f"SELECT * FROM days WHERE date LIKE '{year_and_month}%'")
@@ -102,12 +105,13 @@ def get_json_data_days_in_month(year_and_month):
             "produced": row[2] - row[1],
             "consumed": row[4] - row[3],
             "fed_in": row[6] - row[5]
-            })
+        })
     return json.dumps(data)
 
 
+# Returns JSON response containing monthly data for a year
 def get_json_data_months_in_year(year):
-    '''Todo: add documentation.'''
+    '''Returns JSON response containing monthly data for a year.'''
     con = sqlite3.connect("../data/db.sqlite")
     cur = con.cursor()
     cur.execute(f"SELECT * FROM months WHERE date LIKE '{year}%'")
@@ -122,12 +126,13 @@ def get_json_data_months_in_year(year):
             "produced": row[2] - row[1],
             "consumed": row[4] - row[3],
             "fed_in": row[6] - row[5]
-            })
+        })
     return json.dumps(data)
 
 
+# Returns JSON response containing monthly data for a year
 def get_json_data_real_time():
-    '''Todo: add documentation.'''
+    '''Returns JSON response containing monthly data for a year.'''
     con = sqlite3.connect("../data/db.sqlite")
     cur = con.cursor()
     cur.execute("SELECT * FROM real_time")
@@ -137,8 +142,9 @@ def get_json_data_real_time():
     return json.dumps(rows)
 
 
+# Returns JSON response containing historical data
 def get_json_data_history(table, search_date):
-    '''Todo: add documentation.'''
+    '''Returns JSON response containing historical data.'''
     con = sqlite3.connect("../data/db.sqlite")
     cur = con.cursor()
     cur.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
@@ -182,9 +188,10 @@ def get_json_data_history(table, search_date):
 # .../query?type=current
 # .../query?type=dates
 # .../query?type=historical&table=days&date=2022-08-03
+# etc.
 @app.route("/query", methods=['GET'])
 def handle_request():
-    '''Todo: add documentation.'''
+    '''Answers all query requests.'''
     try:
         _type = request.args['type']
         if _type == "current":
@@ -224,7 +231,7 @@ def handle_request():
 
 # Main loop
 def main():
-    '''Todo: add documentation.'''
+    '''Main loop.'''
 
     global config
 
@@ -243,5 +250,5 @@ def main():
 
 
 # Main entry point of the application
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
