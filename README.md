@@ -1,3 +1,6 @@
+![Python checks](https://github.com/VanKurt/Sunalyzer/.github/workflows/python.yml/badge.svg)
+![Docker build](https://github.com/VanKurt/Sunalyzer/.github/workflows/docker.yml/badge.svg)
+
 # Sunalyzer
 Sunalyzer is a free and open source solar monitoring system. It collects relevant data from your inverter/smart meter and stores them safely in a data base. A modern and beautiful web frontend allows you to visualize the data on any device. Sunalyzer can easily be self hosted on a Raspberry Pi or a NAS by using Docker. No cloud is required, all your data stays under your control.
 
