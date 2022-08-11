@@ -1,0 +1,14 @@
+name: Docker build and test
+
+on: [push]
+
+jobs:
+  build:
+   runs-on: ubuntu-latest
+  
+   steps:
+     - uses: actions/checkout@v3
+     - name: Build Docker image 
+       run: docker build -t sunalyzer .
+     #- name: Run tests inside the container
+     #  run: docker run samplepy poetry run pytest

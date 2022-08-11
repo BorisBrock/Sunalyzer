@@ -1,0 +1,20 @@
+# Web server configuration
+server:
+  ip:     0.0.0.0       # IP address of the server, usually 0.0.0.0 should work
+  port:   5000          # Port for the web server (default)
+
+# PV data grabber configuration
+grabber:
+  device:       Dummy   # Name of the device to load (must match an existing device .py file/class)
+  interval_s:   5       # Interval for the data acquisition in seconds
+
+# Electricity prices
+prices:
+  price_per_grid_kwh:     0.325  # Price for 1 kWh from the grid
+  revenue_per_fed_in_kwh: 0.085  # Revenue for one fed in kWh
+
+# Device specific settings
+# These depend on the selected device adapter
+Dummy:
+  foo:    42    # Just some dummy settings data
+  bar:    23    # Just some dummy settings data
