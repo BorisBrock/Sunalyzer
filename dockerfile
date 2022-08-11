@@ -13,7 +13,7 @@ COPY webserver webserver
 COPY run.sh .
 RUN chmod a+x run.sh
 
-RUN rm /data/db.sqlite
+RUN rm /data/db.sqlite || true
 
 
 # Usage: VOLUME ["/dir_1", "/dir_2" ..]
