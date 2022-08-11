@@ -1,7 +1,6 @@
 name: Docker build and test
 
-on:
-  on: [push]
+on: [push]
 
 jobs:
   build:
