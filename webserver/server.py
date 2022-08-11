@@ -139,7 +139,6 @@ def get_json_data_history(table, search_date):
     cur = con.cursor()
     cur.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
     rows = cur.fetchall()
-    #print(f"Read row {rows[0]}")
     con.commit()
     con.close()
     # Compute feed in
