@@ -4,13 +4,22 @@ let gChartUsage = null
 let gChartDashboard = null
 let gChartHistoryDetails = null
 
+// Colors
+const COLOR_CONSUMED_GRID   = "#d35400";
+const COLOR_CONSUMED_PV     = "#f1c40f";
+const COLOR_SELF_CONSUMED   = "#f1c40f";
+const COLOR_FED_IN          = "#3498db";
+const COLOR_PRODUCED        = "#f1c40f";
+const COLOR_CONSUMED        = "#d35400";
 
+
+// Creates a chart showing the consumption distribution
 function createConsumptionChart(canvasId, gridPercentage, pvPercentage) {
     var xValues = ["From grid", "From PV"];
     var yValues = [gridPercentage, pvPercentage];
     var barColors = [
-        "#e67e22",
-        "#2ecc71"
+        COLOR_CONSUMED_GRID,
+        COLOR_CONSUMED_PV
     ];
     if (gChartConsumption != null) gChartConsumption.destroy();
     gChartConsumption = new Chart(canvasId, {
@@ -41,12 +50,13 @@ function createConsumptionChart(canvasId, gridPercentage, pvPercentage) {
     });
 }
 
+// Creates a chart showing the power consumption distribution
 function createUsageChart(canvasId, fedInPercentage, selfPercentage) {
     var xValues = ["Fed in", "Self consumed"];
     var yValues = [fedInPercentage, selfPercentage];
     var barColors = [
-        "#3498db",
-        "#9b59b6"
+        COLOR_FED_IN,
+        COLOR_SELF_CONSUMED
     ];
     if (gChartUsage != null) gChartUsage.destroy();
     gChartUsage = new Chart(canvasId, {
@@ -77,6 +87,7 @@ function createUsageChart(canvasId, fedInPercentage, selfPercentage) {
     });
 }
 
+// Creates a chart for the dashboard view
 function createDashboardChart(canvasId, data) {
 
     const labels = [];
@@ -86,24 +97,24 @@ function createDashboardChart(canvasId, data) {
             label: getChartString("chart_produced"),
             data: [],
             fill: false,
-            borderColor: '#f39c12',
-            backgroundColor: '#f39c12',
+            borderColor: COLOR_PRODUCED,
+            backgroundColor: COLOR_PRODUCED,
             borderWidth: 2
         },
         {
             label: getChartString("chart_consumed"),
             data: [],
             fill: false,
-            borderColor: '#e74c3c',
-            backgroundColor: '#e74c3c',
+            borderColor: COLOR_CONSUMED,
+            backgroundColor: COLOR_CONSUMED,
             borderWidth: 2
         },
         {
             label: getChartString("chart_fed_in"),
             data: [],
             fill: false,
-            borderColor: '#3498db',
-            backgroundColor: '#3498db',
+            borderColor: COLOR_FED_IN,
+            backgroundColor: COLOR_FED_IN,
             borderWidth: 2
         }]
     };
@@ -133,6 +144,7 @@ function createDashboardChart(canvasId, data) {
     });
 }
 
+// Creates a chart showing history details
 function createHistoryDetailsChart(canvasId, data) {
 
     const labels = [];
@@ -141,22 +153,22 @@ function createHistoryDetailsChart(canvasId, data) {
         datasets: [{
             label: getChartString("chart_produced"),
             data: [],
-            borderColor: '#f39c12',
-            backgroundColor: '#f39c12',
+            borderColor: COLOR_PRODUCED,
+            backgroundColor: COLOR_PRODUCED,
             borderWidth: 2
         },
         {
             label: getChartString("chart_consumed"),
             data: [],
-            borderColor: '#e74c3c',
-            backgroundColor: '#e74c3c',
+            borderColor: COLOR_CONSUMED,
+            backgroundColor: COLOR_CONSUMED,
             borderWidth: 2
         },
         {
             label: getChartString("chart_fed_in"),
             data: [],
-            borderColor: '#3498db',
-            backgroundColor: '#3498db',
+            borderColor: COLOR_FED_IN,
+            backgroundColor: COLOR_FED_IN,
             borderWidth: 2
         }]
     };
