@@ -218,15 +218,24 @@ def handle_request():
         return json.dumps(data)
 
 
-# Read the configuration from disk
-try:
-    print("Server: Reading backend configuration from config.yaml")
-    with open("data/config.yaml", "r", encoding="utf-8") as file:
-        config = yaml.safe_load(file)
-except Exception:
-    print("Server: Error: opening the configuration file failed")
-    exit()
+# Main loop
+def main():
+    '''Todo: add documentation.'''
 
-# Start the web server
-if __name__ == '__main__':
-    app.run(host=config['server']['ip'], port=config['server']['port'])
+    # Read the configuration from disk
+    try:
+        print("Server: Reading backend configuration from config.yaml")
+        with open("data/config.yaml", "r", encoding="utf-8") as file:
+            config = yaml.safe_load(file)
+    except Exception:
+        print("Server: Error: opening the configuration file failed")
+        exit()
+
+    # Start the web server
+    if __name__ == '__main__':
+        app.run(host=config['server']['ip'], port=config['server']['port'])
+
+
+# Main entry point of the application
+if __name__=="__main__":
+    main()
