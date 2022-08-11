@@ -103,131 +103,140 @@ def create_new_db():
     new_con.close()
 
 
-# Read the configuration from disk
-try:
-    print("Grabber: Reading backend configuration from config.yaml")
-    with open("data/config.yaml", "r", encoding="utf-8") as file:
-        config = yaml.safe_load(file)
-except Exception:
-    print("Error: opening the configuration file failed")
-    exit()
+# Main loop
+def main():
+    '''Todo: add documentation.'''
+
+    # Read the configuration from disk
+    try:
+        print("Grabber: Reading backend configuration from config.yaml")
+        with open("data/config.yaml", "r", encoding="utf-8") as file:
+            config = yaml.safe_load(file)
+    except Exception:
+        print("Error: opening the configuration file failed")
+        exit()
 
 
-# Dynamically load the device
-try:
-    deviceName = config['grabber']['device']
-    print("Grabber: Loading device adapter " + deviceName)
-    module = importlib.import_module("devices." + deviceName)
-    class_ = getattr(module, deviceName)
-    device = class_(config)
-except Exception:
-    print("Grabber: Error: creating the device adapter failed")
-    exit()
+    # Dynamically load the device
+    try:
+        deviceName = config['grabber']['device']
+        print("Grabber: Loading device adapter " + deviceName)
+        module = importlib.import_module("devices." + deviceName)
+        class_ = getattr(module, deviceName)
+        device = class_(config)
+    except Exception:
+        print("Grabber: Error: creating the device adapter failed")
+        exit()
 
 
-# Prepare the data base
-print("Grabber: Checking if data base exists")
-if not exists("data/db.sqlite"):
-    create_new_db()
+    # Prepare the data base
+    print("Grabber: Checking if data base exists")
+    if not exists("data/db.sqlite"):
+        create_new_db()
 
 
-# Grabber main loop
-print("Grabber: Entering main loop")
-while True:
-    print("Grabber: Updating SQLite data base")
-    device.update()
+    # Grabber main loop
+    print("Grabber: Entering main loop")
+    while True:
+        print("Grabber: Updating SQLite data base")
+        device.update()
 
-    con = sqlite3.connect("data/db.sqlite")
-    cur = con.cursor()
+        con = sqlite3.connect("data/db.sqlite")
+        cur = con.cursor()
 
-    # Capture daily data
-    day_string = str(date.today())
-    insert_historical_values(
-        cur,
-        "days",
-        day_string,
-        device.total_energy_produced_kwh,
-        device.total_energy_consumed_kwh,
-        device.total_energy_fed_in_kwh)
+        # Capture daily data
+        day_string = str(date.today())
+        insert_historical_values(
+            cur,
+            "days",
+            day_string,
+            device.total_energy_produced_kwh,
+            device.total_energy_consumed_kwh,
+            device.total_energy_fed_in_kwh)
 
-    # Capture weekly data
-    week_string = date.today().strftime("%Y") + "-" + date.today().strftime("%V")
-    insert_historical_values(
-        cur,
-        "weeks",
-        week_string,
-        device.total_energy_produced_kwh,
-        device.total_energy_consumed_kwh,
-        device.total_energy_fed_in_kwh)
+        # Capture weekly data
+        week_string = date.today().strftime("%Y") + "-" + date.today().strftime("%V")
+        insert_historical_values(
+            cur,
+            "weeks",
+            week_string,
+            device.total_energy_produced_kwh,
+            device.total_energy_consumed_kwh,
+            device.total_energy_fed_in_kwh)
 
-    # Capture monthly data
-    month_string = date.today().strftime("%Y") + "-" + date.today().strftime("%m")
-    insert_historical_values(
-        cur,
-        "months", month_string,
-        device.total_energy_produced_kwh,
-        device.total_energy_consumed_kwh,
-        device.total_energy_fed_in_kwh)
+        # Capture monthly data
+        month_string = date.today().strftime("%Y") + "-" + date.today().strftime("%m")
+        insert_historical_values(
+            cur,
+            "months", month_string,
+            device.total_energy_produced_kwh,
+            device.total_energy_consumed_kwh,
+            device.total_energy_fed_in_kwh)
 
-    # Capture yearly data
-    year_string = date.today().strftime("%Y")
-    insert_historical_values(
-        cur,
-        "years",
-        year_string,
-        device.total_energy_produced_kwh,
-        device.total_energy_consumed_kwh,
-        device.total_energy_fed_in_kwh)
+        # Capture yearly data
+        year_string = date.today().strftime("%Y")
+        insert_historical_values(
+            cur,
+            "years",
+            year_string,
+            device.total_energy_produced_kwh,
+            device.total_energy_consumed_kwh,
+            device.total_energy_fed_in_kwh)
 
-    # Capture all time data
-    insert_historical_values(
-        cur,
-        "all_time",
-        "all_time",
-        device.total_energy_produced_kwh,
-        device.total_energy_consumed_kwh,
-        device.total_energy_fed_in_kwh)
+        # Capture all time data
+        insert_historical_values(
+            cur,
+            "all_time",
+            "all_time",
+            device.total_energy_produced_kwh,
+            device.total_energy_consumed_kwh,
+            device.total_energy_fed_in_kwh)
 
-    # Also store the current values
-    insert_current_values(
-        cur,
-        device.current_power_produced_kw,
-        device.current_power_consumed_kw,
-        device.current_power_fed_in_kw)
+        # Also store the current values
+        insert_current_values(
+            cur,
+            device.current_power_produced_kw,
+            device.current_power_consumed_kw,
+            device.current_power_fed_in_kw)
 
-    # Also store the real time data
-    real_time_seconds_counter = real_time_seconds_counter - \
-        config['grabber']['interval_s']
-    if real_time_seconds_counter <= 0:
-        if has_real_time_data:
-            # Compute deltas
-            d_produced = device.total_energy_produced_kwh - last_real_time_produced
-            d_consumed = device.total_energy_consumed_kwh - last_real_time_consumed
-            d_fed_in = device.total_energy_fed_in_kwh - last_real_time_fed_in
-            # Update values
-            last_real_time_produced = device.total_energy_produced_kwh
-            last_real_time_consumed = device.total_energy_consumed_kwh
-            last_real_time_fed_in = device.total_energy_fed_in_kwh
-            # Time string
-            time_string = datetime.now().strftime("%H:%M")
-            # Store in data base
-            print(f"""Grabber: capturing real time data ({time_string}:
-                {d_produced}, {d_consumed}, {d_fed_in})""")
-            insert_real_time_values(
-                cur,
-                time_string,
-                d_produced,
-                d_consumed,
-                d_fed_in)
-        else:
-            # One time initialization
-            last_real_time_produced = device.total_energy_produced_kwh
-            last_real_time_consumed = device.total_energy_consumed_kwh
-            last_real_time_fed_in = device.total_energy_fed_in_kwh
+        # Also store the real time data
+        real_time_seconds_counter = real_time_seconds_counter - \
+            config['grabber']['interval_s']
+        if real_time_seconds_counter <= 0:
+            if has_real_time_data:
+                # Compute deltas
+                d_produced = device.total_energy_produced_kwh - last_real_time_produced
+                d_consumed = device.total_energy_consumed_kwh - last_real_time_consumed
+                d_fed_in = device.total_energy_fed_in_kwh - last_real_time_fed_in
+                # Update values
+                last_real_time_produced = device.total_energy_produced_kwh
+                last_real_time_consumed = device.total_energy_consumed_kwh
+                last_real_time_fed_in = device.total_energy_fed_in_kwh
+                # Time string
+                time_string = datetime.now().strftime("%H:%M")
+                # Store in data base
+                print(f"""Grabber: capturing real time data ({time_string}:
+                    {d_produced}, {d_consumed}, {d_fed_in})""")
+                insert_real_time_values(
+                    cur,
+                    time_string,
+                    d_produced,
+                    d_consumed,
+                    d_fed_in)
+            else:
+                # One time initialization
+                last_real_time_produced = device.total_energy_produced_kwh
+                last_real_time_consumed = device.total_energy_consumed_kwh
+                last_real_time_fed_in = device.total_energy_fed_in_kwh
 
-        has_real_time_data = True
-        real_time_seconds_counter = 60  # Reset counter to one minute
+            has_real_time_data = True
+            real_time_seconds_counter = 60  # Reset counter to one minute
 
-    con.commit()
-    con.close()
-    time.sleep(config['grabber']['interval_s'])
+        con.commit()
+        con.close()
+        time.sleep(config['grabber']['interval_s'])
+
+
+# Main entry point of the application
+if __name__=="__main__":
+    main()

@@ -1,13 +1,9 @@
-import math
+import sys
+import pytest
 
+sys.path.append('../grabber/')
 
-def test_sqrt():
-    num = 25
-    assert math.sqrt(num) == 5
-
-
-def test_square():
-    assert 7*7 == 49
+from grabber import insert_current_values
 
 
 def test_equality():
