@@ -42,7 +42,7 @@ def insert_historical_values(cursor, table_name, date_string, produced, consumed
 def insert_current_values(cursor, produced, consumed, fed_in):
     '''Todo: add documentation.'''
     cursor.execute("SELECT * FROM current WHERE date='cur'")
-    rows = cur.fetchall()
+    rows = cursor.fetchall()
 
     if len(rows) == 0:
         # Create day row
