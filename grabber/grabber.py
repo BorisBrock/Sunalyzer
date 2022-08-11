@@ -5,7 +5,9 @@ import sqlite3
 from os.path import exists
 from datetime import date, datetime
 
+
 # pylint: disable=C0103
+
 
 # Real time (24h) data
 NUM_REAL_TIME_VALUES = 24*60  # 24h * 60 Minutes
@@ -14,6 +16,7 @@ real_time_seconds_counter = 0
 last_real_time_produced = 0.0
 last_real_time_consumed = 0.0
 last_real_time_fed_in = 0.0
+
 
 # Helper function to insert new values into the DB
 def insert_historical_values(cursor, table_name, date_string, produced, consumed, fed_in):
@@ -137,7 +140,7 @@ while True:
     con = sqlite3.connect("data/db.sqlite")
     cur = con.cursor()
 
-    # DAY
+    # Capture daily data
     day_string = str(date.today())
     insert_historical_values(
         cur,
@@ -147,7 +150,7 @@ while True:
         device.total_energy_consumed_kwh,
         device.total_energy_fed_in_kwh)
 
-    # WEEK
+    # Capture weekly data
     week_string = date.today().strftime("%Y") + "-" + date.today().strftime("%V")
     insert_historical_values(
         cur,
@@ -157,7 +160,7 @@ while True:
         device.total_energy_consumed_kwh,
         device.total_energy_fed_in_kwh)
 
-    # MONTH
+    # Capture monthly data
     month_string = date.today().strftime("%Y") + "-" + date.today().strftime("%m")
     insert_historical_values(
         cur,
@@ -166,7 +169,7 @@ while True:
         device.total_energy_consumed_kwh,
         device.total_energy_fed_in_kwh)
 
-    # YEAR
+    # Capture yearly data
     year_string = date.today().strftime("%Y")
     insert_historical_values(
         cur,
@@ -176,7 +179,7 @@ while True:
         device.total_energy_consumed_kwh,
         device.total_energy_fed_in_kwh)
 
-    # ALLTIME
+    # Capture all time data
     insert_historical_values(
         cur,
         "all_time",
