@@ -6,7 +6,7 @@ Currently Sunalyzer provides an English and a German user interface.
 
 ## Supported Devices
 Sunalyzer provides integrations for the folowing device types /inverters/smart meters):
-* Fronius
+* Fronius Symo/Gen24
 * Dummy device (for testing purposes)
 
 ## Deployment
