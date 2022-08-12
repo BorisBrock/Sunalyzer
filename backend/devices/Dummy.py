@@ -2,8 +2,7 @@
 class Dummy:
     def __init__(self, config):
         # Demo code for config access
-        print(
-            f"""Dummy device: config test -
+        print(f"""Dummy device: config test -
             foo={config.config_data['dummy']['foo']}
             bar={config.config_data['dummy']['bar']}""")
 

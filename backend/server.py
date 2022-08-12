@@ -5,6 +5,7 @@ from flask import Flask, request, send_from_directory
 
 # Project imports
 from config import Config
+from database import Database
 
 
 # Globals
@@ -32,21 +33,14 @@ def get_file(path):
 # Returns JSON response containing current data
 def get_json_data_current():
     '''Returns JSON response containing current data'''
-    con = sqlite3.connect("../data/db.sqlite")
-    cur = con.cursor()
+    db = Database("data/db.sqlite")
     # Current
-    cur.execute("SELECT * FROM current")
-    rows_cur = cur.fetchall()
+    rows_cur = db.execute("SELECT * FROM current")
     # All time
-    cur.execute("SELECT * FROM all_time")
-    rows_all = cur.fetchall()
+    rows_all = db.execute("SELECT * FROM all_time")
     # Today
     day_string = str(date.today())
-    cur.execute(f"SELECT * FROM days WHERE date='{day_string}'")
-    rows_today = cur.fetchall()
-    # Done
-    con.commit()
-    con.close()
+    rows_today = db.execute(f"SELECT * FROM days WHERE date='{day_string}'")
     # Compute earnings
     price = float(config.config_data['prices']['price_per_grid_kwh'])
     revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])
@@ -75,12 +69,8 @@ def get_json_data_current():
 # Returns JSON response containing available years
 def get_json_data_dates():
     '''Returns JSON response containing available years.'''
-    con = sqlite3.connect("../data/db.sqlite")
-    cur = con.cursor()
-    cur.execute("SELECT min(date) FROM years")
-    rows = cur.fetchall()
-    con.commit()
-    con.close()
+    db = Database("data/db.sqlite")
+    rows = db.execute("SELECT min(date) FROM years")
     data = {
         "state": "ok",
         "year_min": rows[0][0],
@@ -92,12 +82,8 @@ def get_json_data_dates():
 # Returns JSON response containing daily data for a month
 def get_json_data_days_in_month(year_and_month):
     '''Returns JSON response containing daily data for a month.'''
-    con = sqlite3.connect("../data/db.sqlite")
-    cur = con.cursor()
-    cur.execute(f"SELECT * FROM days WHERE date LIKE '{year_and_month}%'")
-    rows = cur.fetchall()
-    con.commit()
-    con.close()
+    db = Database("data/db.sqlite")
+    rows = db.execute(f"SELECT * FROM days WHERE date LIKE '{year_and_month}%'")
     # Build results
     data = []
     for row in rows:
@@ -113,12 +99,8 @@ def get_json_data_days_in_month(year_and_month):
 # Returns JSON response containing monthly data for a year
 def get_json_data_months_in_year(year):
     '''Returns JSON response containing monthly data for a year.'''
-    con = sqlite3.connect("../data/db.sqlite")
-    cur = con.cursor()
-    cur.execute(f"SELECT * FROM months WHERE date LIKE '{year}%'")
-    rows = cur.fetchall()
-    con.commit()
-    con.close()
+    db = Database("data/db.sqlite")
+    rows = db.execute(f"SELECT * FROM months WHERE date LIKE '{year}%'")
     # Build results
     data = []
     for row in rows:
@@ -134,24 +116,16 @@ def get_json_data_months_in_year(year):
 # Returns JSON response containing monthly data for a year
 def get_json_data_real_time():
     '''Returns JSON response containing monthly data for a year.'''
-    con = sqlite3.connect("../data/db.sqlite")
-    cur = con.cursor()
-    cur.execute("SELECT * FROM real_time")
-    rows = cur.fetchall()
-    con.commit()
-    con.close()
+    db = Database("data/db.sqlite")
+    rows = db.execute("SELECT * FROM real_time")
     return json.dumps(rows)
 
 
 # Returns JSON response containing historical data
 def get_json_data_history(table, search_date):
     '''Returns JSON response containing historical data.'''
-    con = sqlite3.connect("../data/db.sqlite")
-    cur = con.cursor()
-    cur.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
-    rows = cur.fetchall()
-    con.commit()
-    con.close()
+    db = Database("data/db.sqlite")
+    rows = db.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
     # Compute feed in
     consumed_self = rows[0][2] - rows[0][6]
     consumed_grid = rows[0][4] - consumed_self

@@ -1,12 +1,12 @@
 # https://betterprogramming.pub/how-to-create-a-dockerfile-for-a-python-application-8d078b16bc9a
 
-FROM python:3.11.0b5-slim-bullseye
+FROM python:3.10.6-slim-bullseye
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt && rm requirements.txt
 
 COPY data data
-COPY backend grabber
+COPY backend backend
 COPY site site
 
 COPY run.sh .

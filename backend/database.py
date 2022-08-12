@@ -5,11 +5,14 @@ class Database:
     def __init__(self, file_name):
         self.cursor = None
         self.connection = None
-        self.db_file_name = file_name
+        self.open(file_name)
 
-    def open(self):
+    def __del__(self):
+        self.close()
+
+    def open(self, file_name):
         '''Opens the database connection.'''
-        self.connection = sqlite3.connect(self.db_file_name)
+        self.connection = sqlite3.connect(file_name)
         self.cursor = self.connection.cursor()
 
     def close(self):

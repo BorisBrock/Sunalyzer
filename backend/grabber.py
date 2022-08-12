@@ -1,6 +1,5 @@
 import time
 import importlib
-import sqlite3
 from os.path import exists
 from datetime import date, datetime
 
@@ -83,7 +82,6 @@ def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
 def create_new_db():
     '''Helper function to create a new DB.'''
     new_db = Database("data/db.sqlite")
-    new_db.open()
 
     # Historical data tables
     table_names = ["days", "weeks", "months", "years", "all_time"]
@@ -106,8 +104,6 @@ def create_new_db():
     for x in range(NUM_REAL_TIME_VALUES):  # 24h * 60 minutes
         query = f"INSERT INTO real_time VALUES ('{str(x)}', '...', '0.0', '0.0', '0.0')"
         new_db.execute(query)
-
-    new_db.close()
 
 
 # Loads the device class with the given name
@@ -162,7 +158,6 @@ def main():
 
         # Open connection to data base
         db = Database("data/db.sqlite")
-        db.open()
 
         # Capture daily data
         day_string = str(date.today())
@@ -253,7 +248,6 @@ def main():
             has_real_time_data = True
             real_time_seconds_counter = 60  # Reset counter to one minute
 
-        db.close()
         time.sleep(config.config_data['grabber']['interval_s'])
 
 
