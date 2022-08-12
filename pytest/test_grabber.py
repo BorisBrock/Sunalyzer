@@ -1,6 +1,6 @@
 import sys
 import pytest
-import grabber
+import backend.grabber
 
 
 def test_equality():
