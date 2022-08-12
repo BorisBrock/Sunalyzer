@@ -199,7 +199,7 @@ def handle_request():
         if config.verbose_logging:
             print(f"Server: REST request of type '{_type}' received")
 
-        if _type == "current":        
+        if _type == "current":
             data = get_json_data_current()
             return data
         elif _type == "dates":

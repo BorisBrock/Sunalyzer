@@ -9,7 +9,8 @@ class Config:
                 self.config_data = yaml.safe_load(file)
                 self.load_settings(self.config_data)
         except Exception as e:
-            print("Config error: loading/parsing the configuration file failed")
+            print("""Config error:
+                loading/parsing the configuration file failed""")
             print(e)
             traceback.print_exc()
             exit()
