@@ -1,4 +1,4 @@
 #!/bin/bash
 
-exec python grabber/grabber.py &
-exec python webserver/server.py
+exec python backend/grabber.py &
+exec python backend/server.py

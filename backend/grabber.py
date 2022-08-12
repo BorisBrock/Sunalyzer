@@ -1,10 +1,11 @@
-import yaml
 import time
 import importlib
 import sqlite3
 from os.path import exists
 from datetime import date, datetime
 
+# Project imports
+from config import Config
 
 # pylint: disable=C0103
 
@@ -16,9 +17,7 @@ real_time_seconds_counter = 0
 last_real_time_produced = 0.0
 last_real_time_consumed = 0.0
 last_real_time_fed_in = 0.0
-
-# Logging
-verbose_logging = False
+config = None
 
 
 # Helper function to insert new values into the DB
@@ -114,25 +113,19 @@ def main():
     global last_real_time_produced
     global last_real_time_consumed
     global last_real_time_fed_in
-    global verbose_logging
+    global config
 
     # Read the configuration from disk
     try:
         print("Grabber: Reading backend configuration from config.yml")
-        with open("data/config.yml", "r", encoding="utf-8") as file:
-            config = yaml.safe_load(file)
+        config = Config("data/config.yml")
     except Exception:
-        print("Grabber: Error: opening the configuration file failed")
         exit()
-
-    # Set logging level
-    if config['logging'] == 'verbose':
-        verbose_logging = True
 
     # Dynamically load the device
     try:
-        deviceName = config['grabber']['device']
-        print("Grabber: Loading device adapter " + deviceName)
+        deviceName = config.config_data['grabber']['device']
+        print(f"Grabber: Loading device adapter '{deviceName}'")
         module = importlib.import_module("devices." + deviceName)
         class_ = getattr(module, deviceName)
         device = class_(config)
@@ -149,7 +142,7 @@ def main():
     # Grabber main loop
     print("Grabber: Entering main loop")
     while True:
-        if verbose_logging:
+        if config.verbose_logging:
             print("Grabber: Updating device data")
 
         # Download new data from the actual PV device
@@ -216,7 +209,7 @@ def main():
 
         # Also store the real time data
         real_time_seconds_counter = real_time_seconds_counter - \
-            config['grabber']['interval_s']
+            config.config_data['grabber']['interval_s']
         if real_time_seconds_counter <= 0:
             if has_real_time_data:
                 # Compute deltas
@@ -230,7 +223,7 @@ def main():
                 # Time string
                 time_string = datetime.now().strftime("%H:%M")
                 # Store in data base
-                if verbose_logging:
+                if config.verbose_logging:
                     print(f"""Grabber: capturing real time data ({time_string}:
                         {d_produced}, {d_consumed}, {d_fed_in})""")
                 insert_real_time_values(
@@ -250,7 +243,7 @@ def main():
 
         con.commit()
         con.close()
-        time.sleep(config['grabber']['interval_s'])
+        time.sleep(config.config_data['grabber']['interval_s'])
 
 
 # Main entry point of the application

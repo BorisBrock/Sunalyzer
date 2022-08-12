@@ -1,14 +1,15 @@
 import json
 import sqlite3
-import yaml
 from datetime import date
 import traceback
 from flask import Flask, request, send_from_directory
 
+# Project imports
+from config import Config
+
 
 # Globals
 config = None
-verbose_logging = False
 
 
 # Main Flask web server application
@@ -48,8 +49,8 @@ def get_json_data_current():
     con.commit()
     con.close()
     # Compute earnings
-    price = float(config['prices']['price_per_grid_kwh'])
-    revenue = float(config['prices']['revenue_per_fed_in_kwh'])
+    price = float(config.config_data['prices']['price_per_grid_kwh'])
+    revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])
     earned_total = rows_all[0][6] * revenue
     saved_total = (rows_all[0][2] - rows_all[0][6]) * (price - revenue)
     earned_today = rows_today[0][6] * revenue
@@ -162,8 +163,8 @@ def get_json_data_history(table, search_date):
     usage_fed_in_rel = rows[0][6] / rows[0][2] * 100.0
     usage_self_consumed_rel = consumed_self / rows[0][2] * 100.0
     # Compute earnings
-    price = float(config['prices']['price_per_grid_kwh'])
-    revenue = float(config['prices']['revenue_per_fed_in_kwh'])
+    price = float(config.config_data['prices']['price_per_grid_kwh'])
+    revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])
     earned = rows[0][6] * revenue
     saved = (rows[0][2] - rows[0][6]) * (price - revenue)
     # Build response data
@@ -195,10 +196,10 @@ def handle_request():
     '''Answers all query requests.'''
     try:
         _type = request.args['type']
-        if verbose_logging:
+        if config.verbose_logging:
             print(f"Server: REST request of type '{_type}' received")
 
-        if _type == "current":        
+        if _type == "current":
             data = get_json_data_current()
             return data
         elif _type == "dates":
@@ -207,7 +208,7 @@ def handle_request():
         elif _type == "historical":
             table = request.args['table']
             _date = request.args['date']
-            if verbose_logging:
+            if config.verbose_logging:
                 print(f"  Request details: table: '{table}', date: {_date}")
             data = get_json_data_history(table, _date)
             return data
@@ -234,24 +235,19 @@ def main():
     '''Main loop.'''
 
     global config
-    global verbose_logging
 
     # Read the configuration from disk
     try:
-        print("Server: Reading backend configuration from config.yml")
-        with open("data/config.yml", "r", encoding="utf-8") as file:
-            config = yaml.safe_load(file)
+        print("Grabber: Reading backend configuration from config.yml")
+        config = Config("data/config.yml")
     except Exception:
-        print("Server: Error: opening the configuration file failed")
         exit()
-
-    # Set logging level
-    if config['logging'] == 'verbose':
-        verbose_logging = True
 
     # Start the web server
     if __name__ == '__main__':
-        app.run(host=config['server']['ip'], port=config['server']['port'])
+        app.run(
+            host=config.config_data['server']['ip'],
+            port=config.config_data['server']['port'])
 
 
 # Main entry point of the application
