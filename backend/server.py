@@ -1,5 +1,4 @@
 import json
-import sqlite3
 from datetime import date
 import traceback
 from flask import Flask, request, send_from_directory
