@@ -6,9 +6,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt && rm requirements.txt
 
 COPY data data
-COPY grabber grabber
+COPY backend grabber
 COPY site site
-COPY webserver webserver
 
 COPY run.sh .
 RUN chmod a+x run.sh
