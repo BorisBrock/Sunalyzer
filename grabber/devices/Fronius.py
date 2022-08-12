@@ -3,7 +3,7 @@ class Fronius:
     def __init__(self, config):
         # Demo code for config access
         print(
-            f"Fronius device: configured host name is {config['Fronius']['host_name']}")
+            f"Fronius device: configured host name is {config['fronius']['host_name']}")
 
         # Initialize with some random values
         self.total_energy_produced_kwh = 1200.0
