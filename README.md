@@ -48,5 +48,5 @@ Sunalyzer is currently being developed using the following tools and libraries:
 * **Programming languages**: Python 3.10, JavaScript, HTML
 * **Database**: SQlite
 * **Frameworks**: Bootstrap, Chart.js
-* **DevOps**: pylint, htmlhint, ESlint
+* **DevOps**: flake8, pytest, htmlhint, ESlint
 * **Deployment**: Docker

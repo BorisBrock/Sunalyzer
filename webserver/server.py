@@ -8,6 +8,7 @@ from flask import Flask, request, send_from_directory
 
 # Globals
 config = None
+verbose_logging = False
 
 
 # Main Flask web server application
@@ -194,36 +195,35 @@ def handle_request():
     '''Answers all query requests.'''
     try:
         _type = request.args['type']
-        if _type == "current":
-            print("Server: REST request for current data received")
+        if verbose_logging:
+            print(f"Server: REST request of type '{_type}' received")
+
+        if _type == "current":        
             data = get_json_data_current()
             return data
         elif _type == "dates":
-            print("Server: REST request for current dates")
             data = get_json_data_dates()
             return data
         elif _type == "historical":
             table = request.args['table']
             _date = request.args['date']
-            print(
-                f"Server: REST request for historical data received. Table: {table}, date: {_date}")
+            if verbose_logging:
+                print(f"  Request details: table: '{table}', date: {_date}")
             data = get_json_data_history(table, _date)
             return data
         elif _type == "real_time":
-            print("Server: REST request for real time data")
             data = get_json_data_real_time()
             return data
         elif _type == "days_in_month":
-            print("Server: REST request for days in month")
             _month = request.args['date']
             data = get_json_data_days_in_month(_month)
             return data
         elif _type == "months_in_year":
-            print("Server: REST request for months in year")
             _year = request.args['date']
             data = get_json_data_months_in_year(_year)
             return data
     except Exception:
+        print("Server: Error:")
         print(traceback.print_exc())
         data = {"state": "error"}
         return json.dumps(data)
@@ -234,15 +234,20 @@ def main():
     '''Main loop.'''
 
     global config
+    global verbose_logging
 
     # Read the configuration from disk
     try:
-        print("Server: Reading backend configuration from config.yaml")
+        print("Server: Reading backend configuration from config.yml")
         with open("data/config.yml", "r", encoding="utf-8") as file:
             config = yaml.safe_load(file)
     except Exception:
         print("Server: Error: opening the configuration file failed")
         exit()
+
+    # Set logging level
+    if config['logging'] == 'verbose':
+        verbose_logging = True
 
     # Start the web server
     if __name__ == '__main__':

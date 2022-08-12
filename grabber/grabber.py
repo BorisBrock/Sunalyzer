@@ -17,6 +17,9 @@ last_real_time_produced = 0.0
 last_real_time_consumed = 0.0
 last_real_time_fed_in = 0.0
 
+# Logging
+verbose_logging = False
+
 
 # Helper function to insert new values into the DB
 def insert_historical_values(cursor, table_name, date_string, produced, consumed, fed_in):
@@ -106,15 +109,25 @@ def create_new_db():
 # Main loop
 def main():
     '''Main loop.'''
+    global has_real_time_data
+    global real_time_seconds_counter
+    global last_real_time_produced
+    global last_real_time_consumed
+    global last_real_time_fed_in
+    global verbose_logging
 
     # Read the configuration from disk
     try:
-        print("Grabber: Reading backend configuration from config.yaml")
+        print("Grabber: Reading backend configuration from config.yml")
         with open("data/config.yml", "r", encoding="utf-8") as file:
             config = yaml.safe_load(file)
     except Exception:
-        print("Error: opening the configuration file failed")
+        print("Grabber: Error: opening the configuration file failed")
         exit()
+
+    # Set logging level
+    if config['logging'] == 'verbose':
+        verbose_logging = True
 
     # Dynamically load the device
     try:
@@ -130,20 +143,19 @@ def main():
     # Prepare the data base
     print("Grabber: Checking if data base exists")
     if not exists("data/db.sqlite"):
+        print("Grabber: DAta base does not exist. Creating new one")
         create_new_db()
 
     # Grabber main loop
     print("Grabber: Entering main loop")
     while True:
-        global has_real_time_data
-        global real_time_seconds_counter
-        global last_real_time_produced
-        global last_real_time_consumed
-        global last_real_time_fed_in
+        if verbose_logging:
+            print("Grabber: Updating device data")
 
-        print("Grabber: Updating SQLite data base")
+        # Download new data from the actual PV device
         device.update()
 
+        # Open connection to data base
         con = sqlite3.connect("data/db.sqlite")
         cur = con.cursor()
 
@@ -218,8 +230,9 @@ def main():
                 # Time string
                 time_string = datetime.now().strftime("%H:%M")
                 # Store in data base
-                print(f"""Grabber: capturing real time data ({time_string}:
-                    {d_produced}, {d_consumed}, {d_fed_in})""")
+                if verbose_logging:
+                    print(f"""Grabber: capturing real time data ({time_string}:
+                        {d_produced}, {d_consumed}, {d_fed_in})""")
                 insert_real_time_values(
                     cur,
                     time_string,
