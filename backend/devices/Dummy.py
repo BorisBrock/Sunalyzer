@@ -3,7 +3,7 @@ class Dummy:
     def __init__(self, config):
         # Demo code for config access
         print(
-            f"Dummy device: config test - foo={config['dummy']['foo']} bar={config['dummy']['bar']}")
+            f"Dummy device: config test - foo={config.config_data['dummy']['foo']} bar={config.config_data['dummy']['bar']}")
 
         # Initialize with some random values
         self.total_energy_produced_kwh = 1200.0

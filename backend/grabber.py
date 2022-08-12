@@ -209,7 +209,7 @@ def main():
 
         # Also store the real time data
         real_time_seconds_counter = real_time_seconds_counter - \
-            config['grabber']['interval_s']
+            config.config_data['grabber']['interval_s']
         if real_time_seconds_counter <= 0:
             if has_real_time_data:
                 # Compute deltas
@@ -243,7 +243,7 @@ def main():
 
         con.commit()
         con.close()
-        time.sleep(config['grabber']['interval_s'])
+        time.sleep(config.config_data['grabber']['interval_s'])
 
 
 # Main entry point of the application
