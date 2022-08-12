@@ -1,5 +1,5 @@
-import requests
 import json
+import requests
 
 
 # Fronius Symo/Gn24 devices
@@ -19,19 +19,7 @@ class Fronius:
         self.current_power_consumed_kw = 0.0
         self.current_power_fed_in_kw = 0.0
 
-    def update(self):
-        '''Updates all device stats.'''
-        powerflow_url = f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi"
-        try:
-            r = requests.get(url, timeout=10)
-            r.raise_for_status()
-            copy_data(r.json())
-        except requests.exceptions.Timeout:
-            print(f"Fronius device: Timeout requesting {url}")
-        except requests.exceptions.RequestException as e:
-            print(f"Fronius device: requests exception {e} for URL {url}")
-
-    def copy_data(data):
+    def copy_data(self, data):
         '''Copies the results from the API request.'''
         # Todo
         self.total_energy_produced_kwh = self.total_energy_produced_kwh + 1
@@ -40,3 +28,15 @@ class Fronius:
         self.current_power_produced_kw = self.current_power_produced_kw + 1
         self.current_power_consumed_kw = self.current_power_consumed_kw + 1
         self.current_power_fed_in_kw = self.current_power_fed_in_kw + 1
+
+    def update(self):
+        '''Updates all device stats.'''
+        url = f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi"
+        try:
+            r = requests.get(url, timeout=10)
+            r.raise_for_status()
+            self.copy_data(r.json())
+        except requests.exceptions.Timeout:
+            print(f"Fronius device: Timeout requesting {url}")
+        except requests.exceptions.RequestException as e:
+            print(f"Fronius device: requests exception {e} for URL {url}")
