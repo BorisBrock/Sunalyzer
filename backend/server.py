@@ -196,7 +196,7 @@ def handle_request():
     '''Answers all query requests.'''
     try:
         _type = request.args['type']
-        if verbose_logging:
+        if config.verbose_logging:
             print(f"Server: REST request of type '{_type}' received")
 
         if _type == "current":        
@@ -208,7 +208,7 @@ def handle_request():
         elif _type == "historical":
             table = request.args['table']
             _date = request.args['date']
-            if verbose_logging:
+            if config.verbose_logging:
                 print(f"  Request details: table: '{table}', date: {_date}")
             data = get_json_data_history(table, _date)
             return data
