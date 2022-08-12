@@ -238,7 +238,7 @@ def main():
     # Read the configuration from disk
     try:
         print("Server: Reading backend configuration from config.yaml")
-        with open("data/config.yaml", "r", encoding="utf-8") as file:
+        with open("data/config.yml", "r", encoding="utf-8") as file:
             config = yaml.safe_load(file)
     except Exception:
         print("Server: Error: opening the configuration file failed")
