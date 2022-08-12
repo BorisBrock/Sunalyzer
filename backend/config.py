@@ -15,6 +15,7 @@ class Config:
             exit()
 
     def load_settings(self, yaml_data):
+        '''Copy settings from the yaml data for easier access.'''
         # Logging
         self.verbose_logging = False
         if self.config_data['logging'] == 'verbose':
