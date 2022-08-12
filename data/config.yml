@@ -1,3 +1,6 @@
+# Logging configuration: normal or verbose
+logging: verbose
+
 # Web server configuration
 server:
   ip:     0.0.0.0       # IP address of the server, usually 0.0.0.0 should work
