@@ -55,7 +55,21 @@ let translations = [
     ["history_text_consumption_grid",   "Consumption from grid",        "Verbrauch aus dem Netz"],
     ["history_text_consumption_self",   "Consumption from PV",          "Verbrauch aus PV"],
     ["history_text_consumption_total",  "Total consumption",            "Gesamtverbrauch"],
-    ["history_card_graph_text",          "Details",                      "Zeitverlauf"],   
+    ["history_card_graph_text",          "Details",                      "Zeitverlauf"],
+
+    // Months combo box
+    ["cbx_month_1",     "January",      "Januar"],
+    ["cbx_month_2",     "February",     "Februar"],
+    ["cbx_month_3",     "March",        "März"],
+    ["cbx_month_4",     "April",        "April"],
+    ["cbx_month_5",     "May",          "Mai"],
+    ["cbx_month_6",     "June",         "Juni"],
+    ["cbx_month_7",     "July",         "Juli"],
+    ["cbx_month_8",     "August",       "August"],
+    ["cbx_month_9",     "September",    "September"],
+    ["cbx_month_10",    "October",      "Oktober"],
+    ["cbx_month_11",    "November",     "November"],
+    ["cbx_month_12",    "December",     "Dezember"],
 
     // Info
     ["info_no_data",    "No data is available for the selected time span.",     "Für den gewählten Zeitraum liegen keine Daten vor."],
