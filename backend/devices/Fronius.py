@@ -1,4 +1,4 @@
-import json
+# import json
 import requests
 
 
@@ -6,10 +6,13 @@ import requests
 class Fronius:
     def __init__(self, config):
         # Demo code for config access
-        print(
-            f"Fronius device: configured host name is {config['fronius']['host_name']}")
+        print(f"""Fronius device:
+            configured host name is {config['fronius']['host_name']}""")
 
         self.host_name = config['fronius']['host_name']
+
+        self.url = (f"http://{self.host_name}/",
+                    "solar_api/v1/GetPowerFlowRealtimeData.fcgi")
 
         # Initialize with values
         self.total_energy_produced_kwh = 0.0
@@ -31,12 +34,11 @@ class Fronius:
 
     def update(self):
         '''Updates all device stats.'''
-        url = f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi"
         try:
-            r = requests.get(url, timeout=10)
+            r = requests.get(self.url, timeout=10)
             r.raise_for_status()
             self.copy_data(r.json())
         except requests.exceptions.Timeout:
-            print(f"Fronius device: Timeout requesting {url}")
+            print(f"Fronius device: Timeout requesting {self.url}")
         except requests.exceptions.RequestException as e:
-            print(f"Fronius device: requests exception {e} for URL {url}")
+            print(f"Fronius device: requests exception {e} for URL {self.url}")

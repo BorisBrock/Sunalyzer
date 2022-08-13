@@ -83,7 +83,8 @@ def get_json_data_dates():
 def get_json_data_days_in_month(year_and_month):
     '''Returns JSON response containing daily data for a month.'''
     db = Database("data/db.sqlite")
-    rows = db.execute(f"SELECT * FROM days WHERE date LIKE '{year_and_month}%'")
+    rows = db.execute(
+        f"SELECT * FROM days WHERE date LIKE '{year_and_month}%'")
     # Build results
     data = []
     for row in rows:
