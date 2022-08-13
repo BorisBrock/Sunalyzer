@@ -34,16 +34,18 @@ def insert_historical_values(
 
     if len(rows) == 0:
         # Create day row
-        query = f"""INSERT INTO {table_name} VALUES ('{date_string}',
-        {str(produced)}, {str(produced)}, {str(consumed)}, {str(consumed)},
-        {str(fed_in)}, {str(fed_in)})"""
+        query = (f"INSERT INTO {table_name} VALUES ('{date_string}',"
+                 f"{str(produced)}, {str(produced)}, "
+                 f"{str(consumed)}, {str(consumed)}, "
+                 f"{str(fed_in)}, {str(fed_in)})")
         db.execute(query)
     else:
         # Update existing row
-        db.execute(
-            f"""UPDATE {table_name} SET
-            produced_b = {str(produced)}, consumed_b = {str(consumed)},
-            fed_in_b = {str(fed_in)} WHERE date='{date_string}'""")
+        query = (f"UPDATE {table_name} SET "
+                 f"produced_b = {str(produced)}, "
+                 f"consumed_b = {str(consumed)}, "
+                 f"fed_in_b = {str(fed_in)} WHERE date='{date_string}'")
+        db.execute(query)
 
 
 # Helper function to insert current values into the DB
@@ -53,28 +55,31 @@ def insert_current_values(db, produced, consumed, fed_in):
 
     if len(rows) == 0:
         # Create day row
-        query = f"""INSERT INTO current VALUES ('cur',
-        {str(produced)}, {str(consumed)}, {str(fed_in)})"""
+        query = (f"INSERT INTO current VALUES ('cur', "
+                 f"{str(produced)}, {str(consumed)}, {str(fed_in)})")
         db.execute(query)
     else:
         # Update existing row
-        db.execute(
-            f"""UPDATE current SET produced = {str(produced)},
-            consumed = {str(consumed)}, fed_in = {str(fed_in)} WHERE date='cur'""")
+        query = (f"UPDATE current SET "
+                 f"produced = {str(produced)}, "
+                 f"consumed = {str(consumed)}, "
+                 f"fed_in = {str(fed_in)} "
+                 f"WHERE date='cur'")
+        db.execute(query)
 
 
 # Helper function to insert new values into the DB
 def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
     '''Helper function to insert new values into the DB.'''
     # Insert new data
-    query = f"""INSERT INTO real_time (time, produced, consumed, fed_in) VALUES
-        ('{time_string2}', {produced}, {consumed}, {fed_in})"""
+    query = (f"INSERT INTO real_time (time, produced, consumed, fed_in) "
+             f"VALUES('{time_string2}', {produced}, {consumed}, {fed_in})")
     db.execute(query)
     # Limit data
-    query = f"""DELETE FROM real_time WHERE ID IN (
-        SELECT ID FROM real_time
-        ORDER BY ID DESC
-        LIMIT -1 OFFSET {NUM_REAL_TIME_VALUES})"""
+    query = (f"DELETE FROM real_time WHERE ID IN ("
+             f"SELECT ID FROM real_time"
+             f"ORDER BY ID DESC"
+             f"LIMIT -1 OFFSET {NUM_REAL_TIME_VALUES})")
     db.execute(query)
 
 
@@ -86,23 +91,28 @@ def create_new_db():
     # Historical data tables
     table_names = ["days", "weeks", "months", "years", "all_time"]
     for name in table_names:
-        new_db.execute(f"""create table if not exists {name} (
-            date STRING PRIMARY KEY,
-            produced_a REAL, produced_b REAL,
-            consumed_a REAL, consumed_b REAL,
-            fed_in_a REAL, fed_in_b REAL)""")
+        query = (f"create table if not exists {name} ("
+                 "date STRING PRIMARY KEY,"
+                 "produced_a REAL, produced_b REAL,"
+                 "consumed_a REAL, consumed_b REAL,"
+                 "fed_in_a REAL, fed_in_b REAL)")
+        new_db.execute(query)
 
     # Current data table
-    new_db.execute("""create table if not exists current
-                (date STRING PRIMARY KEY, produced REAL, consumed REAL, fed_in REAL)""")
+    query = ("create table if not exists current"
+             "(date STRING PRIMARY KEY, "
+             "produced REAL, consumed REAL, fed_in REAL)")
+    new_db.execute(query)
 
     # Real time data table
-    new_db.execute("""create table if not exists real_time
-                (ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                time STRING, produced REAL, consumed REAL, fed_in REAL)""")
+    query = ("create table if not exists real_time"
+             "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+             "time STRING, produced REAL, consumed REAL, fed_in REAL)")
+    new_db.execute(query)
     # Insert null data
     for x in range(NUM_REAL_TIME_VALUES):  # 24h * 60 minutes
-        query = f"INSERT INTO real_time VALUES ('{str(x)}', '...', '0.0', '0.0', '0.0')"
+        query = (f"INSERT INTO real_time VALUES"
+                 f"('{str(x)}', '...', '0.0', '0.0', '0.0')")
         new_db.execute(query)
 
 
@@ -159,6 +169,11 @@ def main():
         # Open connection to data base
         db = Database("data/db.sqlite")
 
+        # Time strings
+        year_string = date.today().strftime("%Y")
+        week_string = year_string + "-" + date.today().strftime("%V")
+        month_string = year_string + "-" + date.today().strftime("%m")
+
         # Capture daily data
         day_string = str(date.today())
         insert_historical_values(
@@ -170,7 +185,6 @@ def main():
             device.total_energy_fed_in_kwh)
 
         # Capture weekly data
-        week_string = date.today().strftime("%Y") + "-" + date.today().strftime("%V")
         insert_historical_values(
             db,
             "weeks",
@@ -180,7 +194,6 @@ def main():
             device.total_energy_fed_in_kwh)
 
         # Capture monthly data
-        month_string = date.today().strftime("%Y") + "-" + date.today().strftime("%m")
         insert_historical_values(
             db,
             "months", month_string,
@@ -189,7 +202,6 @@ def main():
             device.total_energy_fed_in_kwh)
 
         # Capture yearly data
-        year_string = date.today().strftime("%Y")
         insert_historical_values(
             db,
             "years",
