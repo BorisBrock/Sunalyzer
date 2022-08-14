@@ -6,6 +6,7 @@ from flask import Flask, request, send_from_directory
 # Project imports
 from config import Config
 from database import Database
+import version
 
 
 # Globals
@@ -209,6 +210,9 @@ def main():
     '''Main loop.'''
 
     global config
+
+    # Print version
+    print(f"Starting Sunalyzer grabber version {version.get_version()}")
 
     # Read the configuration from disk
     try:

@@ -40,6 +40,7 @@ window.addEventListener('DOMContentLoaded', event => {
     updateCurrentStats();
     updateRealTimeGraph();
     initSelectionBoxes();
+    setVersion();
 });
 
 // Called cyclically to update the current stats
