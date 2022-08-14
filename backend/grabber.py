@@ -6,6 +6,7 @@ from datetime import date, datetime
 # Project imports
 from config import Config
 from database import Database
+import version
 
 # pylint: disable=C0103
 
@@ -134,6 +135,9 @@ def main():
     global last_real_time_consumed
     global last_real_time_fed_in
     global config
+
+    # Print version
+    print(f"Starting Sunalyzer grabber version {version.get_version()}")
 
     # Read the configuration from disk
     try:
