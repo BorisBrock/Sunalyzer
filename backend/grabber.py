@@ -78,8 +78,8 @@ def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
     db.execute(query)
     # Limit data
     query = (f"DELETE FROM real_time WHERE ID IN ("
-             f"SELECT ID FROM real_time"
-             f"ORDER BY ID DESC"
+             f"SELECT ID FROM real_time "
+             f"ORDER BY ID DESC "
              f"LIMIT -1 OFFSET {NUM_REAL_TIME_VALUES})")
     db.execute(query)
 
@@ -247,8 +247,8 @@ def main():
                 time_string = datetime.now().strftime("%H:%M")
                 # Store in data base
                 if config.verbose_logging:
-                    print(f"""Grabber: capturing real time data ({time_string}:
-                        {d_produced}, {d_consumed}, {d_fed_in})""")
+                    print((f"Grabber: capturing real time data({time_string}:"
+                           f"{d_produced}, {d_consumed}, {d_fed_in})"))
                 insert_real_time_values(
                     db,
                     time_string,
