@@ -27,9 +27,9 @@ let translations = [
     ["dash_card_all_time",              "All Time",         "Allzeit-Werte"],
     ["dash_card_24h",                   "Last 24 Hours",    "Die letzten 24 Stunden"],
 
-    ["dash_text_currently_produced",    "Produced",         "Erzeugt"],
-    ["dash_text_currently_consumed",    "Consumed",         "Vebraucht"],
-    ["dash_text_currently_fed_in",      "Fed in",           "Eingespeist"],
+    ["dash_text_currently_produced",    "Produced",         "Erzeugung"],
+    ["dash_text_currently_consumed",    "Consumed",         "Vebrauch"],
+    ["dash_text_currently_fed_in",      "Fed in",           "Eingespeisung"],
 
     ["dash_text_today_produced",        "Produced",          "Erzeugt"],
     ["dash_text_today_consumed",        "Consumed",          "Vebraucht"],
