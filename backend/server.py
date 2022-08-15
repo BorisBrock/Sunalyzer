@@ -39,29 +39,35 @@ def get_json_data_current():
     rows_cur = db.execute("SELECT * FROM current")
     # All time
     rows_all = db.execute("SELECT * FROM all_time")
+    produced_total = rows_all[0][2] - rows_all[0][1]
+    consumed_total = rows_all[0][4] - rows_all[0][3]
+    fed_in_total = rows_all[0][6] - rows_all[0][5]
     # Today
     day_string = str(date.today())
     rows_today = db.execute(f"SELECT * FROM days WHERE date='{day_string}'")
+    produced_today = rows_today[0][2] - rows_today[0][1]
+    consumed_today = rows_today[0][4] - rows_today[0][3]
+    fed_in_today = rows_today[0][6] - rows_today[0][5]
     # Compute earnings
     price = float(config.config_data['prices']['price_per_grid_kwh'])
     revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])
-    earned_total = rows_all[0][6] * revenue
-    saved_total = (rows_all[0][2] - rows_all[0][6]) * (price - revenue)
-    earned_today = rows_today[0][6] * revenue
-    saved_today = (rows_today[0][2] - rows_today[0][6]) * (price - revenue)
+    earned_total = fed_in_total * revenue
+    saved_total = (produced_total - fed_in_total) * (price - revenue)
+    earned_today = fed_in_today * revenue
+    saved_today = (produced_today - fed_in_today) * (price - revenue)
     # Build response data
     data = {
         "state": "ok",
         "currently_produced_kw": rows_cur[0][1],
         "currently_consumed_kw": rows_cur[0][2],
         "currently_fed_in_kw": rows_cur[0][3],
-        "all_time_produced_kwh": rows_all[0][2],
-        "all_time_consumed_kwh": rows_all[0][4],
-        "all_time_fed_in_kwh": rows_all[0][6],
+        "all_time_produced_kwh": produced_total,
+        "all_time_consumed_kwh": consumed_total,
+        "all_time_fed_in_kwh": fed_in_total,
         "all_time_earned": (earned_total + saved_total),
-        "today_produced_kwh": rows_today[0][2],
-        "today_consumed_kwh": rows_today[0][4],
-        "today_fed_in_kwh": rows_today[0][6],
+        "today_produced_kwh": produced_today,
+        "today_consumed_kwh": consumed_today,
+        "today_fed_in_kwh": fed_in_today,
         "today_earned": (earned_today + saved_today)
     }
     return json.dumps(data)
@@ -128,30 +134,34 @@ def get_json_data_history(table, search_date):
     '''Returns JSON response containing historical data.'''
     db = Database("data/db.sqlite")
     rows = db.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
+    # Compute data from sqlite columns
+    produced = rows[0][2] - rows[0][1]
+    consumed = rows[0][4] - rows[0][3]
+    fed_in = rows[0][6] - rows[0][5]
     # Compute feed in
-    consumed_self = rows[0][2] - rows[0][6]
-    consumed_grid = rows[0][4] - consumed_self
+    consumed_self = produced - fed_in
+    consumed_grid = consumed - consumed_self
     consumed_total = consumed_self + consumed_grid
     consumed_self_rel = (consumed_self / consumed_total) * 100.0
     consumed_grid_rel = (consumed_grid / consumed_total) * 100.0
     # Compute usage
-    usage_fed_in_rel = rows[0][6] / rows[0][2] * 100.0
-    usage_self_consumed_rel = consumed_self / rows[0][2] * 100.0
+    usage_fed_in_rel = fed_in / produced * 100.0
+    usage_self_consumed_rel = consumed_self / produced * 100.0
     # Compute earnings
     price = float(config.config_data['prices']['price_per_grid_kwh'])
     revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])
-    earned = rows[0][6] * revenue
-    saved = (rows[0][2] - rows[0][6]) * (price - revenue)
+    earned = fed_in * revenue
+    saved = consumed_self * (price - revenue)
     # Build response data
     data = {
         "state": "ok",
-        "produced_kwh": rows[0][2],
-        "consumed_total_kwh": rows[0][4],
+        "produced_kwh": produced,
+        "consumed_total_kwh": consumed,
         "consumed_from_pv_kwh": consumed_self,
         "consumed_from_grid_kwh": consumed_grid,
         "consumed_from_pv_percent": consumed_self_rel,
         "consumed_from_grid_percent": consumed_grid_rel,
-        "usage_fed_in_kwh": rows[0][6],
+        "usage_fed_in_kwh": fed_in,
         "usage_self_consumed_kwh": consumed_self,
         "usage_fed_in_percent": usage_fed_in_rel,
         "usage_self_consumed_percent": usage_self_consumed_rel,
