@@ -132,3 +132,43 @@ function getHistoryString(id) {
             return historyStrings[i][gCurLang];
     return "...";
 }
+
+
+// Numer format with 2 decimals
+const format2_en = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+});
+
+// Numer format with 0 decimals
+const format0_en = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+});
+
+// Numer format with 2 decimals
+const format2_de = new Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+});
+
+// Numer format with 0 decimals
+const format0_de = new Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+});
+
+function numFormat(number, digits) {
+    if(digits == 2) {
+        if(gCurLang == gLangDe)
+            return format2_de.format(number);
+        else
+            return format2_en.format(number);
+    }
+    else {
+        if(gCurLang == gLangDe)
+            return format0_de.format(number);
+        else
+            return format0_en.format(number);
+    }
+}
