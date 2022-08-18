@@ -15,7 +15,7 @@ const COLOR_CONSUMED        = "#d35400";
 
 // Creates a chart showing the consumption distribution
 function createConsumptionChart(canvasId, gridPercentage, pvPercentage) {
-    var xValues = ["From grid", "From PV"];
+    var xValues = [getChartString("chart_from_grid"), getChartString("chart_from_pv")];
     var yValues = [gridPercentage, pvPercentage];
     var barColors = [
         COLOR_CONSUMED_GRID,
@@ -52,7 +52,7 @@ function createConsumptionChart(canvasId, gridPercentage, pvPercentage) {
 
 // Creates a chart showing the power consumption distribution
 function createUsageChart(canvasId, fedInPercentage, selfPercentage) {
-    var xValues = ["Fed in", "Self consumed"];
+    var xValues = [getChartString("chart_fed_in"), getChartString("chart_self_consumed")];
     var yValues = [fedInPercentage, selfPercentage];
     var barColors = [
         COLOR_FED_IN,
@@ -94,7 +94,7 @@ function createDashboardChart(canvasId, data) {
     const chart_data = {
         labels: labels,
         datasets: [{
-            label: getChartString("chart_produced"),
+            label: getChartString("chart_produced_kwh"),
             data: [],
             fill: false,
             borderColor: COLOR_PRODUCED,
@@ -102,7 +102,7 @@ function createDashboardChart(canvasId, data) {
             borderWidth: 2
         },
         {
-            label: getChartString("chart_consumed"),
+            label: getChartString("chart_consumed_kwh"),
             data: [],
             fill: false,
             borderColor: COLOR_CONSUMED,
@@ -110,7 +110,7 @@ function createDashboardChart(canvasId, data) {
             borderWidth: 2
         },
         {
-            label: getChartString("chart_fed_in"),
+            label: getChartString("chart_fed_in_kwh"),
             data: [],
             fill: false,
             borderColor: COLOR_FED_IN,
