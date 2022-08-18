@@ -76,10 +76,16 @@ let translations = [
 ];
 
 let chartStrings = [
-    // HTML element ID      English (1)             German (2)
-    ["chart_produced",      "Produced [kWh]",       "Erzeugt [kWh]"],
-    ["chart_consumed",      "Consumed [kWh]",       "Verbraucht [kWh]"],
-    ["chart_fed_in",        "Fed in [kWh]",         "Eingespeist [kWh]"],
+    // HTML element ID          English (1)             German (2)
+    ["chart_produced_kwh",      "Produced [kWh]",       "Erzeugt [kWh]"],
+    ["chart_consumed_kwh",      "Consumed [kWh]",       "Verbraucht [kWh]"],
+    ["chart_fed_in_kwh",        "Fed in [kWh]",         "Eingespeist [kWh]"],
+    ["chart_from_grid",         "From grid",            "Aus dem Netz"],
+    ["chart_from_pv",           "From PV",              "Aus PV"],
+    ["chart_produced",          "Produced",             "Erzeugt"],
+    ["chart_consumed",          "Consumed",             "Verbraucht"],
+    ["chart_fed_in",            "Fed in",               "Eingespeist"],
+    ["chart_self_consumed",     "Self consumed",        "Eigenverbrauch"],
 ];
 
 let historyStrings = [
