@@ -52,7 +52,7 @@ function createConsumptionChart(canvasId, gridPercentage, pvPercentage) {
 
 // Creates a chart showing the power consumption distribution
 function createUsageChart(canvasId, fedInPercentage, selfPercentage) {
-    var xValues = ["Fed in", "Self consumed"];
+    var xValues = [getChartString("chart_fed_in"), getChartString("chart_self_consumed")];
     var yValues = [fedInPercentage, selfPercentage];
     var barColors = [
         COLOR_FED_IN,
