@@ -4,17 +4,6 @@ var gBaseUrl = "";
 // Global status flag
 var gDashboardVisible = false;
 
-// Numer format with 2 decimals
-const format2 = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-});
-
-// Numer format with 0 decimals
-const format0 = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-});
 
 // History types
 const histories = {
@@ -52,19 +41,19 @@ function updateCurrentStats() {
         const d = new Date();
         document.getElementById("dashboard_subtitle_time").innerHTML = d.toLocaleTimeString('de-DE');
 
-        document.getElementById("dash_currently_produced").innerHTML = format2.format(stats["currently_produced_kw"]);
-        document.getElementById("dash_currently_consumed").innerHTML = format2.format(stats["currently_consumed_kw"]);
-        document.getElementById("dash_currently_fed_in").innerHTML = format2.format(stats["currently_fed_in_kw"]);
+        document.getElementById("dash_currently_produced").innerHTML = numFormat(stats["currently_produced_kw"], 2);
+        document.getElementById("dash_currently_consumed").innerHTML = numFormat(stats["currently_consumed_kw"], 2);
+        document.getElementById("dash_currently_fed_in").innerHTML = numFormat(stats["currently_fed_in_kw"]), 2;
 
-        document.getElementById("dash_today_produced").innerHTML = format0.format(stats["today_produced_kwh"]);
-        document.getElementById("dash_today_consumed").innerHTML = format0.format(stats["today_consumed_kwh"]);
-        document.getElementById("dash_today_fed_in").innerHTML = format0.format(stats["today_fed_in_kwh"]);
-        document.getElementById("dash_today_earned").innerHTML = format0.format(stats["today_earned"]);
+        document.getElementById("dash_today_produced").innerHTML = numFormat(stats["today_produced_kwh"], 0);
+        document.getElementById("dash_today_consumed").innerHTML = numFormat(stats["today_consumed_kwh"], 0);
+        document.getElementById("dash_today_fed_in").innerHTML = numFormat(stats["today_fed_in_kwh"], 0);
+        document.getElementById("dash_today_earned").innerHTML = numFormat(stats["today_earned"], 0);
 
-        document.getElementById("dash_all_time_produced").innerHTML = format0.format(stats["all_time_produced_kwh"]);
-        document.getElementById("dash_all_time_consumed").innerHTML = format0.format(stats["all_time_consumed_kwh"]);
-        document.getElementById("dash_all_time_fed_in").innerHTML = format0.format(stats["all_time_fed_in_kwh"]);
-        document.getElementById("dash_all_time_earned").innerHTML = format0.format(stats["all_time_earned"]);
+        document.getElementById("dash_all_time_produced").innerHTML = numFormat(stats["all_time_produced_kwh"], 0);
+        document.getElementById("dash_all_time_consumed").innerHTML = numFormat(stats["all_time_consumed_kwh"], 0);
+        document.getElementById("dash_all_time_fed_in").innerHTML = numFormat(stats["all_time_fed_in_kwh"], 0);
+        document.getElementById("dash_all_time_earned").innerHTML = numFormat(stats["all_time_earned"], 0);
     });
 }
 
@@ -137,18 +126,18 @@ function updateHistoryStats() {
             setElementVisible("row_error_banner", false);
             setElementVisible("row_history_data", true);
 
-            document.getElementById("history_stat_produced").innerHTML = format2.format(stats["produced_kwh"]);
+            document.getElementById("history_stat_produced").innerHTML = numFormat(stats["produced_kwh"], 2);
 
-            document.getElementById("history_stat_self_consumed").innerHTML = format2.format(stats["consumed_from_pv_kwh"]);
-            document.getElementById("history_stat_fedin").innerHTML = format2.format(stats["usage_fed_in_kwh"]);
+            document.getElementById("history_stat_self_consumed").innerHTML = numFormat(stats["consumed_from_pv_kwh"], 2);
+            document.getElementById("history_stat_fedin").innerHTML = numFormat(stats["usage_fed_in_kwh"], 2);
 
-            document.getElementById("history_stat_consumption_grid").innerHTML = format2.format(stats["consumed_from_grid_kwh"]);
-            document.getElementById("history_stat_consumption_self").innerHTML = format2.format(stats["consumed_from_pv_kwh"]);
-            document.getElementById("history_stat_consumption_total").innerHTML = format2.format(stats["consumed_total_kwh"]);
+            document.getElementById("history_stat_consumption_grid").innerHTML = numFormat(stats["consumed_from_grid_kwh"], 2);
+            document.getElementById("history_stat_consumption_self").innerHTML = numFormat(stats["consumed_from_pv_kwh"], 2);
+            document.getElementById("history_stat_consumption_total").innerHTML = numFormat(stats["consumed_total_kwh"], 2);
 
-            document.getElementById("history_stat_earned_feedin").innerHTML = format2.format(stats["earned_feedin"]);
-            document.getElementById("history_stat_earned_self").innerHTML = format2.format(stats["earned_savings"]);
-            document.getElementById("history_stat_earned_total").innerHTML = format2.format(stats["earned_total"]);
+            document.getElementById("history_stat_earned_feedin").innerHTML = numFormat(stats["earned_feedin"], 2);
+            document.getElementById("history_stat_earned_self").innerHTML = numFormat(stats["earned_savings"], 2);
+            document.getElementById("history_stat_earned_total").innerHTML = numFormat(stats["earned_total"], 2);
 
             // Create the consumption doughnut chart
             createConsumptionChart(

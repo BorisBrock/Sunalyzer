@@ -165,7 +165,8 @@ def main():
     print("Grabber: Entering main loop")
     while True:
         if config.verbose_logging:
-            print("Grabber: Updating device data")
+            time_string = datetime.now().strftime("%H:%M")
+            print(f"Grabber: {time_string}: Updating device data")
 
         # Download new data from the actual PV device
         device.update()
