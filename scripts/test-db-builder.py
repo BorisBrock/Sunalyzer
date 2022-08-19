@@ -167,8 +167,9 @@ def main():
     for i in range(num_days):
         cur_date = cur_date + timedelta(1)
         print(f"Creating data for {cur_date}")
+        create_data(cur_date, cursor) # A
         update_counters()
-        create_data(cur_date, cursor)
+        create_data(cur_date, cursor) # B
 
     connection.commit()
     connection.close()
