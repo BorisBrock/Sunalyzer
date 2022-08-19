@@ -121,6 +121,23 @@ def get_json_data_months_in_year(year):
     return json.dumps(data)
 
 
+# Returns JSON response containing yearly data for all years
+def get_json_data_years_in_all_time():
+    '''Returns JSON response containing yearly data for all years.'''
+    db = Database("data/db.sqlite")
+    rows = db.execute("SELECT * FROM years")
+    # Build results
+    data = []
+    for row in rows:
+        data.append({
+            "date": row[0],
+            "produced": row[2] - row[1],
+            "consumed": row[4] - row[3],
+            "fed_in": row[6] - row[5]
+        })
+    return json.dumps(data)
+
+
 # Returns JSON response containing monthly data for a year
 def get_json_data_real_time():
     '''Returns JSON response containing monthly data for a year.'''
@@ -208,6 +225,10 @@ def handle_request():
             _year = request.args['date']
             data = get_json_data_months_in_year(_year)
             return data
+        elif _type == "years_in_all_time":
+            data = get_json_data_years_in_all_time()
+            return data
+            
     except Exception:
         print("Server: Error:")
         print(traceback.print_exc())
