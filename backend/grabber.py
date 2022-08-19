@@ -198,9 +198,9 @@ def main():
         year_string = date.today().strftime("%Y")
         week_string = year_string + "-" + date.today().strftime("%V")
         month_string = year_string + "-" + date.today().strftime("%m")
+        day_string = month_string + "-" + date.today().strftime("%d")
 
         # Capture daily data
-        day_string = str(date.today())
         insert_historical_values(
             db,
             "days",
