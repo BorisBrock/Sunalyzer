@@ -15,13 +15,13 @@ def update_counters():
     global global_ctr_produced
     global global_ctr_consumed
     global global_ctr_fed_in
-    prod = random() * 10
-    con = random() * 5
-    fed = random() * 10
+    prod = random() * 10 + 1.0
+    con = random() * 5 + 2.0
+    fed = random() * 10 + 1.0
     if fed > prod:
-        fed = prod
+        fed = prod * 0.5
     if con < prod - fed:
-        con = prod - fed
+        con = (prod - fed) + 2.0
     global_ctr_produced += prod
     global_ctr_consumed += con
     global_ctr_fed_in += fed
