@@ -155,10 +155,16 @@ def get_json_data_history(table, search_date):
     produced = rows[0][2] - rows[0][1]
     consumed = rows[0][4] - rows[0][3]
     fed_in = rows[0][6] - rows[0][5]
+    print(f"produced = {produced}") # 178
+    print(f"consumed = {consumed}") # 66
+    print(f"fed_in = {fed_in}") # 100
     # Compute feed in
     consumed_self = produced - fed_in
     consumed_grid = consumed - consumed_self
     consumed_total = consumed_self + consumed_grid
+    print(f"consumed_self = {consumed_self}") # 78
+    print(f"consumed_grid = {consumed_grid}") # -11 !!!!!!!!!!!!!
+    print(f"consumed_total = {consumed_total}")
 
     if consumed_total > 0:
         consumed_self_rel = (consumed_self / consumed_total) * 100.0
