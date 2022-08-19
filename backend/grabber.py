@@ -1,3 +1,4 @@
+import os
 import time
 import importlib
 from os.path import exists
@@ -130,6 +131,18 @@ def load_devie_plugin(device_name):
     return device
 
 
+# Sets the time zone environment variable
+def set_time_zone(tz):
+    '''Sets the time zone environment variable.'''
+    if tz is None:
+        print("Grabber: Warning: No time zone set")
+    else:
+        print(f"Grabber: Setting tme zone to {tz}")
+        os.environ['TZ'] = tz
+        time.tzset()
+        print(f"Grabber: Time is now {time.strftime('%X %x %Z')}")
+
+
 # Main loop
 def main():
     '''Main loop.'''
@@ -149,6 +162,9 @@ def main():
         config = Config("data/config.yml")
     except Exception:
         exit()
+
+    # Set time zone
+    set_time_zone(config.config_data.get("time_zone"))
 
     # Dynamically load the device
     try:
