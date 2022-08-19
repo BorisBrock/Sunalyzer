@@ -159,11 +159,22 @@ def get_json_data_history(table, search_date):
     consumed_self = produced - fed_in
     consumed_grid = consumed - consumed_self
     consumed_total = consumed_self + consumed_grid
-    consumed_self_rel = (consumed_self / consumed_total) * 100.0
-    consumed_grid_rel = (consumed_grid / consumed_total) * 100.0
+
+    if consumed_total > 0:
+        consumed_self_rel = (consumed_self / consumed_total) * 100.0
+        consumed_grid_rel = (consumed_grid / consumed_total) * 100.0
+    else:
+        consumed_self_rel = 100.0
+        consumed_grid_rel = 0.0
+
     # Compute usage
-    usage_fed_in_rel = fed_in / produced * 100.0
-    usage_self_consumed_rel = consumed_self / produced * 100.0
+    if produced > 0:
+        usage_fed_in_rel = fed_in / produced * 100.0
+        usage_self_consumed_rel = consumed_self / produced * 100.0
+    else:
+        usage_fed_in_rel = 0.0
+        usage_self_consumed_rel = 100.0
+
     # Compute earnings
     price = float(config.config_data['prices']['price_per_grid_kwh'])
     revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])

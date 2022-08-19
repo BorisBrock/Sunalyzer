@@ -156,6 +156,10 @@ function updateHistoryStats() {
             setElementVisible("row_history_data", false);
         }
     });
+
+    // Also update the details graph
+    if(gCurHistory == histories.MONTH || gCurHistory == histories.YEAR || gCurHistory == histories.ALL)
+    updateHistoryDetailsGraph();
 }
 
 // Async function to get the current stats
@@ -259,7 +263,6 @@ function showViewHistory(mode) {
             setElementVisible("selection_day", false);
             // Show the days
             setElementVisible("history_card_graph", true);
-            updateHistoryDetailsGraph();
             break;
         case histories.YEAR:
             document.getElementById("headline_history").innerHTML = getHistoryString("yearly_data");
@@ -268,7 +271,6 @@ function showViewHistory(mode) {
             setElementVisible("selection_day", false);
             // Show the months
             setElementVisible("history_card_graph", true);
-            updateHistoryDetailsGraph();
             break;
         case histories.ALL:
             document.getElementById("headline_history").innerHTML = getHistoryString("all_time_data");
@@ -278,7 +280,6 @@ function showViewHistory(mode) {
             setElementVisible("history_card_graph", false);
             // Show the years
             setElementVisible("history_card_graph", true);
-            updateHistoryDetailsGraph();
             break;
     }
     updateHistoryStats();
