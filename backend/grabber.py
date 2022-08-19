@@ -34,7 +34,7 @@ def insert_historical_values(
     rows = db.execute(query)
 
     if len(rows) == 0:
-        # Create day row
+        # Create new row
         query = (f"INSERT INTO {table_name} VALUES ('{date_string}',"
                  f"{str(produced)}, {str(produced)}, "
                  f"{str(consumed)}, {str(consumed)}, "
@@ -98,6 +98,10 @@ def create_new_db():
                  "consumed_a REAL, consumed_b REAL,"
                  "fed_in_a REAL, fed_in_b REAL)")
         new_db.execute(query)
+
+    # Add initial all time row
+    query = ("INSERT INTO all_time VALUES ('all_time',0,0,0,0,0,0)")
+    new_db.execute(query)
 
     # Current data table
     query = ("create table if not exists current"
