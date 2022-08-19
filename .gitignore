@@ -127,4 +127,5 @@ dmypy.json
 
 # Additional files/folders
 data/db.sqlite
+data/db.sqlite-journal
 grabber/devices/__pycache__
