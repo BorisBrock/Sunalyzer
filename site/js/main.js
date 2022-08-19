@@ -214,6 +214,9 @@ async function fetchHistoryDetailsJSON() {
             query += "months_in_year&date=";
             query += document.getElementById('selection_year2').value.toString();
             break;
+        case histories.ALL:
+            query += "years_in_all_time";
+            break;
     }
     const response = await fetch(gBaseUrl + query);
     const stats = await response.json();
@@ -273,6 +276,9 @@ function showViewHistory(mode) {
             setElementVisible("selection_month", false);
             setElementVisible("selection_day", false);
             setElementVisible("history_card_graph", false);
+            // Show the years
+            setElementVisible("history_card_graph", true);
+            updateHistoryDetailsGraph();
             break;
     }
     updateHistoryStats();
