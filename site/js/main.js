@@ -98,9 +98,9 @@ function initSelectionBoxes() {
         for (let i = dates["year_min"]; i <= dates["year_max"]; i++) {
             addSelectionItem("selection_year2", i.toString(), i.toString());
         }
+        // Initial selection
+        selectDateToday();
     });
-    // Initial selection
-    selectDateToday();
 }
 
 function selectDateToday() {
