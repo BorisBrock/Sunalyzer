@@ -29,7 +29,7 @@ let translations = [
 
     ["dash_text_currently_produced",    "Produced",         "Erzeugung"],
     ["dash_text_currently_consumed",    "Consumed",         "Vebrauch"],
-    ["dash_text_currently_fed_in",      "Fed in",           "Eingespeisung"],
+    ["dash_text_currently_fed_in",      "Fed in",           "Einspeisung"],
 
     ["dash_text_today_produced",        "Produced",          "Erzeugt"],
     ["dash_text_today_consumed",        "Consumed",          "Vebraucht"],
@@ -55,7 +55,7 @@ let translations = [
     ["history_text_consumption_grid",   "Consumption from grid",        "Verbrauch aus dem Netz"],
     ["history_text_consumption_self",   "Consumption from PV",          "Verbrauch aus PV"],
     ["history_text_consumption_total",  "Total consumption",            "Gesamtverbrauch"],
-    ["history_card_graph_text",          "Details",                      "Zeitverlauf"],
+    ["history_card_graph_text",         "Details",                      "Zeitverlauf"],
 
     // Months combo box
     ["cbx_month_1",     "January",      "Januar"],
