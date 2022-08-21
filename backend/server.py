@@ -95,11 +95,15 @@ def get_json_data_days_in_month(year_and_month):
     # Build results
     data = []
     for row in rows:
+        produced = row[2] - row[1]
+        consumed = row[4] - row[3]
+        fed_in = row[6] - row[5]
         data.append({
             "date": row[0],
-            "produced": row[2] - row[1],
-            "consumed": row[4] - row[3],
-            "fed_in": row[6] - row[5]
+            "produced_self": produced - fed_in,
+            "produced_feed_in": fed_in,
+            "consumed_from_pv": produced - fed_in,
+            "consumed_from_grid": consumed - produced + fed_in
         })
     return json.dumps(data)
 
