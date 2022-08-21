@@ -42,7 +42,6 @@ let translations = [
     ["dash_text_all_time_earned", "Earned", "Verdient"],
 
     // History
-    ["history_card_production", "PV Production", "Erzeugt"],
     ["history_card_earned", "Earnings", "Einnahmen"],
     ["history_card_usage", "Produced", "Erzeugt"],
     ["history_card_consumption", "Consumed", "Verbraucht"],

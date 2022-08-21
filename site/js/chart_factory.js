@@ -99,24 +99,24 @@ function createDashboardChart(canvasId, data) {
             label: getChartString("chart_produced_kwh"),
             data: [],
             fill: false,
-            borderColor: COLOR_PRODUCED,
-            backgroundColor: COLOR_PRODUCED,
+            borderColor: COLOR_PRODUCTION_SELF_CONSUMED,
+            backgroundColor: COLOR_PRODUCTION_SELF_CONSUMED,
             borderWidth: 2
         },
         {
             label: getChartString("chart_consumed_kwh"),
             data: [],
             fill: false,
-            borderColor: COLOR_CONSUMED,
-            backgroundColor: COLOR_CONSUMED,
+            borderColor: COLOR_CONSUMED_FROM_GRID,
+            backgroundColor: COLOR_CONSUMED_FROM_GRID,
             borderWidth: 2
         },
         {
             label: getChartString("chart_fed_in_kwh"),
             data: [],
             fill: false,
-            borderColor: COLOR_FED_IN,
-            backgroundColor: COLOR_FED_IN,
+            borderColor: COLOR_PRODUCTION_FED_IN,
+            backgroundColor: COLOR_PRODUCTION_FED_IN,
             borderWidth: 2
         }]
     };
