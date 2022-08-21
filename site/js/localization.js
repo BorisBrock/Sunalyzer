@@ -86,6 +86,10 @@ let chartStrings = [
     ["chart_consumed", "Consumed", "Verbraucht"],
     ["chart_fed_in", "Fed in", "Eingespeist"],
     ["chart_self_consumed", "Self consumed", "Eigenverbrauch"],
+    ["chart_produced_self_kwh", "Consumed directly [kWh]", "Direktverbrauch [kWh]"],
+    ["chart_produced_grid_kwh", "Feed-in [kWh]", "Einspeisung [kWh]"],
+    ["chart_consumed_pv_kwh", "Consumed directly [kWh]", "Direktverbrauch [kWh]"],
+    ["chart_consumed_grid_kwh", "From grid [kWh]", "Netzbezug [kWh]"],
 ];
 
 let historyStrings = [
