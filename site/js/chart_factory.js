@@ -152,21 +152,21 @@ function createHistoryDetailsChart(canvasId, data) {
     const chart_data = {
         labels: labels,
         datasets: [{
-            label: getChartString("chart_produced"),
+            label: getChartString("chart_produced_kwh"),
             data: [],
             borderColor: COLOR_PRODUCED,
             backgroundColor: COLOR_PRODUCED,
             borderWidth: 2
         },
         {
-            label: getChartString("chart_consumed"),
+            label: getChartString("chart_consumed_kwh"),
             data: [],
             borderColor: COLOR_CONSUMED,
             backgroundColor: COLOR_CONSUMED,
             borderWidth: 2
         },
         {
-            label: getChartString("chart_fed_in"),
+            label: getChartString("chart_fed_in_kwh"),
             data: [],
             borderColor: COLOR_FED_IN,
             backgroundColor: COLOR_FED_IN,

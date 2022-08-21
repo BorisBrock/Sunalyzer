@@ -86,7 +86,8 @@
                 <div class="container-fluid px-4" id="view_dashboard">
                     <h1 class="mt-4">Dashboard</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active"><span id="dashboard_subtitle">Last updated:</span><span id="dashboard_subtitle_time">...</span></li>
+                        <li class="breadcrumb-item active"><span id="dashboard_subtitle">Last updated:</span><span
+                                id="dashboard_subtitle_time">...</span></li>
                     </ol>
 
                     <div class="row">
@@ -261,62 +262,8 @@
 
                     <div id="row_history_data">
                         <div class="row ">
-                            <div class="col-xl-4">
 
-                                <!-- Card Production -->
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-solar-panel me-1"></i>
-                                        <span id="history_card_production">PV Production</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <td><i class="fas fa-solar-panel me-1"></i></td>
-                                                    <td id="history_text_produced">Energy produced</td>
-                                                    <td id="history_stat_produced">0.0</td>
-                                                    <td>kWh</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                <!-- Card Earnings -->
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-sack-dollar me-1"></i>
-                                        <span id="history_card_earned">Earnings</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
-                                                    <td id="history_text_earned_feedin">Earned with feed-in</td>
-                                                    <td id="history_stat_earned_feedin">0.0</td>
-                                                    <td>€</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><i class="fas fa-lightbulb me-1"></i></td>
-                                                    <td id="history_text_earned_self">Saved via self-consumption</td>
-                                                    <td id="history_stat_earned_self">0.0</td>
-                                                    <td>€</td>
-                                                </tr>
-                                                <tr class="fw-bold">
-                                                    <td><i class="fas fa-sack-dollar me-1"></i></td>
-                                                    <td id="history_text_earned_total">Total</td>
-                                                    <td id="history_stat_earned_total">0.0</td>
-                                                    <td>€</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Card Energy Usage -->
+                            <!-- Card Production -->
                             <div class="col-xl-4">
                                 <div class="card mb-4">
                                     <div class="card-header">
@@ -324,10 +271,20 @@
                                         <span id="history_card_usage">Usage of Produced Energy</span>
                                     </div>
                                     <div class="card-body">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr class="fw-bold">
+                                                    <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                    <td id="history_text_produced">Energy produced</td>
+                                                    <td id="history_stat_produced">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                         <div>
                                             <canvas id="chart_usage" height="200"></canvas>
                                         </div>
-                                        <table class="table table-borderless mt-4">
+                                        <table class="table table-borderless">
                                             <tbody>
                                                 <tr>
                                                     <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
@@ -355,10 +312,20 @@
                                         <span id="history_card_consumption">Power Consumption</span>
                                     </div>
                                     <div class="card-body">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr class="fw-bold">
+                                                    <td><i class="fas fa-lightbulb me-1"></i></td>
+                                                    <td id="history_text_consumption_total">Total consumption</td>
+                                                    <td id="history_stat_consumption_total">0.0</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                         <div>
-                                            <canvas id="chart_consumption"  height="200"></canvas>
+                                            <canvas id="chart_consumption" height="200"></canvas>
                                         </div>
-                                        <table class="table table-borderless mt-4">
+                                        <table class="table table-borderless">
                                             <tbody>
                                                 <tr>
                                                     <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
@@ -372,11 +339,39 @@
                                                     <td id="history_stat_consumption_self">0.0</td>
                                                     <td>kWh</td>
                                                 </tr>
-                                                <tr class="fw-bold">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Earnings -->
+                            <div class="col-xl-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-sack-dollar me-1"></i>
+                                        <span id="history_card_earned">Earnings</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
+                                                    <td id="history_text_earned_feedin">Earned with feed-in</td>
+                                                    <td id="history_stat_earned_feedin">0.0</td>
+                                                    <td>€</td>
+                                                </tr>
+                                                <tr>
                                                     <td><i class="fas fa-lightbulb me-1"></i></td>
-                                                    <td id="history_text_consumption_total">Total consumption</td>
-                                                    <td id="history_stat_consumption_total">0.0</td>
-                                                    <td>kWh</td>
+                                                    <td id="history_text_earned_self">Saved via self-consumption</td>
+                                                    <td id="history_stat_earned_self">0.0</td>
+                                                    <td>€</td>
+                                                </tr>
+                                                <tr class="fw-bold">
+                                                    <td><i class="fas fa-sack-dollar me-1"></i></td>
+                                                    <td id="history_text_earned_total">Total</td>
+                                                    <td id="history_stat_earned_total">0.0</td>
+                                                    <td>€</td>
                                                 </tr>
                                             </tbody>
                                         </table>
