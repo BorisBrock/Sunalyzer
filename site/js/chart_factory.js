@@ -71,7 +71,6 @@ function createUsageChart(canvasId, fedInPercentage, selfPercentage) {
         options: {
             rotation: 180,
             maintainAspectRatio: false,
-            responsive: false,
             title: {
                 display: false
             },
