@@ -132,6 +132,7 @@ function createDashboardChart(canvasId, data) {
         responsive: true,
         data: chart_data,
         options: {
+            maintainAspectRatio: false,
             title: {
                 display: false
             },
@@ -186,6 +187,7 @@ function createHistoryDetailsChart(canvasId, data) {
         responsive: true,
         data: chart_data,
         options: {
+            maintainAspectRatio: false,
             title: {
                 display: false
             },
