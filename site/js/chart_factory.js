@@ -71,6 +71,7 @@ function createUsageChart(canvasId, fedInPercentage, selfPercentage) {
         options: {
             rotation: 180,
             maintainAspectRatio: false,
+            responsive: false,
             title: {
                 display: false
             },
@@ -132,6 +133,7 @@ function createDashboardChart(canvasId, data) {
         responsive: true,
         data: chart_data,
         options: {
+            maintainAspectRatio: false,
             title: {
                 display: false
             },
@@ -186,6 +188,7 @@ function createHistoryDetailsChart(canvasId, data) {
         responsive: true,
         data: chart_data,
         options: {
+            maintainAspectRatio: false,
             title: {
                 display: false
             },
