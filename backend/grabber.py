@@ -123,7 +123,7 @@ def create_new_db():
 
 
 # Loads the device class with the given name
-def load_devie_plugin(device_name):
+def load_device_plugin(device_name):
     '''Loads the device class with the given name.'''
     module = importlib.import_module("devices." + device_name)
     class_ = getattr(module, device_name)
@@ -170,7 +170,7 @@ def main():
     try:
         device_name = config.config_data['grabber']['device']
         print(f"Grabber: Loading device adapter '{device_name}'")
-        device = load_devie_plugin(device_name)
+        device = load_device_plugin(device_name)
     except Exception:
         print("Grabber: Error: creating the device adapter failed")
         exit()

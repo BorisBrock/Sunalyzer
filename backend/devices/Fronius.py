@@ -9,10 +9,13 @@ class Fronius:
         print(f"""Fronius device:
             configured host name is {config['fronius']['host_name']}""")
 
+        self.verbose_logging = config.verbose_logging
         self.host_name = config['fronius']['host_name']
 
-        self.url_inverter = (f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi")
-        self.url_meter = (f"http://{self.host_name}/solar_api/v1/GetMeterRealtimeData.cgi?Scope=System")
+        self.url_inverter = (
+            f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi")
+        self.url_meter = (
+            f"http://{self.host_name}/solar_api/v1/GetMeterRealtimeData.cgi?Scope=System")
 
         # Initialize with values
         self.total_energy_produced_kwh = 0.0
@@ -28,17 +31,28 @@ class Fronius:
         strTotalProduced = inverter_data["Body"]["Data"]["Site"]["E_Total"]
         totalProduced = float(strTotalProduced)
         # Meter data
-        strConsumedFromGrid = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
-        consumedFromGrid = float(strConsumedFromGrid)
-        strFedIn = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Minus_Absolute"]
-        fedIn = float(strFedIn)
+        strTotalConsumedFromGrid = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
+        totalConsumedFromGrid = float(strTotalConsumedFromGrid)
+        strTotalFedIn = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Minus_Absolute"]
+        totalFedIn = float(strTotalFedIn)
+        # Compute other values
+        totalSelfConsumption = totalProduced - totalFedIn
+        totalConsumption = totalConsumedFromGrid + totalSelfConsumption
 
-        TODO
+        # Logging
+        if self.verbose_logging:
+            print(f"Fronius device: Current data:\n"
+                  f" - Total produced: {str(totalProduced)}\n"
+                  f" - Total grid consumption: {str(totalConsumedFromGrid)}\n"
+                  f" - Total self consumption: {str(totalSelfConsumption)}\n"
+                  f" - Total consumption: {str(totalConsumption)}\n"
+                  f" - Total fed in: {str(totalFedIn)}")
 
         # Todo
-        self.total_energy_produced_kwh = self.total_energy_produced_kwh + 1
-        self.total_energy_consumed_kwh = self.total_energy_consumed_kwh + 1
-        self.total_energy_fed_in_kwh = self.total_energy_fed_in_kwh + 1
+        self.total_energy_produced_kwh = totalProduced
+        self.total_energy_consumed_kwh = totalConsumption
+        self.total_energy_fed_in_kwh = totalFedIn
+
         self.current_power_produced_kw = self.current_power_produced_kw + 1
         self.current_power_consumed_kw = self.current_power_consumed_kw + 1
         self.current_power_fed_in_kw = self.current_power_fed_in_kw + 1
