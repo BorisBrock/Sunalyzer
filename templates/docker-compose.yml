@@ -1,0 +1,9 @@
+services:
+  sunalyzer:
+    container_name: sunalyzer
+    image: borisbrock/sunalyzer:latest
+    restart: always
+    ports:
+      - "8020:5000"
+    volumes:
+      - /volume1/docker/sunalyzer:/data
