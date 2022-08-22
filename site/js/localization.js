@@ -180,3 +180,24 @@ function numFormat(number, digits) {
             return format0_en.format(number);
     }
 }
+
+
+let monthNames = [
+    // English (1), German (2)
+    ["January", "Januar"],
+    ["February", "Februar"],
+    ["March", "März"],
+    ["April", "April"],
+    ["May", "Mai"],
+    ["June", "Juni"],
+    ["July", "Juli"],
+    ["August", "August"],
+    ["September", "September"],
+    ["October", "Oktober"],
+    ["November", "November"],
+    ["December", "Dezember"],
+];
+
+function getMonthName(index) {
+    return monthNames[index][gCurLang - 1];
+}

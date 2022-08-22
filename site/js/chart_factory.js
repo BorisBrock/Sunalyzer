@@ -15,6 +15,24 @@ const COLOR_CONSUMED_FROM_PV = "#8e44ad";
 const COLOR_PRODUCED = "#f1c40f";
 const COLOR_CONSUMED = "#d35400";
 
+// Utility function to beautify the given date
+function utilBeautifyDate(date) {
+    if (date.length == 10) {
+        // Must be a day
+        let day = date.slice(8);
+        return parseInt(day).toString();
+    }
+    else if (date.length == 7) {
+        // Must be a month
+        let month = date.slice(5);
+        return getMonthName(parseInt(month) - 1);
+    }
+    else {
+        // Must be a year
+        return date;
+    }
+}
+
 
 // Creates a chart showing the consumption distribution
 function createConsumptionChart(canvasId, gridPercentage, pvPercentage) {
@@ -173,7 +191,7 @@ function createHistoryDetailsChartProduction(canvasId, data) {
     };
 
     for (index = 0; index < data.length; index++) {
-        labels.push(data[index]["date"]); // Element 1 = time
+        labels.push(utilBeautifyDate(data[index]["date"])); // Element 1 = time
         chart_data.datasets[0].data.push(data[index]["produced_self"]);
         chart_data.datasets[1].data.push(data[index]["produced_feed_in"]);
     }
@@ -231,7 +249,7 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
     };
 
     for (index = 0; index < data.length; index++) {
-        labels.push(data[index]["date"]); // Element 1 = time
+        labels.push(utilBeautifyDate(data[index]["date"])); // Element 1 = time
         chart_data.datasets[0].data.push(data[index]["consumed_from_pv"]);
         chart_data.datasets[1].data.push(data[index]["consumed_from_grid"]);
     }
