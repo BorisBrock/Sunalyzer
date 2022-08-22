@@ -9,11 +9,12 @@ let gChartHistoryDetailsConsumed = null
 const COLOR_PRODUCTION_FED_IN = "#2980b9";
 const COLOR_PRODUCTION_SELF_CONSUMED = "#27ae60";
 
-const COLOR_CONSUMED_FROM_GRID = "#c0392b";
-const COLOR_CONSUMED_FROM_PV = "#8e44ad";
+const COLOR_CONSUMED_FROM_GRID = "#8e44ad";
+const COLOR_CONSUMED_FROM_PV = "#e67e22";
 
 const COLOR_PRODUCED = "#f1c40f";
 const COLOR_CONSUMED = "#d35400";
+
 
 // Utility function to beautify the given date
 function utilBeautifyDate(date) {
