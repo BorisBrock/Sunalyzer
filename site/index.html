@@ -381,15 +381,36 @@
 
                         </div>
 
-                        <div class="card mb-4" id="history_card_graph">
-                            <div class="card-header">
-                                <i class="fas fa-chart-line me-1"></i>
-                                <span id="history_card_graph_text">Details</span>
+                        <div class="row" id="history_card_graphs">
+
+                            <!-- Left graph: production -->
+                            <div class="col-sm">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-line me-1"></i>
+                                        <span id="history_card_graph_production_text">Details</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="chart_history_details_production" height="250"></canvas>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <canvas id="chart_history_details" height="250"></canvas>
+
+                            <!-- Right graph: consumption -->
+                            <div class="col-sm">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-line me-1"></i>
+                                        <span id="history_card_graph_consumption_text">Details</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="chart_history_details_consumption" height="250"></canvas>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
+
                     </div>
 
                     <!-- No data -->

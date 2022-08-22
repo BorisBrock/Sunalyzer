@@ -2,7 +2,8 @@
 let gChartConsumption = null
 let gChartUsage = null
 let gChartDashboard = null
-let gChartHistoryDetails = null
+let gChartHistoryDetailsProduced = null
+let gChartHistoryDetailsConsumed = null
 
 // Colors
 const COLOR_PRODUCTION_FED_IN = "#2980b9";
@@ -148,7 +149,7 @@ function createDashboardChart(canvasId, data) {
 }
 
 // Creates a chart showing history details
-function createHistoryDetailsChart(canvasId, data) {
+function createHistoryDetailsChartProduction(canvasId, data) {
 
     const labels = [];
     const chart_data = {
@@ -168,22 +169,6 @@ function createHistoryDetailsChart(canvasId, data) {
             backgroundColor: COLOR_PRODUCTION_FED_IN,
             borderWidth: 2,
             stack: 'Stack 0'
-        },
-        {
-            label: getChartString("chart_consumed_pv_kwh"),
-            data: [],
-            borderColor: COLOR_CONSUMED_FROM_PV,
-            backgroundColor: COLOR_CONSUMED_FROM_PV,
-            borderWidth: 2,
-            stack: 'Stack 1'
-        },
-        {
-            label: getChartString("chart_consumed_grid_kwh"),
-            data: [],
-            borderColor: COLOR_CONSUMED_FROM_GRID,
-            backgroundColor: COLOR_CONSUMED_FROM_GRID,
-            borderWidth: 2,
-            stack: 'Stack 1'
         }]
     };
 
@@ -191,12 +176,68 @@ function createHistoryDetailsChart(canvasId, data) {
         labels.push(data[index]["date"]); // Element 1 = time
         chart_data.datasets[0].data.push(data[index]["produced_self"]);
         chart_data.datasets[1].data.push(data[index]["produced_feed_in"]);
-        chart_data.datasets[2].data.push(data[index]["consumed_from_pv"]);
-        chart_data.datasets[3].data.push(data[index]["consumed_from_grid"]);
     }
 
-    if (gChartHistoryDetails != null) gChartHistoryDetails.destroy();
-    gChartHistoryDetails = new Chart(canvasId, {
+    if (gChartHistoryDetailsProduced != null) gChartHistoryDetailsProduced.destroy();
+    gChartHistoryDetailsProduced = new Chart(canvasId, {
+        type: "bar",
+        responsive: true,
+        data: chart_data,
+        options: {
+            maintainAspectRatio: false,
+            title: {
+                display: false
+            },
+            plugins: {
+                labels: false
+            },
+            interaction: {
+                intersect: false,
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true
+                }
+            }
+        }
+    });
+}
+
+// Creates a chart showing history details
+function createHistoryDetailsChartConsumption(canvasId, data) {
+
+    const labels = [];
+    const chart_data = {
+        labels: labels,
+        datasets: [{
+            label: getChartString("chart_consumed_pv_kwh"),
+            data: [],
+            borderColor: COLOR_CONSUMED_FROM_PV,
+            backgroundColor: COLOR_CONSUMED_FROM_PV,
+            borderWidth: 2,
+            stack: 'Stack 0'
+        },
+        {
+            label: getChartString("chart_consumed_grid_kwh"),
+            data: [],
+            borderColor: COLOR_CONSUMED_FROM_GRID,
+            backgroundColor: COLOR_CONSUMED_FROM_GRID,
+            borderWidth: 2,
+            stack: 'Stack 0'
+        }]
+    };
+
+    for (index = 0; index < data.length; index++) {
+        labels.push(data[index]["date"]); // Element 1 = time
+        chart_data.datasets[0].data.push(data[index]["consumed_from_pv"]);
+        chart_data.datasets[1].data.push(data[index]["consumed_from_grid"]);
+    }
+
+    if (gChartHistoryDetailsConsumed != null) gChartHistoryDetailsConsumed.destroy();
+    gChartHistoryDetailsConsumed = new Chart(canvasId, {
         type: "bar",
         responsive: true,
         data: chart_data,
