@@ -86,12 +86,16 @@ def get_json_data_dates():
     return json.dumps(data)
 
 
-# Returns JSON response containing daily data for a month
-def get_json_data_days_in_month(year_and_month):
-    '''Returns JSON response containing daily data for a month.'''
+# Returns JSON response containing history details
+def get_json_data_history_details(table, date_search_string):
+    '''Returns JSON response containing history details.'''
     db = Database("data/db.sqlite")
-    rows = db.execute(
-        f"SELECT * FROM days WHERE date LIKE '{year_and_month}%'")
+    if len(date_search_string) > 0:
+        rows = db.execute(
+            f"SELECT * FROM {table} WHERE date LIKE '{date_search_string}%'")
+    else:
+        rows = db.execute(
+            f"SELECT * FROM {table}")
     # Build results
     data = []
     for row in rows:
@@ -104,40 +108,6 @@ def get_json_data_days_in_month(year_and_month):
             "produced_feed_in": fed_in,
             "consumed_from_pv": produced - fed_in,
             "consumed_from_grid": consumed - produced + fed_in
-        })
-    return json.dumps(data)
-
-
-# Returns JSON response containing monthly data for a year
-def get_json_data_months_in_year(year):
-    '''Returns JSON response containing monthly data for a year.'''
-    db = Database("data/db.sqlite")
-    rows = db.execute(f"SELECT * FROM months WHERE date LIKE '{year}%'")
-    # Build results
-    data = []
-    for row in rows:
-        data.append({
-            "date": row[0],
-            "produced": row[2] - row[1],
-            "consumed": row[4] - row[3],
-            "fed_in": row[6] - row[5]
-        })
-    return json.dumps(data)
-
-
-# Returns JSON response containing yearly data for all years
-def get_json_data_years_in_all_time():
-    '''Returns JSON response containing yearly data for all years.'''
-    db = Database("data/db.sqlite")
-    rows = db.execute("SELECT * FROM years")
-    # Build results
-    data = []
-    for row in rows:
-        data.append({
-            "date": row[0],
-            "produced": row[2] - row[1],
-            "consumed": row[4] - row[3],
-            "fed_in": row[6] - row[5]
         })
     return json.dumps(data)
 
@@ -234,14 +204,14 @@ def handle_request():
             return data
         elif _type == "days_in_month":
             _month = request.args['date']
-            data = get_json_data_days_in_month(_month)
+            data = get_json_data_history_details("days", _month)
             return data
         elif _type == "months_in_year":
             _year = request.args['date']
-            data = get_json_data_months_in_year(_year)
+            data = get_json_data_history_details("months", _year)
             return data
         elif _type == "years_in_all_time":
-            data = get_json_data_years_in_all_time()
+            data = get_json_data_history_details("years", "")
             return data
             
     except Exception:
