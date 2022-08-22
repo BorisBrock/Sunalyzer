@@ -7,9 +7,9 @@ class Dummy:
             bar={config.config_data['dummy']['bar']}""")
 
         # Initialize with some random values
-        self.total_energy_produced_kwh = 1200.0
-        self.total_energy_consumed_kwh = 900.0
-        self.total_energy_fed_in_kwh = 800.0
+        self.total_energy_produced_kwh = 44000.0
+        self.total_energy_consumed_kwh = 39000.0
+        self.total_energy_fed_in_kwh = 24000.0
 
         self.current_power_produced_kw = 300.0
         self.current_power_consumed_kw = 700.0

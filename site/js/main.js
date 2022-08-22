@@ -159,7 +159,7 @@ function updateHistoryStats() {
 
     // Also update the details graph
     if(gCurHistory == histories.MONTH || gCurHistory == histories.YEAR || gCurHistory == histories.ALL)
-    updateHistoryDetailsGraph();
+    updateHistoryDetailsGraphs();
 }
 
 // Async function to get the current stats
@@ -196,10 +196,11 @@ async function fetchHistoryStatsJSON() {
     return stats;
 }
 
-function updateHistoryDetailsGraph() {
+function updateHistoryDetailsGraphs() {
     fetchHistoryDetailsJSON().then(stats => {
         //console.log(stats);
-        createHistoryDetailsChart("chart_history_details", stats);
+        createHistoryDetailsChartProduction("chart_history_details_production", stats);
+        createHistoryDetailsChartConsumption("chart_history_details_consumption", stats);
     });
 }
 
@@ -248,13 +249,13 @@ function showViewHistory(mode) {
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", true);
-            setElementVisible("history_card_graph", false);
+            setElementVisible("history_card_graphs", false);
         case histories.DAY:
             document.getElementById("headline_history").innerHTML = getHistoryString("daily_data");
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", true);
-            setElementVisible("history_card_graph", false);
+            setElementVisible("history_card_graphs", false);
             break;
         case histories.MONTH:
             document.getElementById("headline_history").innerHTML = getHistoryString("monthly_data");
@@ -262,7 +263,7 @@ function showViewHistory(mode) {
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", false);
             // Show the days
-            setElementVisible("history_card_graph", true);
+            setElementVisible("history_card_graphs", true);
             break;
         case histories.YEAR:
             document.getElementById("headline_history").innerHTML = getHistoryString("yearly_data");
@@ -270,16 +271,15 @@ function showViewHistory(mode) {
             setElementVisible("selection_month", false);
             setElementVisible("selection_day", false);
             // Show the months
-            setElementVisible("history_card_graph", true);
+            setElementVisible("history_card_graphs", true);
             break;
         case histories.ALL:
             document.getElementById("headline_history").innerHTML = getHistoryString("all_time_data");
             setElementVisible("selection_year", false);
             setElementVisible("selection_month", false);
             setElementVisible("selection_day", false);
-            setElementVisible("history_card_graph", false);
             // Show the years
-            setElementVisible("history_card_graph", true);
+            setElementVisible("history_card_graphs", true);
             break;
     }
     updateHistoryStats();

@@ -54,7 +54,8 @@ let translations = [
     ["history_text_consumption_grid", "Consumption from grid", "Verbrauch aus dem Netz"],
     ["history_text_consumption_self", "Consumption from PV", "Verbrauch aus PV"],
     ["history_text_consumption_total", "Total consumption", "Gesamtverbrauch"],
-    ["history_card_graph_text", "Details", "Zeitverlauf"],
+    ["history_card_graph_production_text", "Production Details", "Zeitverlauf Produktion"],
+    ["history_card_graph_consumption_text", "Consumption Details", "Zeitverlauf Verbrauch"],
 
     // Months combo box
     ["cbx_month_1", "January", "Januar"],
@@ -178,4 +179,25 @@ function numFormat(number, digits) {
         else
             return format0_en.format(number);
     }
+}
+
+
+let monthNames = [
+    // English (1), German (2)
+    ["January", "Januar"],
+    ["February", "Februar"],
+    ["March", "März"],
+    ["April", "April"],
+    ["May", "Mai"],
+    ["June", "Juni"],
+    ["July", "Juli"],
+    ["August", "August"],
+    ["September", "September"],
+    ["October", "Oktober"],
+    ["November", "November"],
+    ["December", "Dezember"],
+];
+
+function getMonthName(index) {
+    return monthNames[index][gCurLang - 1];
 }

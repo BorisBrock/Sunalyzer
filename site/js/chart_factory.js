@@ -2,17 +2,37 @@
 let gChartConsumption = null
 let gChartUsage = null
 let gChartDashboard = null
-let gChartHistoryDetails = null
+let gChartHistoryDetailsProduced = null
+let gChartHistoryDetailsConsumed = null
 
 // Colors
 const COLOR_PRODUCTION_FED_IN = "#2980b9";
 const COLOR_PRODUCTION_SELF_CONSUMED = "#27ae60";
 
-const COLOR_CONSUMED_FROM_GRID = "#c0392b";
-const COLOR_CONSUMED_FROM_PV = "#8e44ad";
+const COLOR_CONSUMED_FROM_GRID = "#8e44ad";
+const COLOR_CONSUMED_FROM_PV = "#e67e22";
 
 const COLOR_PRODUCED = "#f1c40f";
 const COLOR_CONSUMED = "#d35400";
+
+
+// Utility function to beautify the given date
+function utilBeautifyDate(date) {
+    if (date.length == 10) {
+        // Must be a day
+        let day = date.slice(8);
+        return parseInt(day).toString();
+    }
+    else if (date.length == 7) {
+        // Must be a month
+        let month = date.slice(5);
+        return getMonthName(parseInt(month) - 1);
+    }
+    else {
+        // Must be a year
+        return date;
+    }
+}
 
 
 // Creates a chart showing the consumption distribution
@@ -148,7 +168,7 @@ function createDashboardChart(canvasId, data) {
 }
 
 // Creates a chart showing history details
-function createHistoryDetailsChart(canvasId, data) {
+function createHistoryDetailsChartProduction(canvasId, data) {
 
     const labels = [];
     const chart_data = {
@@ -168,14 +188,56 @@ function createHistoryDetailsChart(canvasId, data) {
             backgroundColor: COLOR_PRODUCTION_FED_IN,
             borderWidth: 2,
             stack: 'Stack 0'
-        },
-        {
+        }]
+    };
+
+    for (index = 0; index < data.length; index++) {
+        labels.push(utilBeautifyDate(data[index]["date"])); // Element 1 = time
+        chart_data.datasets[0].data.push(data[index]["produced_self"]);
+        chart_data.datasets[1].data.push(data[index]["produced_feed_in"]);
+    }
+
+    if (gChartHistoryDetailsProduced != null) gChartHistoryDetailsProduced.destroy();
+    gChartHistoryDetailsProduced = new Chart(canvasId, {
+        type: "bar",
+        responsive: true,
+        data: chart_data,
+        options: {
+            maintainAspectRatio: false,
+            title: {
+                display: false
+            },
+            plugins: {
+                labels: false
+            },
+            interaction: {
+                intersect: false,
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true
+                }
+            }
+        }
+    });
+}
+
+// Creates a chart showing history details
+function createHistoryDetailsChartConsumption(canvasId, data) {
+
+    const labels = [];
+    const chart_data = {
+        labels: labels,
+        datasets: [{
             label: getChartString("chart_consumed_pv_kwh"),
             data: [],
             borderColor: COLOR_CONSUMED_FROM_PV,
             backgroundColor: COLOR_CONSUMED_FROM_PV,
             borderWidth: 2,
-            stack: 'Stack 1'
+            stack: 'Stack 0'
         },
         {
             label: getChartString("chart_consumed_grid_kwh"),
@@ -183,20 +245,18 @@ function createHistoryDetailsChart(canvasId, data) {
             borderColor: COLOR_CONSUMED_FROM_GRID,
             backgroundColor: COLOR_CONSUMED_FROM_GRID,
             borderWidth: 2,
-            stack: 'Stack 1'
+            stack: 'Stack 0'
         }]
     };
 
     for (index = 0; index < data.length; index++) {
-        labels.push(data[index]["date"]); // Element 1 = time
-        chart_data.datasets[0].data.push(data[index]["produced_self"]);
-        chart_data.datasets[1].data.push(data[index]["produced_feed_in"]);
-        chart_data.datasets[2].data.push(data[index]["consumed_from_pv"]);
-        chart_data.datasets[3].data.push(data[index]["consumed_from_grid"]);
+        labels.push(utilBeautifyDate(data[index]["date"])); // Element 1 = time
+        chart_data.datasets[0].data.push(data[index]["consumed_from_pv"]);
+        chart_data.datasets[1].data.push(data[index]["consumed_from_grid"]);
     }
 
-    if (gChartHistoryDetails != null) gChartHistoryDetails.destroy();
-    gChartHistoryDetails = new Chart(canvasId, {
+    if (gChartHistoryDetailsConsumed != null) gChartHistoryDetailsConsumed.destroy();
+    gChartHistoryDetailsConsumed = new Chart(canvasId, {
         type: "bar",
         responsive: true,
         data: chart_data,
