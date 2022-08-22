@@ -15,12 +15,16 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Logo -->
-        <a class="navbar-brand ps-3" href="index.html"><img src="favicon.ico" width="22" height="22"> Sunalyzer</a>
         <!-- Sidebar Toggle -->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+        <button class="btn btn-link order-1 order-lg-0 me-4 me-lg-0 ms-2 me-4" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-        <ul class="navbar-nav">
+
+        <!-- Logo -->
+        <a class="navbar-brand ps-3" href="index.html"><img src="favicon.ico" width="22" height="22">
+            Sunalyzer</a>
+
+        <!-- More settings -->
+        <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_language" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,6 +43,7 @@
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
+
                     <div class="nav">
 
                         <!-- Dashboard -->
@@ -261,7 +266,7 @@
                     </div>
 
                     <div id="row_history_data">
-                        <div class="row ">
+                        <div class="row">
 
                             <!-- Card Production -->
                             <div class="col-xl-4">
@@ -385,7 +390,7 @@
 
                             <!-- Left graph: production -->
                             <div class="col-sm">
-                                <div class="card">
+                                <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-line me-1"></i>
                                         <span id="history_card_graph_production_text">Details</span>
@@ -398,7 +403,7 @@
 
                             <!-- Right graph: consumption -->
                             <div class="col-sm">
-                                <div class="card">
+                                <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-line me-1"></i>
                                         <span id="history_card_graph_consumption_text">Details</span>
