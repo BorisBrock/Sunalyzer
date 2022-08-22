@@ -129,3 +129,4 @@ dmypy.json
 data/db.sqlite
 data/db.sqlite-journal
 grabber/devices/__pycache__
+local_testing/test_data
