@@ -213,7 +213,7 @@ def handle_request():
         elif _type == "years_in_all_time":
             data = get_json_data_history_details("years", "")
             return data
-            
+
     except Exception:
         print("Server: Error:")
         print(traceback.print_exc())

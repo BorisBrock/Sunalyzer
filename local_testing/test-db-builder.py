@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 import sqlite3
 from random import random
 
@@ -169,12 +169,13 @@ def main():
     for i in range(num_days):
         cur_date = cur_date + timedelta(1)
         print(f"Creating data for {cur_date}")
-        create_data(cur_date, cursor) # A
+        create_data(cur_date, cursor)  # A
         update_counters()
-        create_data(cur_date, cursor) # B
+        create_data(cur_date, cursor)  # B
 
     connection.commit()
     connection.close()
+
 
 # Main entry point of the application
 if __name__ == "__main__":
