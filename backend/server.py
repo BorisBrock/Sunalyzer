@@ -35,7 +35,11 @@ def get_file(path):
 # Returns a .csv export from the database
 def get_csv():
     '''Returns a .csv export from the database.'''
+    # Gather parameters
+    _type = request.args['range']
     csv = "Fooooo"
+
+    # Build HTML response
     response = make_response(csv)
     cd = "attachment; filename=fooo.csv"
     response.headers["Content-Disposition"] = cd
