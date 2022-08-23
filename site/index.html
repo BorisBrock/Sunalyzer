@@ -15,12 +15,16 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Logo -->
-        <a class="navbar-brand ps-3" href="index.html"><img src="favicon.ico" width="22" height="22"> Sunalyzer</a>
         <!-- Sidebar Toggle -->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+        <button class="btn btn-link order-0 me-2 ms-2" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-        <ul class="navbar-nav">
+
+        <!-- Logo -->
+        <a class="navbar-brand ps-3" href="index.html"><img src="favicon.ico" width="26" height="26">
+            Sunalyzer</a>
+
+        <!-- More settings -->
+        <ul class="navbar-nav ms-auto pe-4">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_language" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,34 +43,35 @@
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
+
                     <div class="nav">
 
                         <!-- Dashboard -->
                         <div class="sb-sidenav-menu-heading" id="sidebar_headline_overview">Overview</div>
-                        <a class="nav-link" href="javascript:showViewDashboard();">
+                        <a class="nav-link" href="javascript:showViewDashboard();collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-grip"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="javascript:showViewHistory(histories.TODAY);">
+                        <a class="nav-link" href="javascript:showViewHistory(histories.TODAY);collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
                             <div id="sidebar_today">Today</div>
                         </a>
 
                         <!-- History -->
                         <div class="sb-sidenav-menu-heading" id="sidebar_headline_history">History</div>
-                        <a class="nav-link" href="javascript:showViewHistory(histories.DAY);">
+                        <a class="nav-link" href="javascript:showViewHistory(histories.DAY);collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar-day"></i></div>
                             <div id="sidebar_by_day">By Day</div>
                         </a>
-                        <a class="nav-link" href="javascript:showViewHistory(histories.MONTH);">
+                        <a class="nav-link" href="javascript:showViewHistory(histories.MONTH);collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar-days"></i></div>
                             <div id="sidebar_by_month">By Month</div>
                         </a>
-                        <a class="nav-link" href="javascript:showViewHistory(histories.YEAR);">
+                        <a class="nav-link" href="javascript:showViewHistory(histories.YEAR);collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar-week"></i></div>
                             <div id="sidebar_by_year">By Year</div>
                         </a>
-                        <a class="nav-link" href="javascript:showViewHistory(histories.ALL);">
+                        <a class="nav-link" href="javascript:showViewHistory(histories.ALL);collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
                             <div id="sidebar_all_time">All Time</div>
                         </a>
@@ -90,13 +95,12 @@
                                 id="dashboard_subtitle_time">...</span></li>
                     </ol>
 
-                    <div class="row">
+                    <div class="row row-cols-1 row-cols-md-2">
 
                         <!-- Column Current -->
                         <div class="col-xl-4">
                             <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-bolt me-1"></i>
+                                <div class="card-header h5">
                                     <span id="dash_card_current">Current</span>
                                 </div>
                                 <div class="card-body">
@@ -129,8 +133,7 @@
                         <!-- Column Today -->
                         <div class="col-xl-4">
                             <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-calendar-day me-1"></i>
+                                <div class="card-header h5">
                                     <span id="dash_card_today">Today</span>
                                 </div>
                                 <div class="card-body">
@@ -169,8 +172,7 @@
                         <!-- Column All Time -->
                         <div class="col-xl-4">
                             <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-calendar me-1"></i>
+                                <div class="card-header h5">
                                     <span id="dash_card_all_time">All Time</span>
                                 </div>
                                 <div class="card-body">
@@ -208,14 +210,20 @@
 
                     </div>
 
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-chart-line me-1"></i>
-                            <span id="dash_card_24h">All Time</span>
+                    <div class="row row-cols-1">
+
+                        <!-- Dashboard card with 24h graph -->
+                        <div class="col">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="dash_card_24h">All Time</span>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chart_dashboard" height="250"></canvas>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <canvas id="chart_dashboard" height="250"></canvas>
-                        </div>
+
                     </div>
                 </div>
 
@@ -261,13 +269,13 @@
                     </div>
 
                     <div id="row_history_data">
-                        <div class="row ">
+
+                        <div class="row row-cols-1 row-cols-md-2">
 
                             <!-- Card Production -->
                             <div class="col-xl-4">
                                 <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-plug-circle-bolt me-1"></i>
+                                    <div class="card-header h5">
                                         <span id="history_card_usage">Usage of Produced Energy</span>
                                     </div>
                                     <div class="card-body">
@@ -307,8 +315,7 @@
                             <!-- Card Consumption -->
                             <div class="col-xl-4">
                                 <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-lightbulb me-1"></i>
+                                    <div class="card-header h5">
                                         <span id="history_card_consumption">Power Consumption</span>
                                     </div>
                                     <div class="card-body">
@@ -348,8 +355,7 @@
                             <!-- Card Earnings -->
                             <div class="col-xl-4">
                                 <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-sack-dollar me-1"></i>
+                                    <div class="card-header h5">
                                         <span id="history_card_earned">Earnings</span>
                                     </div>
                                     <div class="card-body">
@@ -381,34 +387,34 @@
 
                         </div>
 
-                        <div class="row" id="history_card_graphs">
+                        <div id="history_card_graphs">
+                            <div class="row row-cols-1 row-cols-md-2">
 
-                            <!-- Left graph: production -->
-                            <div class="col-sm">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-line me-1"></i>
-                                        <span id="history_card_graph_production_text">Details</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <canvas id="chart_history_details_production" height="250"></canvas>
+                                <!-- Left graph: production -->
+                                <div class="col-sm">
+                                    <div class="card mb-4">
+                                        <div class="card-header h5">
+                                            <span id="history_card_graph_production_text">Details</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="chart_history_details_production" height="250"></canvas>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Right graph: consumption -->
-                            <div class="col-sm">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-line me-1"></i>
-                                        <span id="history_card_graph_consumption_text">Details</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <canvas id="chart_history_details_consumption" height="250"></canvas>
+                                <!-- Right graph: consumption -->
+                                <div class="col-sm">
+                                    <div class="card mb-4">
+                                        <div class="card-header h5">
+                                            <span id="history_card_graph_consumption_text">Details</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="chart_history_details_consumption" height="250"></canvas>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
 
                     </div>
