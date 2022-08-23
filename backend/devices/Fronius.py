@@ -21,41 +21,67 @@ class Fronius:
         self.total_energy_produced_kwh = 0.0
         self.total_energy_consumed_kwh = 0.0
         self.total_energy_fed_in_kwh = 0.0
-        self.current_power_produced_kw = 0.0
-        self.current_power_consumed_kw = 0.0
+        self.current_power_consumed_from_grid_kw = 0.0
+        self.current_power_consumed_from_pv_kw = 0.0
+        self.current_power_consumed_total_kw = 0.0   
         self.current_power_fed_in_kw = 0.0
 
     def copy_data(self, inverter_data, meter_data):
         '''Copies the results from the API request.'''
         # Inverter data
-        strTotalProduced = inverter_data["Body"]["Data"]["Site"]["E_Total"]
-        totalProduced = float(strTotalProduced)
+        str_total_produced = inverter_data["Body"]["Data"]["Site"]["E_Total"]
+        total_produced = float(str_total_produced)
         # Meter data
-        strTotalConsumedFromGrid = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
-        totalConsumedFromGrid = float(strTotalConsumedFromGrid)
-        strTotalFedIn = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Minus_Absolute"]
-        totalFedIn = float(strTotalFedIn)
+        str_total_consumed_from_grid = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
+        total_consumed_from_grid = float(str_total_consumed_from_grid)
+        str_total_fed_in = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Minus_Absolute"]
+        total_fed_in = float(str_total_fed_in)
         # Compute other values
-        totalSelfConsumption = totalProduced - totalFedIn
-        totalConsumption = totalConsumedFromGrid + totalSelfConsumption
+        total_self_consumption = total_produced - total_fed_in
+        totalConsumption = total_consumed_from_grid + total_self_consumption
 
         # Logging
         if self.verbose_logging:
-            print(f"Fronius device: Current data:\n"
-                  f" - Total produced: {str(totalProduced)}\n"
-                  f" - Total grid consumption: {str(totalConsumedFromGrid)}\n"
-                  f" - Total self consumption: {str(totalSelfConsumption)}\n"
+            print(f"Fronius device: Absolute values:\n"
+                  f" - Total produced: {str(total_produced)}\n"
+                  f" - Total grid consumption: {str(total_consumed_from_grid)}\n"
+                  f" - Total self consumption: {str(total_self_consumption)}\n"
                   f" - Total consumption: {str(totalConsumption)}\n"
-                  f" - Total fed in: {str(totalFedIn)}")
+                  f" - Total fed in: {str(total_fed_in)}")
 
-        # Todo
-        self.total_energy_produced_kwh = totalProduced
+        # Total/absolute values
+        self.total_energy_produced_kwh = total_produced
         self.total_energy_consumed_kwh = totalConsumption
         self.total_energy_fed_in_kwh = totalFedIn
 
-        self.current_power_produced_kw = self.current_power_produced_kw + 1
-        self.current_power_consumed_kw = self.current_power_consumed_kw + 1
-        self.current_power_fed_in_kw = self.current_power_fed_in_kw + 1
+        # Now extract the momentary values
+        str_cur_production = inverter_data["Body"]["Data"]["Site"]["P_PV"]
+        cur_production = float(str_cur_production)
+        str_grid_power = inverter_data["Body"]["Data"]["Site"]["P_Grid"]
+        grid_power = float(str_grid_power)
+        cur_feed_in = grid_power if grid_power > 0.0 else 0.0
+        cur_consumption_from_grid = (-grid_power) if grid_power < 0.0 else 0.0
+        cur_consumption_from_pv = cur_production - cur_feed_in
+        if cur_consumption_from_pv < 0.0:
+            cur_consumption_from_pv = 0.0
+        cur_consumption_total = cur_from_grid + cur_from_pv
+
+        # Logging
+        if self.verbose_logging:
+            print(f"Fronius device: Momentary values:\n"
+                  f" - Current production: {str(cur_production)}\n"
+                  f" - Current feed-in: {str(cur_feed_in)}\n"
+                  f" - Current consumption from grid: {str(cur_consumption_from_grid)}\n"
+                  f" - Current consumption from PV: {str(cur_consumption_from_pv)}\n"
+                  f" - Current total consumption: {str(cur_consumption_total)}")
+
+        # Store results
+        self.current_power_produced_kw = cur_production
+        self.current_power_fed_in_kw = cur_feed_in
+        self.current_power_consumed_from_grid_kw = cur_consumption_from_grid
+        self.current_power_consumed_from_pv_kw = cur_consumption_from_pv
+        self.current_power_consumed_total_kw = cur_consumption_total
+
 
     def update(self):
         '''Updates all device stats.'''
