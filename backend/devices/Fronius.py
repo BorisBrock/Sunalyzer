@@ -23,7 +23,7 @@ class Fronius:
         self.total_energy_fed_in_kwh = 0.0
         self.current_power_consumed_from_grid_kw = 0.0
         self.current_power_consumed_from_pv_kw = 0.0
-        self.current_power_consumed_total_kw = 0.0   
+        self.current_power_consumed_total_kw = 0.0
         self.current_power_fed_in_kw = 0.0
 
     def copy_data(self, inverter_data, meter_data):
@@ -38,7 +38,7 @@ class Fronius:
         total_fed_in = float(str_total_fed_in)
         # Compute other values
         total_self_consumption = total_produced - total_fed_in
-        totalConsumption = total_consumed_from_grid + total_self_consumption
+        total_consumption = total_consumed_from_grid + total_self_consumption
 
         # Logging
         if self.verbose_logging:
@@ -46,13 +46,13 @@ class Fronius:
                   f" - Total produced: {str(total_produced)}\n"
                   f" - Total grid consumption: {str(total_consumed_from_grid)}\n"
                   f" - Total self consumption: {str(total_self_consumption)}\n"
-                  f" - Total consumption: {str(totalConsumption)}\n"
+                  f" - Total consumption: {str(total_consumption)}\n"
                   f" - Total fed in: {str(total_fed_in)}")
 
         # Total/absolute values
         self.total_energy_produced_kwh = total_produced
-        self.total_energy_consumed_kwh = totalConsumption
-        self.total_energy_fed_in_kwh = totalFedIn
+        self.total_energy_consumed_kwh = total_consumption
+        self.total_energy_fed_in_kwh = total_fed_in
 
         # Now extract the momentary values
         str_cur_production = inverter_data["Body"]["Data"]["Site"]["P_PV"]
@@ -64,7 +64,7 @@ class Fronius:
         cur_consumption_from_pv = cur_production - cur_feed_in
         if cur_consumption_from_pv < 0.0:
             cur_consumption_from_pv = 0.0
-        cur_consumption_total = cur_from_grid + cur_from_pv
+        cur_consumption_total = cur_consumption_from_grid + cur_consumption_from_pv
 
         # Logging
         if self.verbose_logging:
@@ -81,7 +81,6 @@ class Fronius:
         self.current_power_consumed_from_grid_kw = cur_consumption_from_grid
         self.current_power_consumed_from_pv_kw = cur_consumption_from_pv
         self.current_power_consumed_total_kw = cur_consumption_total
-
 
     def update(self):
         '''Updates all device stats.'''
