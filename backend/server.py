@@ -1,7 +1,7 @@
 import json
 from datetime import date
 import traceback
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, make_response
 
 # Project imports
 from config import Config
@@ -29,6 +29,18 @@ def get_index():
 def get_file(path):
     '''Serves all other static files.'''
     return send_from_directory("../site", path)
+
+
+@app.route('/csv')
+# Returns a .csv export from the database
+def get_csv():
+    '''Returns a .csv export from the database.'''
+    csv = "Fooooo"
+    response = make_response(csv)
+    cd = "attachment; filename=fooo.csv"
+    response.headers["Content-Disposition"] = cd
+    response.mimetype = "text/csv"
+    return response
 
 
 # Returns JSON response containing current data
