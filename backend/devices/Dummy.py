@@ -2,9 +2,9 @@
 class Dummy:
     def __init__(self, config):
         # Demo code for config access
-        print(f"""Dummy device: config test -
-            foo={config.config_data['dummy']['foo']}
-            bar={config.config_data['dummy']['bar']}""")
+        # print(f"""Dummy device: config test -
+        #    foo={config.config_data['dummy']['foo']}
+        #    bar={config.config_data['dummy']['bar']}""")
 
         # Initialize with some random values
         self.total_energy_produced_kwh = 44000.0
@@ -24,8 +24,8 @@ class Dummy:
         self.total_energy_consumed_kwh = self.total_energy_consumed_kwh + 1
         self.total_energy_fed_in_kwh = self.total_energy_fed_in_kwh + 1
 
-        #self.current_power_produced_kw = self.current_power_produced_kw
-        #self.current_power_consumed_from_grid_kw = self.current_power_consumed_from_grid_kw
-        #self.current_power_consumed_from_pv_kw = self.current_power_consumed_from_pv_kw
-        #self.current_power_consumed_total_kw = self.current_power_consumed_total_kw
-        #self.current_power_fed_in_kw = self.current_power_fed_in_kw
+        # self.current_power_produced_kw = self.current_power_produced_kw
+        # self.current_power_consumed_from_grid_kw = self.current_power_consumed_from_grid_kw
+        # self.current_power_consumed_from_pv_kw = self.current_power_consumed_from_pv_kw
+        # self.current_power_consumed_total_kw = self.current_power_consumed_total_kw
+        # self.current_power_fed_in_kw = self.current_power_fed_in_kw

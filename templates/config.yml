@@ -19,8 +19,9 @@ prices:
   price_per_grid_kwh:     0.325  # Price for 1 kWh from the grid
   revenue_per_fed_in_kwh: 0.085  # Revenue for one fed in kWh
 
-# Device specific settings
-# These depend on the selected device adapter
-dummy:
-  foo:    42    # Just some dummy settings data
-  bar:    23    # Just some dummy settings data
+
+# Device specific settings. These depend on the selected device adapter
+
+# Enable if you want to use Fronius hardware
+#fonius:
+#  host_name: 192.168.178.200  # Host name/IP address of the Fronius end point
