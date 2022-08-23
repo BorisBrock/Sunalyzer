@@ -178,7 +178,7 @@ function createHistoryDetailsChartProduction(canvasId, data) {
             data: [],
             borderColor: COLOR_PRODUCTION_SELF_CONSUMED,
             backgroundColor: COLOR_PRODUCTION_SELF_CONSUMED,
-            borderWidth: 2,
+            borderWidth: 0,
             stack: 'Stack 0'
         },
         {
@@ -186,7 +186,7 @@ function createHistoryDetailsChartProduction(canvasId, data) {
             data: [],
             borderColor: COLOR_PRODUCTION_FED_IN,
             backgroundColor: COLOR_PRODUCTION_FED_IN,
-            borderWidth: 2,
+            borderWidth: 0,
             stack: 'Stack 0'
         }]
     };
@@ -236,7 +236,7 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
             data: [],
             borderColor: COLOR_CONSUMED_FROM_PV,
             backgroundColor: COLOR_CONSUMED_FROM_PV,
-            borderWidth: 2,
+            borderWidth: 0,
             stack: 'Stack 0'
         },
         {
@@ -244,7 +244,7 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
             data: [],
             borderColor: COLOR_CONSUMED_FROM_GRID,
             backgroundColor: COLOR_CONSUMED_FROM_GRID,
-            borderWidth: 2,
+            borderWidth: 0,
             stack: 'Stack 0'
         }]
     };
