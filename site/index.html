@@ -95,7 +95,7 @@
                                 id="dashboard_subtitle_time">...</span></li>
                     </ol>
 
-                    <div class="row">
+                    <div class="row row-cols-1 row-cols-md-2">
 
                         <!-- Column Current -->
                         <div class="col-xl-4">
@@ -210,14 +210,20 @@
 
                     </div>
 
-                     <!-- Dashboard card with 24h graph -->
-                    <div class="card mb-4">
-                        <div class="card-header h5">
-                            <span id="dash_card_24h">All Time</span>
+                    <div class="row row-cols-1">
+
+                        <!-- Dashboard card with 24h graph -->
+                        <div class="col">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="dash_card_24h">All Time</span>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chart_dashboard" height="250"></canvas>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <canvas id="chart_dashboard" height="250"></canvas>
-                        </div>
+
                     </div>
                 </div>
 
@@ -263,7 +269,7 @@
                     </div>
 
                     <div id="row_history_data">
-                        
+
                         <div class="row">
 
                             <!-- Card Production -->
