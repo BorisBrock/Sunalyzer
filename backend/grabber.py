@@ -3,6 +3,7 @@ import time
 import importlib
 from os.path import exists
 from datetime import date, datetime
+import traceback
 
 # Project imports
 from config import Config
@@ -173,6 +174,7 @@ def main():
         device = load_device_plugin(device_name)
     except Exception:
         print("Grabber: Error: creating the device adapter failed")
+        print(traceback.print_exc())
         exit()
 
     # Prepare the data base
@@ -189,7 +191,13 @@ def main():
             print(f"Grabber: {time_string}: Updating device data")
 
         # Download new data from the actual PV device
-        device.update()
+        try:
+            device.update()
+        except Exception:
+            print("Grabber: Error: updting data from device failed")
+            print(traceback.print_exc())
+            time.sleep(config.config_data['grabber']['interval_s'])
+            continue
 
         # Open connection to data base
         db = Database("data/db.sqlite")

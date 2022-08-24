@@ -1,4 +1,4 @@
-# import json
+import traceback
 import requests
 
 
@@ -17,7 +17,7 @@ class Fronius:
         self.url_meter = (
             f"http://{self.host_name}/solar_api/v1/GetMeterRealtimeData.cgi?Scope=System")
 
-        # Initialize with values
+        # Initialize with default values
         self.total_energy_produced_kwh = 0.0
         self.total_energy_consumed_kwh = 0.0
         self.total_energy_fed_in_kwh = 0.0
@@ -25,6 +25,14 @@ class Fronius:
         self.current_power_consumed_from_pv_kw = 0.0
         self.current_power_consumed_total_kw = 0.0
         self.current_power_fed_in_kw = 0.0
+
+        # Test connection by doing an initial update
+        try:
+            self.update()
+        except Exception:
+            print("Fronius device: Error: connecting to the device failed")
+            print(traceback.print_exc())
+            raise
 
     def copy_data(self, inverter_data, meter_data):
         '''Copies the results from the API request.'''
@@ -86,14 +94,16 @@ class Fronius:
         '''Updates all device stats.'''
         try:
             # Query inverter data
-            r_inverter = requests.get(self.url_inverter, timeout=10)
+            r_inverter = requests.get(self.url_inverter, timeout=2)
             r_inverter.raise_for_status()
             # Query smart meter data
-            r_meter = requests.get(self.url_meter, timeout=10)
+            r_meter = requests.get(self.url_meter, timeout=2)
             r_meter.raise_for_status()
             # Extract and process relevant data
             self.copy_data(r_inverter.json(), r_meter.json())
         except requests.exceptions.Timeout:
             print(f"Fronius device: Timeout requesting {self.url}")
+            raise
         except requests.exceptions.RequestException as e:
             print(f"Fronius device: requests exception {e} for URL {self.url}")
+            raise
