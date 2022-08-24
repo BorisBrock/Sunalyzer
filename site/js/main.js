@@ -307,26 +307,66 @@ function updateCsvDateSelector() {
         setElementVisible("csv_selection_year", true);
         setElementVisible("csv_selection_month", true);
         setElementVisible("csv_selection_day", true);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", false);
+        setElementEnabled("csv_res_rad_year", false);
+
+        if (isElementChecked("csv_res_rad_month") || isElementChecked("csv_res_rad_year"))
+            setElementChecked("csv_res_rad_day", true);
     }
     else if (document.getElementById("csv_range_rad_month").checked == true) {
         setElementVisible("csv_selection_year", true);
         setElementVisible("csv_selection_month", true);
         setElementVisible("csv_selection_day", false);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", false);
+        setElementEnabled("csv_res_rad_year", false);
+
+        if (isElementChecked("csv_res_rad_month") || isElementChecked("csv_res_rad_year"))
+            setElementChecked("csv_res_rad_day", true);
     }
     else if (document.getElementById("csv_range_rad_year").checked == true) {
         setElementVisible("csv_selection_year", true);
         setElementVisible("csv_selection_month", false);
         setElementVisible("csv_selection_day", false);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", true);
+        setElementEnabled("csv_res_rad_year", false);
+
+        if (isElementChecked("csv_res_rad_year"))
+            setElementChecked("csv_res_rad_month", true);
     }
     else {
         setElementVisible("csv_selection_year", false);
         setElementVisible("csv_selection_month", false);
         setElementVisible("csv_selection_day", false);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", true);
+        setElementEnabled("csv_res_rad_year", true);
     }
 }
 
 function setElementVisible(name, visible) {
     document.getElementById(name).style.display = visible ? 'block' : 'none';
+}
+
+function setElementEnabled(name, enabled) {
+    if (enabled)
+        document.getElementById(name).removeAttribute("disabled");
+    else
+        document.getElementById(name).setAttribute("disabled", "");
+}
+
+function isElementChecked(name) {
+    return document.getElementById(name).checked;
+}
+
+function setElementChecked(name, checked) {
+    document.getElementById(name).checked = checked;
 }
 
 function addSelectionItem(control, name, value) {
