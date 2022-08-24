@@ -91,12 +91,14 @@ function initSelectionBoxes() {
     // Days: numbers 1 to 31
     for (let i = 1; i <= 31; i++) {
         addSelectionItem("selection_day2", i.toString(), i.toString());
+        addSelectionItem("csv_selection_day2", i.toString(), i.toString());
     }
     // Years: query from DB
     fetchDatesJSON().then(dates => {
         //console.log(stats);
         for (let i = dates["year_min"]; i <= dates["year_max"]; i++) {
             addSelectionItem("selection_year2", i.toString(), i.toString());
+            addSelectionItem("csv_selection_year2", i.toString(), i.toString());
         }
         // Initial selection
         selectDateToday();
@@ -104,9 +106,14 @@ function initSelectionBoxes() {
 }
 
 function selectDateToday() {
+    // Combo boxes 1
     document.getElementById('selection_year2').value = new Date().getFullYear();
     document.getElementById('selection_month2').value = new Date().getMonth() + 1;
     document.getElementById('selection_day2').value = new Date().getDate();
+    // Combo boxes 2
+    document.getElementById('csv_selection_year2').value = new Date().getFullYear();
+    document.getElementById('csv_selection_month2').value = new Date().getMonth() + 1;
+    document.getElementById('csv_selection_day2').value = new Date().getDate();
 }
 
 // Async function to get the important dates
