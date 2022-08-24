@@ -29,6 +29,7 @@ window.addEventListener('DOMContentLoaded', event => {
     updateCurrentStats();
     updateRealTimeGraph();
     initSelectionBoxes();
+    updateCsvDateSelector();
     setVersion();
 });
 
@@ -165,8 +166,8 @@ function updateHistoryStats() {
     });
 
     // Also update the details graph
-    if(gCurHistory == histories.MONTH || gCurHistory == histories.YEAR || gCurHistory == histories.ALL)
-    updateHistoryDetailsGraphs();
+    if (gCurHistory == histories.MONTH || gCurHistory == histories.YEAR || gCurHistory == histories.ALL)
+        updateHistoryDetailsGraphs();
 }
 
 // Async function to get the current stats
@@ -299,6 +300,29 @@ function showViewCsv() {
     setElementVisible("view_history", false);
     setElementVisible("view_csv", true);
     gDashboardVisible = false;
+}
+
+function updateCsvDateSelector() {
+    if (document.getElementById("csv_range_rad_day").checked == true) {
+        setElementVisible("csv_selection_year", true);
+        setElementVisible("csv_selection_month", true);
+        setElementVisible("csv_selection_day", true);
+    }
+    else if (document.getElementById("csv_range_rad_month").checked == true) {
+        setElementVisible("csv_selection_year", true);
+        setElementVisible("csv_selection_month", true);
+        setElementVisible("csv_selection_day", false);
+    }
+    else if (document.getElementById("csv_range_rad_year").checked == true) {
+        setElementVisible("csv_selection_year", true);
+        setElementVisible("csv_selection_month", false);
+        setElementVisible("csv_selection_day", false);
+    }
+    else {
+        setElementVisible("csv_selection_year", false);
+        setElementVisible("csv_selection_month", false);
+        setElementVisible("csv_selection_day", false);
+    }
 }
 
 function setElementVisible(name, visible) {
