@@ -56,6 +56,9 @@ let translations = [
     ["history_text_consumption_total", "Total consumption", "Gesamtverbrauch"],
     ["history_card_graph_production_text", "Production Details", "Zeitverlauf der Erzeugung"],
     ["history_card_graph_consumption_text", "Consumption Details", "Zeitverlauf des Verbrauchs"],
+    ["history_card_autarky", "Autarky", "Autarkie"],
+    ["history_text_autarky", "Achieved autarky", "Erreichte Autarkie"],
+    
 
     // Months combo box
     ["cbx_month_1", "January", "Januar"],

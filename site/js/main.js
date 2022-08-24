@@ -139,6 +139,8 @@ function updateHistoryStats() {
             document.getElementById("history_stat_earned_self").innerHTML = numFormat(stats["earned_savings"], 2);
             document.getElementById("history_stat_earned_total").innerHTML = numFormat(stats["earned_total"], 2);
 
+            document.getElementById("history_stat_autarky").innerHTML = numFormat(stats["autarky"], 0);
+
             // Create the consumption doughnut chart
             createConsumptionChart(
                 "chart_consumption",

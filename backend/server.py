@@ -170,6 +170,7 @@ def get_json_data_history(table, search_date):
         "earned_feedin": earned,
         "earned_savings": saved,
         "earned_total": (earned+saved),
+        "autarky": usage_self_consumed_rel
     }
     return json.dumps(data)
 
