@@ -18,6 +18,8 @@ let translations = [
     ["sidebar_by_month", "By Month", "Nach Monat"],
     ["sidebar_by_year", "By Year", "Nach Jahr"],
     ["sidebar_all_time", "All Time", "Gesamt"],
+    ["sidebar_headline_misc", "Misc", "Sonstiges"], 
+    ["sidebar_csv", "CSV Download", "CSV-Download"], 
 
     // Dashboard
     ["dashboard_subtitle", "Last updated: ", "Letzte Aktualisierung: "],
@@ -56,6 +58,9 @@ let translations = [
     ["history_text_consumption_total", "Total consumption", "Gesamtverbrauch"],
     ["history_card_graph_production_text", "Production Details", "Zeitverlauf der Erzeugung"],
     ["history_card_graph_consumption_text", "Consumption Details", "Zeitverlauf des Verbrauchs"],
+
+    // CSV download
+    ["csv_subtitle", "Download .csv reports ", "Report-Dateien im .csv-Format herunterladen"], 
 
     // Months combo box
     ["cbx_month_1", "January", "Januar"],

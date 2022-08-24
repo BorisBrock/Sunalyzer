@@ -233,12 +233,14 @@ async function fetchHistoryDetailsJSON() {
 function showViewDashboard() {
     setElementVisible("view_dashboard", true);
     setElementVisible("view_history", false);
+    etElementVisible("view_csv", false);
     gDashboardVisible = true;
 }
 
 function showViewHistory(mode) {
     setElementVisible("view_dashboard", false);
     setElementVisible("view_history", true);
+    etElementVisible("view_csv", false);
     gDashboardVisible = false;
     gCurHistory = mode;
 
@@ -283,6 +285,13 @@ function showViewHistory(mode) {
             break;
     }
     updateHistoryStats();
+}
+
+function showViewCsv() {
+    setElementVisible("view_dashboard", false);
+    setElementVisible("view_history", false);
+    setElementVisible("view_csv", true);
+    gDashboardVisible = false;
 }
 
 function setElementVisible(name, visible) {

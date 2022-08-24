@@ -16,8 +16,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Sidebar Toggle -->
-        <button class="btn btn-link order-0 me-2 ms-2" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link order-0 me-2 ms-2" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 
         <!-- Logo -->
         <a class="navbar-brand ps-3" href="index.html"><img src="favicon.ico" width="26" height="26">
@@ -74,6 +73,13 @@
                         <a class="nav-link" href="javascript:showViewHistory(histories.ALL);collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
                             <div id="sidebar_all_time">All Time</div>
+                        </a>
+
+                        <!-- Misc -->
+                        <div class="sb-sidenav-menu-heading" id="sidebar_headline_misc">History</div>
+                        <a class="nav-link" href="javascript:showViewCsv();collapseSidebar();">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-csv"></i></div>
+                            <div id="sidebar_csv">CSV Download</div>
                         </a>
                     </div>
                 </div>
@@ -428,6 +434,105 @@
                     </div>
 
                 </div>
+
+                <!-- CSV Download View -->
+                <div class="container-fluid px-4" id="view_csv">
+                    <h1 class="mt-4">CSV Download</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active"><span id="csv_subtitle">...</span></li>
+                    </ol>
+
+
+                    <div class="container">
+
+                        <div class="row pt-5">
+                            <div class="col-md-2">
+                                <label class="fs-4">Time range:</label>
+                            </div>
+                            <div class="col-md">
+                                <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"
+                                    checked>
+                                <label class="btn btn-outline-primary" for="option1">One day</label>
+
+                                <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="option2">One month</label>
+
+                                <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off"
+                                    disabled>
+                                <label class="btn btn-outline-primary" for="option3">One year</label>
+
+                                <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="option4">All time</label>
+                            </div>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md">
+                                <div class="d-flex flex-row">
+                                    <!-- Year -->
+                                    <div id="selection_year">
+                                        <select class="form-select" aria-label="Default select example"
+                                            id="selection_year2" onchange="updateHistoryStats();">
+                                        </select>
+                                    </div>
+                                    <!-- Month -->
+                                    <div id="selection_month">
+                                        <select class="form-select" aria-label="Default select example"
+                                            id="selection_month2" onchange="updateHistoryStats();">
+                                            <option value="1" id="cbx_month_1">January</option>
+                                            <option value="2" id="cbx_month_2">February</option>
+                                            <option value="3" id="cbx_month_3">March</option>
+                                            <option value="4" id="cbx_month_4">April</option>
+                                            <option value="5" id="cbx_month_5">May</option>
+                                            <option value="6" id="cbx_month_6">June</option>
+                                            <option value="7" id="cbx_month_7">July</option>
+                                            <option value="8" id="cbx_month_8">August</option>
+                                            <option value="9" id="cbx_month_9">September</option>
+                                            <option value="10" id="cbx_month_10">October</option>
+                                            <option value="11" id="cbx_month_11">November</option>
+                                            <option value="12" id="cbx_month_12">December</option>
+                                        </select>
+                                    </div>
+                                    <!-- Day -->
+                                    <div id="selection_day">
+                                        <select class="form-select" aria-label="Default select example"
+                                            id="selection_day2" onchange="updateHistoryStats();">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-4">
+                            <div class="col-md-2">
+                                <label class="fs-4">Resolution:</label>
+                            </div>
+                            <div class="col-md">
+                                <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"
+                                    checked>
+                                <label class="btn btn-outline-primary" for="option1">Single days</label>
+
+                                <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="option2">Summed up by month</label>
+
+                                <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off"
+                                    disabled>
+                                <label class="btn btn-outline-primary" for="option3">Summed up by year</label>
+                            </div>
+                        </div>
+
+                        <div class="row pt-5">
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success btn-lg"><i
+                                        class="fas fa-download me-2"></i>Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </main>
         </div>
     </div>
