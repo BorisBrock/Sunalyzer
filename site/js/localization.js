@@ -61,8 +61,8 @@ let translations = [
 
     // CSV download
     ["csv_subtitle", "Download .csv reports ", "Report-Dateien im .csv-Format herunterladen"],
-    ["csv_label_time_range", "Time range:", "Zeitbereich:"],
-    ["csv_label_resolution", "Resolution:", "Genauigkeit:"],
+    ["csv_label_time_range", "Time range:", "Zeitraum:"],
+    ["csv_label_resolution", "Resolution:", "Granularität:"],
     ["csv_range_rad_lbl_day", "A single day", "Ein Tag"],
     ["csv_range_rad_lbl_month", "A month", "Ein Monat"],
     ["csv_range_rad_lbl_year", "A year", "Ein jahr"],
