@@ -53,32 +53,39 @@ def get_file(path):
 # Returns a .csv export from the database
 def get_csv():
     '''Returns a .csv export from the database.'''
-    # Gather parameters
-    _table = request.args['table']
-    _date = request.args.get('date', "")
+    try:
+        # Gather parameters
+        _table = request.args['table']
+        _date = request.args.get('date', "")
 
-    # Gather CSV contents
-    rows = None
-    db = Database("data/db.sqlite")
+        # Gather CSV contents
+        rows = None
+        db = Database("data/db.sqlite")
 
-    # Build and execute query
-    query = f"SELECT * FROM {_table}"
-    if len(_date) > 0:
-        query += f" WHERE date LIKE '{_date}%'"
-        rows = db.execute(query)
+        # Build and execute query
+        query = f"SELECT * FROM {_table}"
+        if len(_date) > 0:
+            query += f" WHERE date LIKE '{_date}%'"
+            rows = db.execute(query)
 
-    # Build file name
-    file_name = (f"Sunalyzer_{_date}.csv") if len(_date) > 0 else "Sunalyzer_All.csv"
+        # Build file name
+        file_name = (f"Sunalyzer_{_date}.csv") if len(_date) > 0 else "Sunalyzer_All.csv"
 
-    # Convert rows to CSV
-    csv = rows_to_csv(rows)
+        # Convert rows to CSV
+        csv = rows_to_csv(rows)
 
-    # Build HTML response
-    response = make_response(csv)
-    cd = f"attachment; filename={file_name}"
-    response.headers["Content-Disposition"] = cd
-    response.mimetype = "text/csv"
-    return response
+        # Build HTML response
+        response = make_response(csv)
+        cd = f"attachment; filename={file_name}"
+        response.headers["Content-Disposition"] = cd
+        response.mimetype = "text/csv"
+        return response
+
+    except Exception:
+        print("Server: Bad CSV request:")
+        print(traceback.print_exc())
+        data = {"state": "error"}
+        return json.dumps(data), 404
 
 
 # Returns JSON response containing current data

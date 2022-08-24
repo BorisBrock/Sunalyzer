@@ -480,13 +480,13 @@
                                     <!-- Year -->
                                     <div id="csv_selection_year">
                                         <select class="form-select" aria-label="Default select example"
-                                            id="csv_selection_year2" onchange="updateHistoryStats();">
+                                            id="csv_selection_year2">
                                         </select>
                                     </div>
                                     <!-- Month -->
                                     <div id="csv_selection_month">
                                         <select class="form-select" aria-label="Default select example"
-                                            id="csv_selection_month2" onchange="updateHistoryStats();">
+                                            id="csv_selection_month2">
                                             <option value="1" id="csv_cbx_month_1">January</option>
                                             <option value="2" id="csv_cbx_month_2">February</option>
                                             <option value="3" id="csv_cbx_month_3">March</option>
@@ -504,7 +504,7 @@
                                     <!-- Day -->
                                     <div id="csv_selection_day">
                                         <select class="form-select" aria-label="Default select example"
-                                            id="csv_selection_day2" onchange="updateHistoryStats();">
+                                            id="csv_selection_day2">
                                         </select>
                                     </div>
                                 </div>
@@ -536,7 +536,7 @@
 
                         <div class="row pt-5">
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-success btn-lg"><i
+                                <button type="button" class="btn btn-success btn-lg" onclick="downloadCsv();"><i
                                         class="fas fa-download me-2"></i>Download</button>
                             </div>
                         </div>
@@ -551,6 +551,7 @@
     <script src="js/version.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/localization.js"></script>
+    <script src="js/csv.js"></script>
     <script src="lib/chart.min.js" crossorigin="anonymous"></script>
     <script src="lib/chartjs-plugin-labels.min.js"></script>
     <script src="js/chart_factory.js"></script>
