@@ -29,19 +29,19 @@ let translations = [
     ["dash_card_all_time", "All Time", "Allzeit-Werte"],
     ["dash_card_24h", "Last 24 Hours", "Die letzten 24 Stunden"],
 
-    ["dash_text_currently_produced", "Produced", "Erzeugung"],
-    ["dash_text_currently_consumed", "Consumed", "Vebrauch"],
-    ["dash_text_currently_fed_in", "Fed in", "Einspeisung"],
+    ["dash_text_currently_produced", "Currently produced", "Aktuell erzeugt"],
+    ["dash_text_currently_consumed", "Currently consumed", "Aktuell verbraucht"],
+    ["dash_text_currently_fed_in", "Currently fed in", "Aktuell eingespeist"],
 
-    ["dash_text_today_produced", "Produced", "Erzeugt"],
-    ["dash_text_today_consumed", "Consumed", "Vebraucht"],
-    ["dash_text_today_fed_in", "Fed in", "Eingespeist"],
-    ["dash_text_today_earned", "Earned", "Verdient"],
+    ["dash_text_today_produced", "Produced today", "Heute erzeugt"],
+    ["dash_text_today_consumed", "Consumed today", "Heute vebraucht"],
+    ["dash_text_today_fed_in", "Fed in today", "Heute eingespeist"],
+    ["dash_text_today_earned", "Earned today", "Heute verdient"],
 
-    ["dash_text_all_time_produced", "Produced", "Erzeugt"],
-    ["dash_text_all_time_consumed", "Consumed", "Vebraucht"],
-    ["dash_text_all_time_fed_in", "Fed in", "Eingespeist"],
-    ["dash_text_all_time_earned", "Earned", "Verdient"],
+    ["dash_text_all_time_produced", "Produced in total", "Insgesamt erzeugt"],
+    ["dash_text_all_time_consumed", "Consumed in total", "Insgesamt vebraucht"],
+    ["dash_text_all_time_fed_in", "Fed in total", "Insgesamt eingespeist"],
+    ["dash_text_all_time_earned", "Earned in total", "Insgesamt verdient"],
 
     // History
     ["history_card_earned", "Earnings", "Einnahmen"],
