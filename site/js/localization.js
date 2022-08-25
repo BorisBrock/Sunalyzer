@@ -18,6 +18,8 @@ let translations = [
     ["sidebar_by_month", "By Month", "Nach Monat"],
     ["sidebar_by_year", "By Year", "Nach Jahr"],
     ["sidebar_all_time", "All Time", "Gesamt"],
+    ["sidebar_headline_misc", "Misc", "Sonstiges"],
+    ["sidebar_csv", "CSV Download", "CSV-Download"],
 
     // Dashboard
     ["dashboard_subtitle", "Last updated: ", "Letzte Aktualisierung: "],
@@ -60,6 +62,18 @@ let translations = [
     ["history_text_autarky", "Achieved autarky", "Erreichte Autarkie"],
     
 
+    // CSV download
+    ["csv_subtitle", "Download .csv reports ", "Report-Dateien im .csv-Format herunterladen"],
+    ["csv_label_time_range", "Time range:", "Zeitraum:"],
+    ["csv_label_resolution", "Resolution:", "Granularität:"],
+    ["csv_range_rad_lbl_day", "A single day", "Ein Tag"],
+    ["csv_range_rad_lbl_month", "A month", "Ein Monat"],
+    ["csv_range_rad_lbl_year", "A year", "Ein jahr"],
+    ["csv_range_rad_lbl_all", "All time", "Alles"],
+    ["csv_res_rad_lbl_day", "Single days", "Einzelne Tage"],
+    ["csv_res_rad_lbl_month", "Summed up by months", "Auf Monate summiert"],
+    ["csv_res_rad_lbl_year", "Summed up by years", "Auf Jahre summiert"],
+
     // Months combo box
     ["cbx_month_1", "January", "Januar"],
     ["cbx_month_2", "February", "Februar"],
@@ -73,6 +87,20 @@ let translations = [
     ["cbx_month_10", "October", "Oktober"],
     ["cbx_month_11", "November", "November"],
     ["cbx_month_12", "December", "Dezember"],
+
+    // Months combo box
+    ["csv_cbx_month_1", "January", "Januar"],
+    ["csv_cbx_month_2", "February", "Februar"],
+    ["csv_cbx_month_3", "March", "März"],
+    ["csv_cbx_month_4", "April", "April"],
+    ["csv_cbx_month_5", "May", "Mai"],
+    ["csv_cbx_month_6", "June", "Juni"],
+    ["csv_cbx_month_7", "July", "Juli"],
+    ["csv_cbx_month_8", "August", "August"],
+    ["csv_cbx_month_9", "September", "September"],
+    ["csv_cbx_month_10", "October", "Oktober"],
+    ["csv_cbx_month_11", "November", "November"],
+    ["csv_cbx_month_12", "December", "Dezember"],
 
     // Info
     ["info_no_data", "No data is available for the selected time span.", "Für den gewählten Zeitraum liegen keine Daten vor."],

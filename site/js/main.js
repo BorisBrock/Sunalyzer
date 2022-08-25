@@ -29,6 +29,7 @@ window.addEventListener('DOMContentLoaded', event => {
     updateCurrentStats();
     updateRealTimeGraph();
     initSelectionBoxes();
+    updateCsvDateSelector();
     setVersion();
 });
 
@@ -91,12 +92,14 @@ function initSelectionBoxes() {
     // Days: numbers 1 to 31
     for (let i = 1; i <= 31; i++) {
         addSelectionItem("selection_day2", i.toString(), i.toString());
+        addSelectionItem("csv_selection_day2", i.toString(), i.toString());
     }
     // Years: query from DB
     fetchDatesJSON().then(dates => {
         //console.log(stats);
         for (let i = dates["year_min"]; i <= dates["year_max"]; i++) {
             addSelectionItem("selection_year2", i.toString(), i.toString());
+            addSelectionItem("csv_selection_year2", i.toString(), i.toString());
         }
         // Initial selection
         selectDateToday();
@@ -104,9 +107,14 @@ function initSelectionBoxes() {
 }
 
 function selectDateToday() {
+    // Combo boxes 1
     document.getElementById('selection_year2').value = new Date().getFullYear();
     document.getElementById('selection_month2').value = new Date().getMonth() + 1;
     document.getElementById('selection_day2').value = new Date().getDate();
+    // Combo boxes 2
+    document.getElementById('csv_selection_year2').value = new Date().getFullYear();
+    document.getElementById('csv_selection_month2').value = new Date().getMonth() + 1;
+    document.getElementById('csv_selection_day2').value = new Date().getDate();
 }
 
 // Async function to get the important dates
@@ -160,8 +168,8 @@ function updateHistoryStats() {
     });
 
     // Also update the details graph
-    if(gCurHistory == histories.MONTH || gCurHistory == histories.YEAR || gCurHistory == histories.ALL)
-    updateHistoryDetailsGraphs();
+    if (gCurHistory == histories.MONTH || gCurHistory == histories.YEAR || gCurHistory == histories.ALL)
+        updateHistoryDetailsGraphs();
 }
 
 // Async function to get the current stats
@@ -235,12 +243,14 @@ async function fetchHistoryDetailsJSON() {
 function showViewDashboard() {
     setElementVisible("view_dashboard", true);
     setElementVisible("view_history", false);
+    setElementVisible("view_csv", false);
     gDashboardVisible = true;
 }
 
 function showViewHistory(mode) {
     setElementVisible("view_dashboard", false);
     setElementVisible("view_history", true);
+    setElementVisible("view_csv", false);
     gDashboardVisible = false;
     gCurHistory = mode;
 
@@ -287,8 +297,78 @@ function showViewHistory(mode) {
     updateHistoryStats();
 }
 
+function showViewCsv() {
+    setElementVisible("view_dashboard", false);
+    setElementVisible("view_history", false);
+    setElementVisible("view_csv", true);
+    gDashboardVisible = false;
+}
+
+function updateCsvDateSelector() {
+    if (document.getElementById("csv_range_rad_day").checked == true) {
+        setElementVisible("csv_selection_year", true);
+        setElementVisible("csv_selection_month", true);
+        setElementVisible("csv_selection_day", true);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", false);
+        setElementEnabled("csv_res_rad_year", false);
+
+        if (isElementChecked("csv_res_rad_month") || isElementChecked("csv_res_rad_year"))
+            setElementChecked("csv_res_rad_day", true);
+    }
+    else if (document.getElementById("csv_range_rad_month").checked == true) {
+        setElementVisible("csv_selection_year", true);
+        setElementVisible("csv_selection_month", true);
+        setElementVisible("csv_selection_day", false);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", false);
+        setElementEnabled("csv_res_rad_year", false);
+
+        if (isElementChecked("csv_res_rad_month") || isElementChecked("csv_res_rad_year"))
+            setElementChecked("csv_res_rad_day", true);
+    }
+    else if (document.getElementById("csv_range_rad_year").checked == true) {
+        setElementVisible("csv_selection_year", true);
+        setElementVisible("csv_selection_month", false);
+        setElementVisible("csv_selection_day", false);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", true);
+        setElementEnabled("csv_res_rad_year", false);
+
+        if (isElementChecked("csv_res_rad_year"))
+            setElementChecked("csv_res_rad_month", true);
+    }
+    else {
+        setElementVisible("csv_selection_year", false);
+        setElementVisible("csv_selection_month", false);
+        setElementVisible("csv_selection_day", false);
+
+        setElementEnabled("csv_res_rad_day", true);
+        setElementEnabled("csv_res_rad_month", true);
+        setElementEnabled("csv_res_rad_year", true);
+    }
+}
+
 function setElementVisible(name, visible) {
     document.getElementById(name).style.display = visible ? 'block' : 'none';
+}
+
+function setElementEnabled(name, enabled) {
+    if (enabled)
+        document.getElementById(name).removeAttribute("disabled");
+    else
+        document.getElementById(name).setAttribute("disabled", "");
+}
+
+function isElementChecked(name) {
+    return document.getElementById(name).checked;
+}
+
+function setElementChecked(name, checked) {
+    document.getElementById(name).checked = checked;
 }
 
 function addSelectionItem(control, name, value) {

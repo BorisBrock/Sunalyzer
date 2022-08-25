@@ -1,7 +1,7 @@
 import json
 from datetime import date
 import traceback
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, make_response
 
 # Project imports
 from config import Config
@@ -17,6 +17,24 @@ config = None
 app = Flask(__name__)
 
 
+# Converts the given rows to a CSV string
+def rows_to_csv(rows):
+    '''Converts the given rows to a CSV string.'''
+    # Header
+    csv = "date;production;consumption;feed_in\n"
+    # Data
+    for row in rows:
+        csv += row[0]  # Date
+        csv += ";"
+        csv += str(row[2] - row[1])  # Production
+        csv += ";"
+        csv += str(row[4] - row[3])  # Consumption
+        csv += ";"
+        csv += str(row[6] - row[5])  # Feed-in
+        csv += "\n"
+    return csv
+
+
 @app.route('/')
 # Serves the index.html
 def get_index():
@@ -29,6 +47,45 @@ def get_index():
 def get_file(path):
     '''Serves all other static files.'''
     return send_from_directory("../site", path)
+
+
+@app.route('/csv')
+# Returns a .csv export from the database
+def get_csv():
+    '''Returns a .csv export from the database.'''
+    try:
+        # Gather parameters
+        _table = request.args['table']
+        _date = request.args.get('date', "")
+
+        # Gather CSV contents
+        rows = None
+        db = Database("data/db.sqlite")
+
+        # Build and execute query
+        query = f"SELECT * FROM {_table}"
+        if len(_date) > 0:
+            query += f" WHERE date LIKE '{_date}%'"
+            rows = db.execute(query)
+
+        # Build file name
+        file_name = (f"Sunalyzer_{_date}.csv") if len(_date) > 0 else "Sunalyzer_All.csv"
+
+        # Convert rows to CSV
+        csv = rows_to_csv(rows)
+
+        # Build HTML response
+        response = make_response(csv)
+        cd = f"attachment; filename={file_name}"
+        response.headers["Content-Disposition"] = cd
+        response.mimetype = "text/csv"
+        return response
+
+    except Exception:
+        print("Server: Bad CSV request:")
+        print(traceback.print_exc())
+        data = {"state": "error"}
+        return json.dumps(data), 404
 
 
 # Returns JSON response containing current data

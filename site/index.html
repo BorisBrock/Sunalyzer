@@ -75,6 +75,13 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
                             <div id="sidebar_all_time">All Time</div>
                         </a>
+
+                        <!-- Misc -->
+                        <div class="sb-sidenav-menu-heading" id="sidebar_headline_misc">History</div>
+                        <a class="nav-link" href="javascript:showViewCsv();collapseSidebar();">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-csv"></i></div>
+                            <div id="sidebar_csv">CSV Download</div>
+                        </a>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer bg-dark">
@@ -449,6 +456,116 @@
                     </div>
 
                 </div>
+
+                <!-- CSV Download View -->
+                <div class="container-fluid px-4" id="view_csv">
+                    <h1 class="mt-4">CSV Download</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active"><span id="csv_subtitle">...</span></li>
+                    </ol>
+
+
+                    <div class="container">
+
+                        <div class="row pt-5">
+                            <div class="col-md-2">
+                                <label class="fs-4" id="csv_label_time_range">Time range:</label>
+                            </div>
+                            <div class="col-md">
+                                <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_day"
+                                    autocomplete="off" onclick="updateCsvDateSelector();">
+                                <label class="btn btn-outline-primary" for="csv_range_rad_day"
+                                    id="csv_range_rad_lbl_day">One day</label>
+
+                                <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_month"
+                                    autocomplete="off" onclick="updateCsvDateSelector();">
+                                <label class="btn btn-outline-primary" for="csv_range_rad_month"
+                                    id="csv_range_rad_lbl_month">One month</label>
+
+                                <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_year"
+                                    autocomplete="off" onclick="updateCsvDateSelector();" checked>
+                                <label class="btn btn-outline-primary" for="csv_range_rad_year"
+                                    id="csv_range_rad_lbl_year">One year</label>
+
+                                <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_all"
+                                    autocomplete="off" onclick="updateCsvDateSelector();">
+                                <label class="btn btn-outline-primary" for="csv_range_rad_all"
+                                    id="csv_range_rad_lbl_all">All time</label>
+                            </div>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md">
+                                <div class="d-flex flex-row">
+                                    <!-- Year -->
+                                    <div id="csv_selection_year">
+                                        <select class="form-select" aria-label="Default select example"
+                                            id="csv_selection_year2">
+                                        </select>
+                                    </div>
+                                    <!-- Month -->
+                                    <div id="csv_selection_month">
+                                        <select class="form-select" aria-label="Default select example"
+                                            id="csv_selection_month2">
+                                            <option value="1" id="csv_cbx_month_1">January</option>
+                                            <option value="2" id="csv_cbx_month_2">February</option>
+                                            <option value="3" id="csv_cbx_month_3">March</option>
+                                            <option value="4" id="csv_cbx_month_4">April</option>
+                                            <option value="5" id="csv_cbx_month_5">May</option>
+                                            <option value="6" id="csv_cbx_month_6">June</option>
+                                            <option value="7" id="csv_cbx_month_7">July</option>
+                                            <option value="8" id="csv_cbx_month_8">August</option>
+                                            <option value="9" id="csv_cbx_month_9">September</option>
+                                            <option value="10" id="csv_cbx_month_10">October</option>
+                                            <option value="11" id="csv_cbx_month_11">November</option>
+                                            <option value="12" id="csv_cbx_month_12">December</option>
+                                        </select>
+                                    </div>
+                                    <!-- Day -->
+                                    <div id="csv_selection_day">
+                                        <select class="form-select" aria-label="Default select example"
+                                            id="csv_selection_day2">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-4">
+                            <div class="col-md-2">
+                                <label class="fs-4" id="csv_label_resolution">Resolution:</label>
+                            </div>
+                            <div class="col-md">
+                                <input type="radio" class="btn-check" name="options_res" id="csv_res_rad_day"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" for="csv_res_rad_day"
+                                    id="csv_res_rad_lbl_day">Single days</label>
+
+                                <input type="radio" class="btn-check" name="options_res" id="csv_res_rad_month"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="csv_res_rad_month"
+                                    id="csv_res_rad_lbl_month">Summed up by
+                                    month</label>
+
+                                <input type="radio" class="btn-check" name="options_res" id="csv_res_rad_year"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="csv_res_rad_year"
+                                    id="csv_res_rad_lbl_year">Summed up by year</label>
+                            </div>
+                        </div>
+
+                        <div class="row pt-5">
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success btn-lg" onclick="downloadCsv();"><i
+                                        class="fas fa-download me-2"></i>Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </main>
         </div>
     </div>
@@ -456,6 +573,7 @@
     <script src="js/version.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/localization.js"></script>
+    <script src="js/csv.js"></script>
     <script src="lib/chart.min.js" crossorigin="anonymous"></script>
     <script src="lib/chartjs-plugin-labels.min.js"></script>
     <script src="js/chart_factory.js"></script>
