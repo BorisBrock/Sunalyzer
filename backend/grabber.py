@@ -256,7 +256,7 @@ def main():
         insert_current_values(
             db,
             device.current_power_produced_kw,
-            device.current_power_consumed_kw,
+            device.current_power_consumed_total_kw,
             device.current_power_fed_in_kw)
 
         # Also store the real time data

@@ -44,7 +44,7 @@ function updateCurrentStats() {
 
         document.getElementById("dash_currently_produced").innerHTML = numFormat(stats["currently_produced_kw"], 2);
         document.getElementById("dash_currently_consumed").innerHTML = numFormat(stats["currently_consumed_kw"], 2);
-        document.getElementById("dash_currently_fed_in").innerHTML = numFormat(stats["currently_fed_in_kw"]), 2;
+        document.getElementById("dash_currently_fed_in").innerHTML = numFormat(stats["currently_fed_in_kw"], 2);
 
         document.getElementById("dash_today_produced").innerHTML = numFormat(stats["today_produced_kwh"], 0);
         document.getElementById("dash_today_consumed").innerHTML = numFormat(stats["today_consumed_kwh"], 0);
