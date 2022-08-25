@@ -66,7 +66,7 @@ def get_csv():
         query = f"SELECT * FROM {_table}"
         if len(_date) > 0:
             query += f" WHERE date LIKE '{_date}%'"
-            rows = db.execute(query)
+        rows = db.execute(query)
 
         # Build file name
         file_name = (f"Sunalyzer_{_date}.csv") if len(_date) > 0 else "Sunalyzer_All.csv"
@@ -82,9 +82,10 @@ def get_csv():
         return response
 
     except Exception:
+        exception_string = traceback.print_exc()
         print("Server: Bad CSV request:")
-        print(traceback.print_exc())
-        data = {"state": "error"}
+        print(exception_string)
+        data = {"state": "error", "message": exception_string}
         return json.dumps(data), 404
 
 
@@ -227,7 +228,7 @@ def get_json_data_history(table, search_date):
         "earned_feedin": earned,
         "earned_savings": saved,
         "earned_total": (earned+saved),
-        "autarky": usage_self_consumed_rel
+        "autarky": consumed_self_rel
     }
     return json.dumps(data)
 

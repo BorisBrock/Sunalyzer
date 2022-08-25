@@ -36,15 +36,15 @@ window.addEventListener('DOMContentLoaded', event => {
 // Called cyclically to update the current stats
 function updateCurrentStats() {
     if (!gDashboardVisible) return;
-    console.log("Refreshing dashbard");
+    //console.log("Refreshing dashbard");
     fetchCurrentStatsJSON().then(stats => {
-        console.log(stats);
+        //console.log(stats);
         const d = new Date();
         document.getElementById("dashboard_subtitle_time").innerHTML = d.toLocaleTimeString('de-DE');
 
         document.getElementById("dash_currently_produced").innerHTML = numFormat(stats["currently_produced_kw"], 2);
         document.getElementById("dash_currently_consumed").innerHTML = numFormat(stats["currently_consumed_kw"], 2);
-        document.getElementById("dash_currently_fed_in").innerHTML = numFormat(stats["currently_fed_in_kw"]), 2;
+        document.getElementById("dash_currently_fed_in").innerHTML = numFormat(stats["currently_fed_in_kw"], 2);
 
         document.getElementById("dash_today_produced").innerHTML = numFormat(stats["today_produced_kwh"], 0);
         document.getElementById("dash_today_consumed").innerHTML = numFormat(stats["today_consumed_kwh"], 0);
@@ -75,7 +75,7 @@ async function fetchCurrentStatsJSON() {
 // Called cyclically to update the current stats
 function updateRealTimeGraph() {
     if (!gDashboardVisible) return;
-    console.log("Refreshing dashbard");
+    //console.log("Refreshing dashbard");
     fetchRealTimeStatsJSON().then(stats => {
         createDashboardChart("chart_dashboard", stats);
     });
@@ -128,8 +128,7 @@ async function fetchDatesJSON() {
 // Called cyclically to update the current stats
 function updateHistoryStats() {
     fetchHistoryStatsJSON().then(stats => {
-        console.log(stats);
-
+        //console.log(stats);
         if (stats["state"] == "ok") {
             setElementVisible("row_error_banner", false);
             setElementVisible("row_history_data", true);
@@ -200,7 +199,7 @@ async function fetchHistoryStatsJSON() {
             query += "all_time&date=all_time";
             break;
     }
-    console.log("Refreshing historic stats: " + query);
+    //console.log("Refreshing historic stats: " + query);
     const response = await fetch(gBaseUrl + query);
     const stats = await response.json();
     return stats;
