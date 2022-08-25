@@ -144,6 +144,12 @@ def set_time_zone(tz):
         print(f"Grabber: Time is now {time.strftime('%X %x %Z')}")
 
 
+# Updates data in the data base
+def update_data():
+    '''Updates data in the data base.'''
+
+
+
 # Main loop
 def main():
     '''Main loop.'''
@@ -190,6 +196,12 @@ def main():
         if config.verbose_logging:
             time_string = datetime.now().strftime("%H:%M")
             print(f"Grabber: {time_string}: Updating device data")
+
+        try:
+            update_data()
+        except Exception:
+            print("Grabber: Error: updting data from device failed")
+            print(traceback.print_exc())
 
         # Download new data from the actual PV device
         try:

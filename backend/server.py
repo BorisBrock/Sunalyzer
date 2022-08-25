@@ -296,10 +296,9 @@ def main():
         exit()
 
     # Start the web server
-    if __name__ == '__main__':
-        app.run(
-            host=config.config_data['server']['ip'],
-            port=config.config_data['server']['port'])
+    app.run(
+        host=config.config_data['server']['ip'],
+        port=config.config_data['server']['port'])
     
     # Exit
     print("Server: Exiting main loop")
