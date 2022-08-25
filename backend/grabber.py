@@ -1,6 +1,7 @@
 import os
 import time
 import importlib
+import signal
 from os.path import exists
 from datetime import date, datetime
 import traceback
@@ -10,13 +11,12 @@ from config import Config
 from database import Database
 import version
 
-# pylint: disable=C0103
-
 
 # Real time (24h) data
 NUM_REAL_TIME_VALUES = 24*60  # 24h * 60 Minutes
 real_time_seconds_counter = 0
 config = None
+run = True
 
 
 # Helper function to insert new values into the DB
@@ -140,11 +140,113 @@ def set_time_zone(tz):
         print(f"Grabber: Time is now {time.strftime('%X %x %Z')}")
 
 
+# Updates data in the data base
+def update_data(device):
+    '''Updates data in the data base.'''
+    global real_time_seconds_counter
+
+    # Download new data from the actual PV device
+    device.update()
+
+    # Open connection to data base
+    db = Database("data/db.sqlite")
+
+    # Time strings
+    year_string = date.today().strftime("%Y")
+    week_string = year_string + "-" + date.today().strftime("%V")
+    month_string = year_string + "-" + date.today().strftime("%m")
+    day_string = month_string + "-" + date.today().strftime("%d")
+
+    # Capture daily data
+    insert_historical_values(
+        db,
+        "days",
+        day_string,
+        device.total_energy_produced_kwh,
+        device.total_energy_consumed_kwh,
+        device.total_energy_fed_in_kwh)
+
+    # Capture weekly data
+    insert_historical_values(
+        db,
+        "weeks",
+        week_string,
+        device.total_energy_produced_kwh,
+        device.total_energy_consumed_kwh,
+        device.total_energy_fed_in_kwh)
+
+    # Capture monthly data
+    insert_historical_values(
+        db,
+        "months", month_string,
+        device.total_energy_produced_kwh,
+        device.total_energy_consumed_kwh,
+        device.total_energy_fed_in_kwh)
+
+    # Capture yearly data
+    insert_historical_values(
+        db,
+        "years",
+        year_string,
+        device.total_energy_produced_kwh,
+        device.total_energy_consumed_kwh,
+        device.total_energy_fed_in_kwh)
+
+    # Capture all time data
+    insert_historical_values(
+        db,
+        "all_time",
+        "all_time",
+        device.total_energy_produced_kwh,
+        device.total_energy_consumed_kwh,
+        device.total_energy_fed_in_kwh)
+
+    # Also store the current values
+    insert_current_values(
+        db,
+        device.current_power_produced_kw,
+        device.current_power_consumed_total_kw,
+        device.current_power_fed_in_kw)
+
+    # Also store the real time data
+    real_time_seconds_counter = real_time_seconds_counter - \
+        config.config_data['grabber']['interval_s']
+    if real_time_seconds_counter <= 0:
+        # Time string
+        time_string = datetime.now().strftime("%H:%M")
+        # Store in data base
+        if config.verbose_logging:
+            print((f"Grabber: capturing real time data({time_string}:"
+                   f"{device.current_power_produced_kw}, "
+                   f"{device.current_power_consumed_total_kw}, "
+                   f"{device.current_power_fed_in_kw})"))
+
+        insert_real_time_values(
+            db,
+            time_string,
+            device.current_power_produced_kw,
+            device.current_power_consumed_total_kw,
+            device.current_power_fed_in_kw)
+
+        real_time_seconds_counter = 60  # Reset counter to one minute
+
+
+# This is called when SIGTERM is received
+def handler_stop_signals(signum, frame):
+    global run
+    print("Grabber: SIGTERM/SIGINT received")
+    run = False
+
+
 # Main loop
 def main():
     '''Main loop.'''
-    global real_time_seconds_counter
     global config
+    global run
+
+    # Set up signal handlers
+    signal.signal(signal.SIGINT, handler_stop_signals)
+    signal.signal(signal.SIGTERM, handler_stop_signals)
 
     # Print version
     print(f"Starting Sunalyzer grabber version {version.get_version()}")
@@ -177,103 +279,22 @@ def main():
 
     # Grabber main loop
     print("Grabber: Entering main loop")
-    while True:
+    while run:
         if config.verbose_logging:
             time_string = datetime.now().strftime("%H:%M")
             print(f"Grabber: {time_string}: Updating device data")
 
-        # Download new data from the actual PV device
         try:
-            device.update()
+            update_data(device)
         except Exception:
-            print("Grabber: Error: updting data from device failed")
+            print("Grabber: Error: updating data from device failed")
             print(traceback.print_exc())
-            time.sleep(config.config_data['grabber']['interval_s'])
-            continue
-
-        # Open connection to data base
-        db = Database("data/db.sqlite")
-
-        # Time strings
-        year_string = date.today().strftime("%Y")
-        week_string = year_string + "-" + date.today().strftime("%V")
-        month_string = year_string + "-" + date.today().strftime("%m")
-        day_string = month_string + "-" + date.today().strftime("%d")
-
-        # Capture daily data
-        insert_historical_values(
-            db,
-            "days",
-            day_string,
-            device.total_energy_produced_kwh,
-            device.total_energy_consumed_kwh,
-            device.total_energy_fed_in_kwh)
-
-        # Capture weekly data
-        insert_historical_values(
-            db,
-            "weeks",
-            week_string,
-            device.total_energy_produced_kwh,
-            device.total_energy_consumed_kwh,
-            device.total_energy_fed_in_kwh)
-
-        # Capture monthly data
-        insert_historical_values(
-            db,
-            "months", month_string,
-            device.total_energy_produced_kwh,
-            device.total_energy_consumed_kwh,
-            device.total_energy_fed_in_kwh)
-
-        # Capture yearly data
-        insert_historical_values(
-            db,
-            "years",
-            year_string,
-            device.total_energy_produced_kwh,
-            device.total_energy_consumed_kwh,
-            device.total_energy_fed_in_kwh)
-
-        # Capture all time data
-        insert_historical_values(
-            db,
-            "all_time",
-            "all_time",
-            device.total_energy_produced_kwh,
-            device.total_energy_consumed_kwh,
-            device.total_energy_fed_in_kwh)
-
-        # Also store the current values
-        insert_current_values(
-            db,
-            device.current_power_produced_kw,
-            device.current_power_consumed_total_kw,
-            device.current_power_fed_in_kw)
-
-        # Also store the real time data
-        real_time_seconds_counter = real_time_seconds_counter - \
-            config.config_data['grabber']['interval_s']
-        if real_time_seconds_counter <= 0:
-            # Time string
-            time_string = datetime.now().strftime("%H:%M")
-            # Store in data base
-            if config.verbose_logging:
-                print((f"Grabber: capturing real time data({time_string}:"
-                       f"{device.current_power_produced_kw}, "
-                       f"{device.current_power_consumed_total_kw}, "
-                       f"{device.current_power_fed_in_kw})"))
-
-            insert_real_time_values(
-                db,
-                time_string,
-                device.current_power_produced_kw,
-                device.current_power_consumed_total_kw,
-                device.current_power_fed_in_kw)
-
-            real_time_seconds_counter = 60  # Reset counter to one minute
 
         time.sleep(config.config_data['grabber']['interval_s'])
+
+    # Exit
+    print("Grabber: Exiting main loop")
+    print("Grabber: Shutting down gracefully")
 
 
 # Main entry point of the application

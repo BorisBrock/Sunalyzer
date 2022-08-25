@@ -291,16 +291,19 @@ def main():
 
     # Read the configuration from disk
     try:
-        print("Grabber: Reading backend configuration from config.yml")
+        print("Server: Reading backend configuration from config.yml")
         config = Config("data/config.yml")
     except Exception:
         exit()
 
     # Start the web server
-    if __name__ == '__main__':
-        app.run(
-            host=config.config_data['server']['ip'],
-            port=config.config_data['server']['port'])
+    app.run(
+        host=config.config_data['server']['ip'],
+        port=config.config_data['server']['port'])
+
+    # Exit
+    print("Server: Exiting main loop")
+    print("Server: Shutting down gracefully")
 
 
 # Main entry point of the application
