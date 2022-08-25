@@ -8,9 +8,8 @@ RUN pip install -r requirements.txt && rm requirements.txt
 COPY backend backend
 COPY site site
 
-# Make sure the main startup script is available and runnable
-COPY run.sh .
-RUN chmod a+x run.sh
+# Make sure the main startup script is available
+COPY supervisord.conf .
 
 # Create and expose data folder in the container
 VOLUME ["/data"]
@@ -22,4 +21,4 @@ EXPOSE 5000
 ENV PYTHONUNBUFFERED=1
 
 # Main entry point of the container
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["supervisord"]

@@ -300,7 +300,7 @@ def main():
     app.run(
         host=config.config_data['server']['ip'],
         port=config.config_data['server']['port'])
-    
+
     # Exit
     print("Server: Exiting main loop")
     print("Server: Shutting down gracefully")
