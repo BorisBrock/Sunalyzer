@@ -1,6 +1,7 @@
 import os
 import time
 import importlib
+import signal
 from os.path import exists
 from datetime import date, datetime
 import traceback
@@ -9,8 +10,6 @@ import traceback
 from config import Config
 from database import Database
 import version
-
-# pylint: disable=C0103
 
 
 # Real time (24h) data
@@ -21,6 +20,7 @@ last_real_time_produced = 0.0
 last_real_time_consumed = 0.0
 last_real_time_fed_in = 0.0
 config = None
+run = True
 
 
 # Helper function to insert new values into the DB
@@ -153,6 +153,7 @@ def main():
     global last_real_time_consumed
     global last_real_time_fed_in
     global config
+    global run
 
     # Print version
     print(f"Starting Sunalyzer grabber version {version.get_version()}")
@@ -185,7 +186,7 @@ def main():
 
     # Grabber main loop
     print("Grabber: Entering main loop")
-    while True:
+    while run:
         if config.verbose_logging:
             time_string = datetime.now().strftime("%H:%M")
             print(f"Grabber: {time_string}: Updating device data")
@@ -256,7 +257,7 @@ def main():
         insert_current_values(
             db,
             device.current_power_produced_kw,
-            device.current_power_consumed_kw,
+            device.current_power_consumed_total_kw,
             device.current_power_fed_in_kw)
 
         # Also store the real time data
@@ -295,6 +296,20 @@ def main():
 
         time.sleep(config.config_data['grabber']['interval_s'])
 
+    # Exit
+    print("Grabber: Exiting main loop")
+    print("Grabber: Shutting down gracefully")
+
+
+# This is called when SIGTERM is received
+def handler_stop_signals(signum, frame):
+    global run
+    print("Grabber: SIGTERM received")
+    run = False
+
+# Set up signal handlers
+signal.signal(signal.SIGINT, handler_stop_signals)
+signal.signal(signal.SIGTERM, handler_stop_signals)
 
 # Main entry point of the application
 if __name__ == "__main__":
