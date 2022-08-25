@@ -15,11 +15,7 @@ import version
 
 # Real time (24h) data
 NUM_REAL_TIME_VALUES = 24*60  # 24h * 60 Minutes
-has_real_time_data = False
 real_time_seconds_counter = 0
-last_real_time_produced = 0.0
-last_real_time_consumed = 0.0
-last_real_time_fed_in = 0.0
 config = None
 
 
@@ -147,11 +143,7 @@ def set_time_zone(tz):
 # Main loop
 def main():
     '''Main loop.'''
-    global has_real_time_data
     global real_time_seconds_counter
-    global last_real_time_produced
-    global last_real_time_consumed
-    global last_real_time_fed_in
     global config
 
     # Print version
@@ -256,41 +248,29 @@ def main():
         insert_current_values(
             db,
             device.current_power_produced_kw,
-            device.current_power_consumed_kw,
+            device.current_power_consumed_total_kw,
             device.current_power_fed_in_kw)
 
         # Also store the real time data
         real_time_seconds_counter = real_time_seconds_counter - \
             config.config_data['grabber']['interval_s']
         if real_time_seconds_counter <= 0:
-            if has_real_time_data:
-                # Compute deltas
-                d_produced = device.total_energy_produced_kwh - last_real_time_produced
-                d_consumed = device.total_energy_consumed_kwh - last_real_time_consumed
-                d_fed_in = device.total_energy_fed_in_kwh - last_real_time_fed_in
-                # Update values
-                last_real_time_produced = device.total_energy_produced_kwh
-                last_real_time_consumed = device.total_energy_consumed_kwh
-                last_real_time_fed_in = device.total_energy_fed_in_kwh
-                # Time string
-                time_string = datetime.now().strftime("%H:%M")
-                # Store in data base
-                if config.verbose_logging:
-                    print((f"Grabber: capturing real time data({time_string}:"
-                           f"{d_produced}, {d_consumed}, {d_fed_in})"))
-                insert_real_time_values(
-                    db,
-                    time_string,
-                    d_produced,
-                    d_consumed,
-                    d_fed_in)
-            else:
-                # One time initialization
-                last_real_time_produced = device.total_energy_produced_kwh
-                last_real_time_consumed = device.total_energy_consumed_kwh
-                last_real_time_fed_in = device.total_energy_fed_in_kwh
+            # Time string
+            time_string = datetime.now().strftime("%H:%M")
+            # Store in data base
+            if config.verbose_logging:
+                print((f"Grabber: capturing real time data({time_string}:"
+                       f"{device.current_power_produced_kw}, "
+                       f"{device.current_power_consumed_total_kw}, "
+                       f"{device.current_power_fed_in_kw})"))
 
-            has_real_time_data = True
+            insert_real_time_values(
+                db,
+                time_string,
+                device.current_power_produced_kw,
+                device.current_power_consumed_total_kw,
+                device.current_power_fed_in_kw)
+
             real_time_seconds_counter = 60  # Reset counter to one minute
 
         time.sleep(config.config_data['grabber']['interval_s'])
