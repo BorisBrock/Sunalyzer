@@ -34,7 +34,6 @@ function utilBeautifyDate(date) {
     }
 }
 
-
 // Creates a chart showing the consumption distribution
 function createConsumptionChart(canvasId, gridPercentage, pvPercentage) {
     var xValues = [getChartString("chart_from_grid"), getChartString("chart_from_pv")];
