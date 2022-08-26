@@ -161,7 +161,13 @@ function createDashboardChart(canvasId, data) {
                 point: {
                     radius: 0
                 }
-            }
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    autoSkip: true
+                }],
+            },
         }
     });
 }

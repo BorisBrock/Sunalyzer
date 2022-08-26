@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import sqlite3
+import math
 from random import random
 
 
@@ -87,10 +88,22 @@ def create_new_db():
              "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "
              "time STRING, produced REAL, consumed REAL, fed_in REAL)")
     cursor.execute(query)
-    # Insert null data
+    h = 0
+    m = 0
+    # Insert demo data
     for x in range(NUM_REAL_TIME_VALUES):  # 24h * 60 minutes
+        p = math.sin(x*0.1) * 100.0 + 200.0
+        c = 20.0 + (x % 100)
+        f = random() * 100.0 + 100.0
+        m = m + 1
+        if m >= 60:
+            m = 0
+            h = h + 1
+        mstr = str(m)
+        if len(mstr) < 2:
+            mstr = "0" + mstr
         query = (f"INSERT INTO real_time VALUES"
-                 f"('{str(x)}', '...', '0.0', '0.0', '0.0')")
+                 f"({str(x)}, '{str(h)}:{mstr}', '{str(p)}', '{str(c)}', '{str(f)}')")
         cursor.execute(query)
 
     connection.commit()
