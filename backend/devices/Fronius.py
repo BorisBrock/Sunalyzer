@@ -7,10 +7,10 @@ class Fronius:
     def __init__(self, config):
         # Demo code for config access
         print(f"""Fronius device:
-            configured host name is {config['fronius']['host_name']}""")
+            configured host name is {config.config_data['fronius']['host_name']}""")
 
         self.verbose_logging = config.verbose_logging
-        self.host_name = config['fronius']['host_name']
+        self.host_name = config.config_data['fronius']['host_name']
 
         self.url_inverter = (
             f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi")
@@ -31,7 +31,6 @@ class Fronius:
             self.update()
         except Exception:
             print("Fronius device: Error: connecting to the device failed")
-            print(traceback.print_exc())
             raise
 
     def copy_data(self, inverter_data, meter_data):
@@ -102,8 +101,10 @@ class Fronius:
             # Extract and process relevant data
             self.copy_data(r_inverter.json(), r_meter.json())
         except requests.exceptions.Timeout:
-            print(f"Fronius device: Timeout requesting {self.url}")
+            print(f"Fronius device: Timeout requesting "
+                  f"'{self.url_inverter}' or '{self.url_meter}'")
             raise
         except requests.exceptions.RequestException as e:
-            print(f"Fronius device: requests exception {e} for URL {self.url}")
+            print(f"Fronius device: requests exception {e} for URL "
+                  f"'{self.url_inverter}' or '{self.url_meter}'")
             raise
