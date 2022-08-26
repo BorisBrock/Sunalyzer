@@ -263,7 +263,7 @@ def main():
 
     # Dynamically load the device
     try:
-        device_name = config.config_data['grabber']['device']
+        device_name = config.config_data['device']['type']
         print(f"Grabber: Loading device adapter '{device_name}'")
         device = load_device_plugin(device_name)
     except Exception:
