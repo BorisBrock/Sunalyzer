@@ -168,6 +168,10 @@ function createDashboardChart(canvasId, data) {
                 point: {
                     radius: 0
                 }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false
             }
         }
     });
@@ -217,7 +221,8 @@ function createHistoryDetailsChartProduction(canvasId, data) {
                 labels: false
             },
             interaction: {
-                intersect: false,
+                mode: 'index',
+                intersect: false
             },
             scales: {
                 x: {
@@ -275,7 +280,8 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
                 labels: false
             },
             interaction: {
-                intersect: false,
+                mode: 'index',
+                intersect: false
             },
             scales: {
                 x: {
