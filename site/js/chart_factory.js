@@ -6,10 +6,17 @@ let gChartHistoryDetailsProduced = null
 let gChartHistoryDetailsConsumed = null
 
 // Colors
+const FILL_OPACITY = "20";
+
 const COLOR_PRODUCTION_FED_IN = "#2980b9";
+const COLOR_PRODUCTION_FED_IN_FILL = COLOR_PRODUCTION_FED_IN + FILL_OPACITY;
+
 const COLOR_PRODUCTION_SELF_CONSUMED = "#27ae60";
+const COLOR_PRODUCTION_SELF_CONSUMED_FILL = COLOR_PRODUCTION_SELF_CONSUMED + FILL_OPACITY;
 
 const COLOR_CONSUMED_FROM_GRID = "#8e44ad";
+const COLOR_CONSUMED_FROM_GRID_FILL = COLOR_CONSUMED_FROM_GRID + FILL_OPACITY;
+
 const COLOR_CONSUMED_FROM_PV = "#e67e22";
 
 const COLOR_PRODUCED = "#f1c40f";
@@ -117,25 +124,25 @@ function createDashboardChart(canvasId, data) {
         datasets: [{
             label: getChartString("chart_produced_kwh"),
             data: [],
-            fill: false,
+            fill: true,
             borderColor: COLOR_PRODUCTION_SELF_CONSUMED,
-            backgroundColor: COLOR_PRODUCTION_SELF_CONSUMED,
+            backgroundColor: COLOR_PRODUCTION_SELF_CONSUMED_FILL,
             borderWidth: 2
         },
         {
             label: getChartString("chart_consumed_kwh"),
             data: [],
-            fill: false,
+            fill: true,
             borderColor: COLOR_CONSUMED_FROM_GRID,
-            backgroundColor: COLOR_CONSUMED_FROM_GRID,
+            backgroundColor: COLOR_CONSUMED_FROM_GRID_FILL,
             borderWidth: 2
         },
         {
             label: getChartString("chart_fed_in_kwh"),
             data: [],
-            fill: false,
+            fill: true,
             borderColor: COLOR_PRODUCTION_FED_IN,
-            backgroundColor: COLOR_PRODUCTION_FED_IN,
+            backgroundColor: COLOR_PRODUCTION_FED_IN_FILL,
             borderWidth: 2
         }]
     };
@@ -161,6 +168,10 @@ function createDashboardChart(canvasId, data) {
                 point: {
                     radius: 0
                 }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false
             }
         }
     });
@@ -210,7 +221,8 @@ function createHistoryDetailsChartProduction(canvasId, data) {
                 labels: false
             },
             interaction: {
-                intersect: false,
+                mode: 'index',
+                intersect: false
             },
             scales: {
                 x: {
@@ -268,7 +280,8 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
                 labels: false
             },
             interaction: {
-                intersect: false,
+                mode: 'index',
+                intersect: false
             },
             scales: {
                 x: {
