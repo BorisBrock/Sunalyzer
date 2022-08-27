@@ -64,7 +64,7 @@ def create_new_db():
     cursor = connection.cursor()
 
     # Historical data tables
-    table_names = ["days", "weeks", "months", "years", "all_time"]
+    table_names = ["days", "months", "years", "all_time"]
     for name in table_names:
         query = (f"create table if not exists {name} ("
                  "date STRING PRIMARY KEY,"
@@ -117,7 +117,6 @@ def create_data(_date, _cursor):
 
     # Time strings
     year_string = _date.strftime("%Y")
-    week_string = year_string + "-" + _date.strftime("%V")
     month_string = year_string + "-" + _date.strftime("%m")
     day_string = month_string + "-" + _date.strftime("%d")
 
@@ -126,15 +125,6 @@ def create_data(_date, _cursor):
         _cursor,
         "days",
         day_string,
-        global_ctr_produced,
-        global_ctr_consumed,
-        global_ctr_fed_in)
-
-    # Capture weekly data
-    insert_historical_values(
-        _cursor,
-        "weeks",
-        week_string,
         global_ctr_produced,
         global_ctr_consumed,
         global_ctr_fed_in)
