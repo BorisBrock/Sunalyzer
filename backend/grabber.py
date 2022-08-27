@@ -88,7 +88,7 @@ def create_new_db():
     new_db = Database("data/db.sqlite")
 
     # Historical data tables
-    table_names = ["days", "weeks", "months", "years", "all_time"]
+    table_names = ["days", "months", "years", "all_time"]
     for name in table_names:
         query = (f"create table if not exists {name} ("
                  "date STRING PRIMARY KEY,"
@@ -153,7 +153,6 @@ def update_data(device):
 
     # Time strings
     year_string = date.today().strftime("%Y")
-    week_string = year_string + "-" + date.today().strftime("%V")
     month_string = year_string + "-" + date.today().strftime("%m")
     day_string = month_string + "-" + date.today().strftime("%d")
 
@@ -162,15 +161,6 @@ def update_data(device):
         db,
         "days",
         day_string,
-        device.total_energy_produced_kwh,
-        device.total_energy_consumed_kwh,
-        device.total_energy_fed_in_kwh)
-
-    # Capture weekly data
-    insert_historical_values(
-        db,
-        "weeks",
-        week_string,
         device.total_energy_produced_kwh,
         device.total_energy_consumed_kwh,
         device.total_energy_fed_in_kwh)
