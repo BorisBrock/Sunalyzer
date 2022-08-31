@@ -48,20 +48,22 @@ def insert_historical_values(
 
 
 # Helper function to insert current values into the DB
-def insert_current_values(db, produced, consumed, fed_in):
+def insert_current_values(db, produced, consumed_grid, consumed_pv, consumed_total, fed_in):
     '''Helper function to insert current values into the DB.'''
     rows = db.execute("SELECT * FROM current WHERE date='cur'")
 
     if len(rows) == 0:
         # Create day row
         query = (f"INSERT INTO current VALUES ('cur', "
-                 f"{str(produced)}, {str(consumed)}, {str(fed_in)})")
+                 f"{str(produced)}, {str(consumed_grid)}, {str(consumed_pv)}, {str(consumed_total)}, {str(fed_in)})")
         db.execute(query)
     else:
         # Update existing row
         query = (f"UPDATE current SET "
                  f"produced = {str(produced)}, "
-                 f"consumed = {str(consumed)}, "
+                 f"consumed_grid = {str(consumed_grid)}, "
+                 f"consumed_pv = {str(consumed_pv)}, "
+                 f"consumed_total = {str(consumed_total)}, "
                  f"fed_in = {str(fed_in)} "
                  f"WHERE date='cur'")
         db.execute(query)
@@ -104,7 +106,7 @@ def create_new_db():
     # Current data table
     query = ("create table if not exists current"
              "(date STRING PRIMARY KEY, "
-             "produced REAL, consumed REAL, fed_in REAL)")
+             "produced REAL, consumed_grid REAL, consumed_pv REAL, consumed_total REAL, fed_in REAL)")
     new_db.execute(query)
 
     # Real time data table
@@ -195,6 +197,8 @@ def update_data(device):
     insert_current_values(
         db,
         device.current_power_produced_kw,
+        device.current_power_consumed_from_grid_kw,
+        device.current_power_consumed_from_pv_kw,
         device.current_power_consumed_total_kw,
         device.current_power_fed_in_kw)
 
