@@ -247,6 +247,8 @@
                     <div class="row py-4">
                         <div class="col-xl-6">
                             <div class="d-flex flex-row">
+                                <!-- BACK -->
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="datePrev();"><i class="fa-solid fa-angle-left"></i></button>
                                 <!-- Year -->
                                 <div id="selection_year">
                                     <select class="form-select" aria-label="Default select example" id="selection_year2"
@@ -277,6 +279,8 @@
                                         onchange="updateHistoryStats();">
                                     </select>
                                 </div>
+                                <!-- FORWARD -->
+                                <button type="button" class="btn btn-outline-secondary ms-2" onclick="dateNext();"><i class="fa-solid fa-angle-right"></i></button>
                             </div>
                         </div>
                     </div>

@@ -16,6 +16,8 @@ const histories = {
 
 let gCurHistory = histories.DAY;
 
+let gCurDate = new Date();
+
 
 // Called when index.html has finished loading
 window.addEventListener('DOMContentLoaded', event => {
@@ -103,19 +105,20 @@ function initSelectionBoxes() {
             addSelectionItem("csv_selection_year2", i.toString(), i.toString());
         }
         // Initial selection
-        selectDateToday();
+        selectDate(new Date());
     });
 }
 
-function selectDateToday() {
+function selectDate(date) {
+    gCurDate = date;
     // Combo boxes 1
-    document.getElementById('selection_year2').value = new Date().getFullYear();
-    document.getElementById('selection_month2').value = new Date().getMonth() + 1;
-    document.getElementById('selection_day2').value = new Date().getDate();
+    document.getElementById('selection_year2').value = date.getFullYear();
+    document.getElementById('selection_month2').value = date.getMonth() + 1;
+    document.getElementById('selection_day2').value = date.getDate();
     // Combo boxes 2
-    document.getElementById('csv_selection_year2').value = new Date().getFullYear();
-    document.getElementById('csv_selection_month2').value = new Date().getMonth() + 1;
-    document.getElementById('csv_selection_day2').value = new Date().getDate();
+    document.getElementById('csv_selection_year2').value = date.getFullYear();
+    document.getElementById('csv_selection_month2').value = date.getMonth() + 1;
+    document.getElementById('csv_selection_day2').value = date.getDate();
 }
 
 // Async function to get the important dates
@@ -128,6 +131,12 @@ async function fetchDatesJSON() {
 
 // Called cyclically to update the current stats
 function updateHistoryStats() {
+    // Store data
+    let year = document.getElementById('selection_year2').value.toString();
+    let month = document.getElementById('selection_month2').value.toString();
+    let day = document.getElementById('selection_day2').value.toString();
+    gCurDate = new Date(year + "-" + month + "-" + day);
+    // Update stats
     fetchHistoryStatsJSON().then(stats => {
         //console.log(stats);
         if (stats["state"] == "ok") {
@@ -256,7 +265,7 @@ function showViewHistory(mode) {
 
     switch (mode) {
         case histories.TODAY:
-            selectDateToday();
+            selectDate(new Date());
             document.getElementById("headline_history").innerHTML = getHistoryString("daily_data");
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
@@ -351,6 +360,40 @@ function updateCsvDateSelector() {
         setElementEnabled("csv_res_rad_year", true);
     }
 }
+
+
+function datePrev() {
+    const date = new Date(gCurDate)
+    if(gCurHistory == histories.DAY) {
+        date.setDate(date.getDate() - 1);
+    }
+    else if(gCurHistory == histories.MONTH) {
+        date.setMonth(date.getMonth() - 1);
+    }
+    else if(gCurHistory == histories.YEAR) {
+        date.setFullYear(date.getFullYear() - 1);
+    }
+
+    selectDate(date);
+    updateHistoryStats();
+}
+
+function dateNext() {
+    const date = new Date(gCurDate)
+    if(gCurHistory == histories.DAY) {
+        date.setDate(date.getDate() + 1);
+    }
+    else if(gCurHistory == histories.MONTH) {
+        date.setMonth(date.getMonth() + 1);
+    }
+    else if(gCurHistory == histories.YEAR) {
+        date.setFullYear(date.getFullYear() + 1);
+    }
+
+    selectDate(date);
+    updateHistoryStats();
+}
+
 
 function setElementVisible(name, visible) {
     document.getElementById(name).style.display = visible ? 'block' : 'none';
