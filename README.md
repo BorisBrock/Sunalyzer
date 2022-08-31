@@ -3,7 +3,7 @@
 ![Python checks](https://github.com/VanKurt/Sunalyzer/actions/workflows/python.yml/badge.svg)
 ![Docker build](https://github.com/VanKurt/Sunalyzer/actions/workflows/docker.yml/badge.svg)
 
-Sunalyzer is a free and open source solar monitoring system. It collects relevant data from your inverter/smart meter and stores them safely in a data base.
+Sunalyzer is a free, open source and vendor independent solar monitoring system. It collects relevant data from your inverter/smart meter and stores them safely in a data base.
 
 A modern and beautiful web frontend allows you to visualize the data on any device. The user interface is highly responsive and works great on any screen size, from a small smart phone to a huge PC monitor.
 
