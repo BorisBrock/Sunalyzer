@@ -17,6 +17,8 @@ const histories = {
 let gCurHistory = histories.DAY;
 
 let gCurDate = new Date();
+let gMinDate = null
+let gMaxDate = new Date();
 
 
 // Called when index.html has finished loading
@@ -100,6 +102,7 @@ function initSelectionBoxes() {
     // Years: query from DB
     fetchDatesJSON().then(dates => {
         //console.log(stats);
+        gMinDate = new Date(dates["year_min"] + "-01-01");
         for (let i = dates["year_min"]; i <= dates["year_max"]; i++) {
             addSelectionItem("selection_year2", i.toString(), i.toString());
             addSelectionItem("csv_selection_year2", i.toString(), i.toString());
@@ -374,6 +377,8 @@ function datePrev() {
         date.setFullYear(date.getFullYear() - 1);
     }
 
+    if(date < gMinDate) return;
+
     selectDate(date);
     updateHistoryStats();
 }
@@ -389,6 +394,8 @@ function dateNext() {
     else if(gCurHistory == histories.YEAR) {
         date.setFullYear(date.getFullYear() + 1);
     }
+
+    if(date > gMaxDate) return;
 
     selectDate(date);
     updateHistoryStats();
