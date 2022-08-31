@@ -57,7 +57,7 @@ class Fronius:
 
         # Total/absolute values
         self.total_energy_produced_kwh = total_produced_kwh
-        self.total_energy_consumed_kwh = total_self_consumption_kwh
+        self.total_energy_consumed_kwh = total_consumption_kwh
         self.total_energy_fed_in_kwh = total_fed_in_kwh
 
         # Now extract the momentary values
