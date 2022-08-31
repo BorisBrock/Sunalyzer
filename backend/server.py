@@ -117,8 +117,10 @@ def get_json_data_current():
     data = {
         "state": "ok",
         "currently_produced_w": rows_cur[0][1] * 1000.0,  # kW -> W
-        "currently_consumed_w": rows_cur[0][2] * 1000.0,  # kW -> W
-        "currently_fed_in_w": rows_cur[0][3] * 1000.0,  # kW -> W
+        "currently_consumed_grid_w": rows_cur[0][2] * 1000.0,  # kW -> W
+        "currently_consumed_pv_w": rows_cur[0][3] * 1000.0,  # kW -> W
+        "currently_consumed_total_w": rows_cur[0][4] * 1000.0,  # kW -> W
+        "currently_fed_in_w": rows_cur[0][5] * 1000.0,  # kW -> W
         "all_time_produced_kwh": produced_total,
         "all_time_consumed_kwh": consumed_total,
         "all_time_fed_in_kwh": fed_in_total,
