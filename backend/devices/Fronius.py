@@ -62,7 +62,7 @@ class Fronius:
 
         # Now extract the momentary values
         str_cur_production_w = inverter_data["Body"]["Data"]["Site"]["P_PV"]
-        cur_production_kw = float(str_cur_production_w) * 0.001
+        cur_production_kw = 0.0 if str_cur_production_w is None else float(str_cur_production_w) * 0.001
         str_grid_power_w = inverter_data["Body"]["Data"]["Site"]["P_Grid"]
         grid_power_kw = float(str_grid_power_w) * 0.001
         cur_feed_in_kw = (-grid_power_kw) if grid_power_kw < 0.0 else 0.0
