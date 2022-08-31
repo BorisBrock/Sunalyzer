@@ -48,14 +48,22 @@ def insert_historical_values(
 
 
 # Helper function to insert current values into the DB
-def insert_current_values(db, produced, consumed_grid, consumed_pv, consumed_total, fed_in):
+def insert_current_values(
+        db,
+        produced,
+        consumed_grid,
+        consumed_pv,
+        consumed_total,
+        fed_in):
     '''Helper function to insert current values into the DB.'''
     rows = db.execute("SELECT * FROM current WHERE date='cur'")
 
     if len(rows) == 0:
         # Create day row
         query = (f"INSERT INTO current VALUES ('cur', "
-                 f"{str(produced)}, {str(consumed_grid)}, {str(consumed_pv)}, {str(consumed_total)}, {str(fed_in)})")
+                 f"{str(produced)}, {str(consumed_grid)}, "
+                 f"{str(consumed_pv)}, {str(consumed_total)}, "
+                 f"{str(fed_in)})")
         db.execute(query)
     else:
         # Update existing row
