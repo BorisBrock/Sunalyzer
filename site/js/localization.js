@@ -35,12 +35,12 @@ let translations = [
     ["dash_text_currently_fed_in", "Currently fed in", "Aktuell eingespeist"],
 
     ["dash_text_today_produced", "Produced today", "Heute erzeugt"],
-    ["dash_text_today_consumed", "Consumed today", "Heute vebraucht"],
+    ["dash_text_today_consumed", "Consumed today", "Heute verbraucht"],
     ["dash_text_today_fed_in", "Fed in today", "Heute eingespeist"],
     ["dash_text_today_earned", "Earned today", "Heute verdient"],
 
     ["dash_text_all_time_produced", "Produced in total", "Insgesamt erzeugt"],
-    ["dash_text_all_time_consumed", "Consumed in total", "Insgesamt vebraucht"],
+    ["dash_text_all_time_consumed", "Consumed in total", "Insgesamt verbraucht"],
     ["dash_text_all_time_fed_in", "Fed in total", "Insgesamt eingespeist"],
     ["dash_text_all_time_earned", "Earned in total", "Insgesamt verdient"],
 
