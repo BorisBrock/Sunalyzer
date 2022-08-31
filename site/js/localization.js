@@ -61,7 +61,7 @@ let translations = [
     ["history_card_graph_consumption_text", "Consumption Details", "Zeitverlauf des Verbrauchs"],
     ["history_card_autarky", "Autarky", "Autarkie"],
     ["history_text_autarky", "Achieved autarky", "Erreichte Autarkie"],
-    
+
 
     // CSV download
     ["csv_subtitle", "Download .csv reports ", "Report-Dateien im .csv-Format herunterladen"],
@@ -109,9 +109,9 @@ let translations = [
 
 let chartStrings = [
     // HTML element ID          English (1)             German (2)
-    ["chart_produced_kwh", "Produced [kWh]", "Erzeugt [kWh]"],
-    ["chart_consumed_kwh", "Consumed [kWh]", "Verbraucht [kWh]"],
-    ["chart_fed_in_kwh", "Fed in [kWh]", "Eingespeist [kWh]"],
+    ["chart_produced_w", "Production [W]", "Erzeugung [W]"],
+    ["chart_consumed_w", "Consumption [W]", "Verbrauch [W]"],
+    ["chart_fed_in_w", "Feed-in [W]", "Einspeisung [W]"],
     ["chart_from_grid", "From grid", "Aus dem Netz"],
     ["chart_from_pv", "From PV", "Aus PV"],
     ["chart_produced", "Produced", "Erzeugt"],
@@ -232,4 +232,8 @@ let monthNames = [
 
 function getMonthName(index) {
     return monthNames[index][gCurLang - 1];
+}
+
+function getLocale() {
+    return gCurLang == gLangDe ? "de" : "en";
 }
