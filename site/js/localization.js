@@ -30,7 +30,8 @@ let translations = [
     ["dash_card_24h", "Last 24 Hours", "Die letzten 24 Stunden"],
 
     ["dash_text_currently_produced", "Currently produced", "Aktuell erzeugt"],
-    ["dash_text_currently_consumed", "Currently consumed", "Aktuell verbraucht"],
+    ["dash_text_currently_consumed_grid", "Consumed from grid", "Netzbezug"],
+    ["dash_text_currently_consumed_pv", "Consumed from PV", "Direktverbrauch"],
     ["dash_text_currently_fed_in", "Currently fed in", "Aktuell eingespeist"],
 
     ["dash_text_today_produced", "Produced today", "Heute erzeugt"],
