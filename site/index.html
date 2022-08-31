@@ -106,10 +106,22 @@
                                 id="dashboard_subtitle_time">...</span></li>
                     </ol>
 
-                    <div class="row row-cols-1 row-cols-md-2">
+                    <div class="row row-cols-1">
+
+                        <!-- Column Info Graphic -->
+                        <div class="col-xl-6 col-xxl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="dash_card_current">Overview</span>
+                                </div>
+                                <div class="card-body align-items-center d-flex justify-content-center">
+                                    <canvas class="paper-canvas" id="dashboard_info_graphic" width="240" height="240"></canvas>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Column Current -->
-                        <div class="col-xl-4">
+                        <div class="col-xl-6 col-xxl-3">
                             <div class="card mb-4">
                                 <div class="card-header h5">
                                     <span id="dash_card_current">Current</span>
@@ -148,7 +160,7 @@
                         </div>
 
                         <!-- Column Today -->
-                        <div class="col-xl-4">
+                        <div class="col-xl-6 col-xxl-3">
                             <div class="card mb-4">
                                 <div class="card-header h5">
                                     <span id="dash_card_today">Today</span>
@@ -187,7 +199,7 @@
                         </div>
 
                         <!-- Column All Time -->
-                        <div class="col-xl-4">
+                        <div class="col-xl-6 col-xxl-3">
                             <div class="card mb-4">
                                 <div class="card-header h5">
                                     <span id="dash_card_all_time">All Time</span>
@@ -744,6 +756,8 @@
     <script src="lib/chartjs-plugin-labels.min.js"></script>
     <script src="lib/chartjs-plugin-zoom.min.js"></script>
     <script src="js/chart_factory.js"></script>
+    <script src="lib/paper-full.min.js"></script>
+    <script src="js/info_graphic.js"></script>
     <script src="js/main.js"></script>
 </body>
 
