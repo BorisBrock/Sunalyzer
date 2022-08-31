@@ -122,7 +122,7 @@ function createDashboardChart(canvasId, data) {
     const chart_data = {
         labels: labels,
         datasets: [{
-            label: getChartString("chart_produced_kwh"),
+            label: getChartString("chart_produced_w"),
             data: [],
             fill: true,
             borderColor: COLOR_PRODUCTION_SELF_CONSUMED,
@@ -130,7 +130,7 @@ function createDashboardChart(canvasId, data) {
             borderWidth: 2
         },
         {
-            label: getChartString("chart_consumed_kwh"),
+            label: getChartString("chart_consumed_w"),
             data: [],
             fill: true,
             borderColor: COLOR_CONSUMED_FROM_GRID,
@@ -138,7 +138,7 @@ function createDashboardChart(canvasId, data) {
             borderWidth: 2
         },
         {
-            label: getChartString("chart_fed_in_kwh"),
+            label: getChartString("chart_fed_in_w"),
             data: [],
             fill: true,
             borderColor: COLOR_PRODUCTION_FED_IN,
@@ -149,9 +149,9 @@ function createDashboardChart(canvasId, data) {
 
     for (index = 0; index < data.length; index++) {
         labels.push(data[index][1]); // Element 1 = time
-        chart_data.datasets[0].data.push(data[index][2]);
-        chart_data.datasets[1].data.push(data[index][3]);
-        chart_data.datasets[2].data.push(data[index][4]);
+        chart_data.datasets[0].data.push(data[index][2] * 1000.0);
+        chart_data.datasets[1].data.push(data[index][3] * 1000.0);
+        chart_data.datasets[2].data.push(data[index][4] * 1000.0);
     }
 
     if (gChartDashboard != null) gChartDashboard.destroy();
@@ -172,7 +172,8 @@ function createDashboardChart(canvasId, data) {
             interaction: {
                 mode: 'index',
                 intersect: false
-            }
+            },
+            locale: getLocale()
         }
     });
 }
