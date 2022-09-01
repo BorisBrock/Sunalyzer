@@ -154,9 +154,8 @@ def get_json_data_statistics():
     }
     return json.dumps(data)
 
+
 # Returns JSON response containing available years
-
-
 def get_json_data_dates():
     '''Returns JSON response containing available years.'''
     db = Database("data/db.sqlite")

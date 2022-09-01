@@ -13,6 +13,7 @@ let translations = [
     // Side bar
     ["sidebar_headline_overview", "Overview", "Übersicht"],
     ["sidebar_today", "Today", "Heute"],
+    ["sidebar_statistics", "Statistics", "Statistiken"],
     ["sidebar_headline_history", "History", "Historie"],
     ["sidebar_by_day", "By Day", "Nach Tag"],
     ["sidebar_by_month", "By Month", "Nach Monat"],
