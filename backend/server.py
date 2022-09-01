@@ -138,12 +138,19 @@ def get_json_data_current():
 # Returns JSON response containing available years
 def get_json_data_statistics():
     '''Returns JSON response containing inverter statistics.'''
+    # Date based data
     start_date = config.config_data['device']['start_date']
     num_days = (date.today() - start_date).days
+    # Averages
+    db = Database("data/db.sqlite")
+    rows_all_time = db.execute("SELECT * FROM all_time")
+    total_production_kwh = rows_all_time[0][2]
+    average_production_kwhpd = total_production_kwh / num_days
     data = {
         "state": "ok",
         "start_of_operation": str(start_date),
         "days_of_operation": num_days,
+        "average_daily_production_kwh": average_production_kwhpd
     }
     return json.dumps(data)
 
