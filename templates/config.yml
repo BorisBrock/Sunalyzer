@@ -11,7 +11,8 @@ time_zone: "Europe/Berlin"
 #  - Dummy: a simple dummy devices that can be used for testing
 #  - Fronius: supports Fronius Symo/GEN24 inverters + smar meter
 device:
-  type: Dummy   # Name of the device to load (must match an existing device .py file/class)
+  type:        Dummy       # Name of the device to load (must match an existing device .py file/class)
+  start_date:  2020-08-01  # The start of operation (YYYY-MM-DD)
 
 # Device specific settings. These depend on the selected device adapter
 # Enable if you want to use Fronius hardware

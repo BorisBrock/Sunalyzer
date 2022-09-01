@@ -1,5 +1,5 @@
 import json
-from datetime import date
+from datetime import date, datetime
 import traceback
 from flask import Flask, request, send_from_directory, make_response
 
@@ -69,7 +69,9 @@ def get_csv():
         rows = db.execute(query)
 
         # Build file name
-        file_name = (f"Sunalyzer_{_date}.csv") if len(_date) > 0 else "Sunalyzer_All.csv"
+        file_name = (
+            f"Sunalyzer_{_date}.csv" if len(_date) > 0
+            else "Sunalyzer_All.csv")
 
         # Convert rows to CSV
         csv = rows_to_csv(rows)
@@ -134,6 +136,20 @@ def get_json_data_current():
 
 
 # Returns JSON response containing available years
+def get_json_data_statistics():
+    '''Returns JSON response containing inverter statistics.'''
+    start_date = config.config_data['device']['start_date']
+    num_days = (date.today() - start_date).days
+    data = {
+        "state": "ok",
+        "start_of_operation": str(start_date),
+        "days_of_operation": num_days,
+    }
+    return json.dumps(data)
+
+# Returns JSON response containing available years
+
+
 def get_json_data_dates():
     '''Returns JSON response containing available years.'''
     db = Database("data/db.sqlite")
@@ -273,6 +289,9 @@ def handle_request():
             return data
         elif _type == "years_in_all_time":
             data = get_json_data_history_details("years", "")
+            return data
+        elif _type == "statistics":
+            data = get_json_data_statistics()
             return data
 
     except Exception:
