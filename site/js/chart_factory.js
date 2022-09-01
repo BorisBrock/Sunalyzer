@@ -118,64 +118,81 @@ function createUsageChart(canvasId, fedInPercentage, selfPercentage) {
 // Creates a chart for the dashboard view
 function createDashboardChart(canvasId, data) {
 
-    const labels = [];
-    const chart_data = {
-        labels: labels,
-        datasets: [{
-            label: getChartString("chart_produced_w"),
-            data: [],
-            fill: true,
-            borderColor: COLOR_PRODUCTION_SELF_CONSUMED,
-            backgroundColor: COLOR_PRODUCTION_SELF_CONSUMED_FILL,
-            borderWidth: 2
-        },
-        {
-            label: getChartString("chart_consumed_w"),
-            data: [],
-            fill: true,
-            borderColor: COLOR_CONSUMED_FROM_GRID,
-            backgroundColor: COLOR_CONSUMED_FROM_GRID_FILL,
-            borderWidth: 2
-        },
-        {
-            label: getChartString("chart_fed_in_w"),
-            data: [],
-            fill: true,
-            borderColor: COLOR_PRODUCTION_FED_IN,
-            backgroundColor: COLOR_PRODUCTION_FED_IN_FILL,
-            borderWidth: 2
-        }]
-    };
+    if (gChartDashboard == null) {
+        // Create new chart
+        const labels = [];
+        const chart_data = {
+            labels: labels,
+            datasets: [{
+                label: getChartString("chart_produced_w"),
+                data: [],
+                fill: true,
+                borderColor: COLOR_PRODUCTION_SELF_CONSUMED,
+                backgroundColor: COLOR_PRODUCTION_SELF_CONSUMED_FILL,
+                borderWidth: 2
+            },
+            {
+                label: getChartString("chart_consumed_w"),
+                data: [],
+                fill: true,
+                borderColor: COLOR_CONSUMED_FROM_GRID,
+                backgroundColor: COLOR_CONSUMED_FROM_GRID_FILL,
+                borderWidth: 2
+            },
+            {
+                label: getChartString("chart_fed_in_w"),
+                data: [],
+                fill: true,
+                borderColor: COLOR_PRODUCTION_FED_IN,
+                backgroundColor: COLOR_PRODUCTION_FED_IN_FILL,
+                borderWidth: 2
+            }]
+        };
 
-    for (index = 0; index < data.length; index++) {
-        labels.push(data[index][1]); // Element 1 = time
-        chart_data.datasets[0].data.push(data[index][2] * 1000.0);
-        chart_data.datasets[1].data.push(data[index][3] * 1000.0);
-        chart_data.datasets[2].data.push(data[index][4] * 1000.0);
-    }
-
-    if (gChartDashboard != null) gChartDashboard.destroy();
-    gChartDashboard = new Chart(canvasId, {
-        type: "line",
-        responsive: true,
-        data: chart_data,
-        options: {
-            maintainAspectRatio: false,
-            title: {
-                display: false
-            },
-            elements: {
-                point: {
-                    radius: 0
-                }
-            },
-            interaction: {
-                mode: 'index',
-                intersect: false
-            },
-            locale: getLocale()
+        for (index = 0; index < data.length; index++) {
+            labels.push(data[index][1]); // Element 1 = time
+            chart_data.datasets[0].data.push(data[index][2] * 1000.0);
+            chart_data.datasets[1].data.push(data[index][3] * 1000.0);
+            chart_data.datasets[2].data.push(data[index][4] * 1000.0);
         }
-    });
+
+        gChartDashboard = new Chart(canvasId, {
+            type: "line",
+            responsive: true,
+            data: chart_data,
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                    display: false
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                locale: getLocale()
+            }
+        });
+    }
+    else {
+        // Update chart
+        gChartDashboard.data.labels = [];
+        gChartDashboard.data.datasets[0].data = [];
+        gChartDashboard.data.datasets[1].data = [];
+        gChartDashboard.data.datasets[2].data = [];
+
+        for (index = 0; index < data.length; index++) {
+            gChartDashboard.data.labels.push(data[index][1]); // Element 1 = time
+            gChartDashboard.data.datasets[0].data.push(data[index][2] * 1000.0);
+            gChartDashboard.data.datasets[1].data.push(data[index][3] * 1000.0);
+            gChartDashboard.data.datasets[2].data.push(data[index][4] * 1000.0);
+        }
+        gChartDashboard.update();
+    }
 }
 
 // Creates a chart showing history details
