@@ -114,7 +114,8 @@ def create_new_db():
     # Current data table
     query = ("create table if not exists current"
              "(date STRING PRIMARY KEY, "
-             "produced REAL, consumed_grid REAL, consumed_pv REAL, consumed_total REAL, fed_in REAL)")
+             "produced REAL, consumed_grid REAL, consumed_pv REAL, "
+             "consumed_total REAL, fed_in REAL)")
     new_db.execute(query)
 
     # Real time data table
@@ -201,7 +202,7 @@ def update_data(device):
         device.total_energy_consumed_kwh,
         device.total_energy_fed_in_kwh)
 
-    # Also store the current values
+    # Store the current values
     insert_current_values(
         db,
         device.current_power_produced_kw,
@@ -210,7 +211,7 @@ def update_data(device):
         device.current_power_consumed_total_kw,
         device.current_power_fed_in_kw)
 
-    # Also store the real time data
+    # Store the real time data
     real_time_seconds_counter = real_time_seconds_counter - \
         config.config_data['grabber']['interval_s']
     if real_time_seconds_counter <= 0:
