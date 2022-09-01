@@ -52,7 +52,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-grip"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="javascript:showViewHistory(histories.TODAY);collapseSidebar();">
+                        <a class="nav-link" href="javascript:showViewStatistics();collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-simple"></i></div>
                             <div id="sidebar_statistics">Statistics</div>
                         </a>
@@ -237,6 +237,51 @@
                                 </div>
                                 <div class="card-body">
                                     <canvas id="chart_dashboard" height="250"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Statistics View -->
+                <div class="container-fluid px-4" id="view_statistics">
+                    <h1 class="mt-4">Statistics</h1>
+
+                    <div class="row row-cols-1 row-cols-md-2">
+
+                        <!-- Column TODO -->
+                        <div class="col-xl-4">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="dash_card_current">TODO</span>
+                                </div>
+                                <div class="card-body">
+                                 
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Today -->
+                        <div class="col-xl-4">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="dash_card_today">TODO</span>
+                                </div>
+                                <div class="card-body">
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column TODO -->
+                        <div class="col-xl-4">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="dash_card_all_time">TODO</span>
+                                </div>
+                                <div class="card-body">
+                                  
                                 </div>
                             </div>
                         </div>

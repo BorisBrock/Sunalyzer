@@ -250,17 +250,52 @@ async function fetchHistoryDetailsJSON() {
     return stats;
 }
 
+function updateStatistics() {
+    // Update stats
+    fetchStatisticsJSON().then(stats => {
+        //console.log(stats);
+        if (stats["state"] == "ok") {
+            setElementVisible("row_error_banner", false);
+            setElementVisible("row_history_data", true);
+
+            TODO
+        }
+        else {
+            setElementVisible("row_error_banner", true);
+            setElementVisible("row_history_data", false);
+        }
+    });
+}
+
+// Async function to get the statistics stats
+async function fetchStatisticsJSON() {
+    const response = await fetch(gBaseUrl + 'query?type=statistics');
+    const stats = await response.json();
+    return stats;
+}
+
 
 
 function showViewDashboard() {
     setElementVisible("view_dashboard", true);
+    setElementVisible("view_statistics", false);
     setElementVisible("view_history", false);
     setElementVisible("view_csv", false);
     gDashboardVisible = true;
 }
 
+function showViewStatistics() {
+    setElementVisible("view_dashboard", false);
+    setElementVisible("view_statistics", true);
+    setElementVisible("view_history", false);
+    setElementVisible("view_csv", false);
+    gDashboardVisible = false;
+    updateStatistics();
+}
+
 function showViewHistory(mode) {
     setElementVisible("view_dashboard", false);
+    setElementVisible("view_statistics", false);
     setElementVisible("view_history", true);
     setElementVisible("view_csv", false);
     gDashboardVisible = false;
@@ -311,6 +346,7 @@ function showViewHistory(mode) {
 
 function showViewCsv() {
     setElementVisible("view_dashboard", false);
+    setElementVisible("view_statistics", false);
     setElementVisible("view_history", false);
     setElementVisible("view_csv", true);
     gDashboardVisible = false;
