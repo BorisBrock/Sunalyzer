@@ -366,36 +366,36 @@ function updateCsvDateSelector() {
 
 
 function datePrev() {
-    const date = new Date(gCurDate)
-    if(gCurHistory == histories.DAY) {
+    let date = new Date(gCurDate)
+    if (gCurHistory == histories.DAY || gCurHistory == histories.TODAY) {
         date.setDate(date.getDate() - 1);
     }
-    else if(gCurHistory == histories.MONTH) {
+    else if (gCurHistory == histories.MONTH) {
         date.setMonth(date.getMonth() - 1);
     }
-    else if(gCurHistory == histories.YEAR) {
+    else if (gCurHistory == histories.YEAR) {
         date.setFullYear(date.getFullYear() - 1);
     }
 
-    if(date < gMinDate) return;
+    if (date < gMinDate) date = new Date(gMinDate);
 
     selectDate(date);
     updateHistoryStats();
 }
 
 function dateNext() {
-    const date = new Date(gCurDate)
-    if(gCurHistory == histories.DAY) {
+    let date = new Date(gCurDate)
+    if (gCurHistory == histories.DAY || gCurHistory == histories.TODAY) {
         date.setDate(date.getDate() + 1);
     }
-    else if(gCurHistory == histories.MONTH) {
+    else if (gCurHistory == histories.MONTH) {
         date.setMonth(date.getMonth() + 1);
     }
-    else if(gCurHistory == histories.YEAR) {
+    else if (gCurHistory == histories.YEAR) {
         date.setFullYear(date.getFullYear() + 1);
     }
 
-    if(date > gMaxDate) return;
+    if (date > gMaxDate) date = new Date(gMaxDate);
 
     selectDate(date);
     updateHistoryStats();
