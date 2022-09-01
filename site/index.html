@@ -246,42 +246,81 @@
 
                 <!-- Statistics View -->
                 <div class="container-fluid px-4" id="view_statistics">
-                    <h1 class="mt-4">Statistics</h1>
+                    <h1 class="mt-4" id="headline_statistics">Statistics</h1>
 
+                    <div class="row row-cols-2 row-cols-md-4 pt-5">
+
+                        <!-- Column Highest Production -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_highest_prod">Highest Production</span>
+                                </div>
+                                <div class="card-body">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Best Day -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_best_day">Best Day</span>
+                                </div>
+                                <div class="card-body">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Best Month -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_best_month">Best Month</span>
+                                </div>
+                                <div class="card-body">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Best Year -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_best_year">Best Year</span>
+                                </div>
+                                <div class="card-body">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="row row-cols-1 row-cols-md-2">
 
-                        <!-- Column TODO -->
-                        <div class="col-xl-4">
+                        <!-- Column Averages -->
+                        <div class="col-xl-6">
                             <div class="card mb-4">
                                 <div class="card-header h5">
-                                    <span id="dash_card_current">TODO</span>
+                                    <span id="stats_card_averages">Averages</span>
                                 </div>
                                 <div class="card-body">
-                                 
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Column Today -->
-                        <div class="col-xl-4">
+                        <!-- Column Runtime -->
+                        <div class="col-xl-6">
                             <div class="card mb-4">
                                 <div class="card-header h5">
-                                    <span id="dash_card_today">TODO</span>
+                                    <span id="stats_card_runtime">Runtime</span>
                                 </div>
                                 <div class="card-body">
-                                   
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Column TODO -->
-                        <div class="col-xl-4">
-                            <div class="card mb-4">
-                                <div class="card-header h5">
-                                    <span id="dash_card_all_time">TODO</span>
-                                </div>
-                                <div class="card-body">
-                                  
                                 </div>
                             </div>
                         </div>
@@ -297,7 +336,8 @@
                         <div class="col-xl-6">
                             <div class="d-flex flex-row">
                                 <!-- BACK -->
-                                <button type="button" class="btn btn-outline-secondary me-2" onclick="datePrev();"><i class="fa-solid fa-angle-left"></i></button>
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="datePrev();"><i
+                                        class="fa-solid fa-angle-left"></i></button>
                                 <!-- Year -->
                                 <div id="selection_year">
                                     <select class="form-select" aria-label="Default select example" id="selection_year2"
@@ -329,7 +369,8 @@
                                     </select>
                                 </div>
                                 <!-- FORWARD -->
-                                <button type="button" class="btn btn-outline-secondary ms-2" onclick="dateNext();"><i class="fa-solid fa-angle-right"></i></button>
+                                <button type="button" class="btn btn-outline-secondary ms-2" onclick="dateNext();"><i
+                                        class="fa-solid fa-angle-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -369,7 +410,8 @@
                                                 <tr>
                                                     <td><i class="fas fa-lightbulb me-1"></i></td>
                                                     <td id="history_text_self_consumed">Self consumed</td>
-                                                    <td style="text-align:right" id="history_stat_self_consumed">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_self_consumed">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                             </tbody>
@@ -390,7 +432,8 @@
                                                 <tr class="fw-bold">
                                                     <td><i class="fas fa-lightbulb me-1"></i></td>
                                                     <td id="history_text_consumption_total">Total consumption</td>
-                                                    <td style="text-align:right" id="history_stat_consumption_total">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_consumption_total">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                             </tbody>
@@ -403,13 +446,15 @@
                                                 <tr>
                                                     <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
                                                     <td id="history_text_consumption_grid">Consumption from grid</td>
-                                                    <td style="text-align:right" id="history_stat_consumption_grid">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_consumption_grid">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-solar-panel me-1"></i></td>
                                                     <td id="history_text_consumption_self">Consumption from PV</td>
-                                                    <td style="text-align:right" id="history_stat_consumption_self">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_consumption_self">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                             </tbody>
@@ -451,7 +496,8 @@
                                                 <tr>
                                                     <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
                                                     <td id="history_text_earned_feedin">Earned with feed-in</td>
-                                                    <td style="text-align:right" id="history_stat_earned_feedin">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_earned_feedin">0.0
+                                                    </td>
                                                     <td>€</td>
                                                 </tr>
                                                 <tr>

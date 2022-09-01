@@ -5,7 +5,7 @@ let gLangDe = 2;
 let gCurLang = gLangEn;
 
 let translations = [
-    // HTML element ID              English (1)     German (2)
+    // HTML element ID  English (1)  German (2)
 
     // Navigation bar
     ["navbar_dropdown_language", "Language", "Sprache"],
@@ -21,6 +21,15 @@ let translations = [
     ["sidebar_all_time", "All Time", "Gesamt"],
     ["sidebar_headline_misc", "Misc", "Sonstiges"],
     ["sidebar_csv", "CSV Download", "CSV-Download"],
+
+    // Statistics
+    ["headline_statistics", "Statistics", "Statistiken"],
+    ["stats_card_highest_prod", "Highest Production", "Höchste Erzeugung"],
+    ["stats_card_best_day", "Best Day", "Bester Tag"],
+    ["stats_card_best_month", "Best Month", "Bester Monat"],
+    ["stats_card_best_year", "Best Year", "Bestes Jahr"],
+    ["stats_card_averages", "Averages ", "Durchschnittswerte"],
+    ["stats_card_runtime", "Runtime ", "Laufzeit"],
 
     // Dashboard
     ["dashboard_subtitle", "Last updated: ", "Letzte Aktualisierung: "],
