@@ -28,7 +28,7 @@ window.addEventListener('DOMContentLoaded', event => {
     restoreLanguage();
     setInterval(updateTime, 1000);
     setInterval(updateCurrentStats, 3000);
-    setInterval(updateRealTimeGraph, 60000);
+    setInterval(updateRealTimeGraph, 5000);
     showViewDashboard();
     updateCurrentStats();
     updateRealTimeGraph();
