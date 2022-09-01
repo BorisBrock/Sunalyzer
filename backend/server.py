@@ -146,11 +146,16 @@ def get_json_data_statistics():
     rows_all_time = db.execute("SELECT * FROM all_time")
     total_production_kwh = rows_all_time[0][2]
     average_production_kwhpd = total_production_kwh / num_days
+    # Best day
+    rows_best_day = db.execute(
+        "SELECT date, MAX(produced_b-produced_a) AS produced_kwh FROM days")
     data = {
         "state": "ok",
         "start_of_operation": str(start_date),
         "days_of_operation": num_days,
-        "average_daily_production_kwh": average_production_kwhpd
+        "average_daily_production_kwh": average_production_kwhpd,
+        "best_day_date": rows_best_day[0][0],
+        "best_day_production_kwh": rows_best_day[0][1],
     }
     return json.dumps(data)
 
