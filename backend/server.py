@@ -167,6 +167,8 @@ def get_json_data_statistics():
         "best_month_production_kwh": rows_best_month[0][1],
         "best_year_date": rows_best_year[0][0],
         "best_year_production_kwh": rows_best_year[0][1],
+        "highest_production_w": 77.7,  # TODO
+        "highest_production_date": "2077-77-77",  # TODO
     }
     return json.dumps(data)
 

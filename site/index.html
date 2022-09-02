@@ -257,8 +257,8 @@
                                     <span id="stats_card_highest_prod">Highest Production</span>
                                 </div>
                                 <div class="card-body text-center">
-                                    <p class="fs-2 fw-bold">9500 W</p>
-                                    <p class="fs-6 text-secondary">am 2022-06-01</p>
+                                    <p class="fs-2 fw-light" id="stats_highest_prod_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_highest_prod_date">...</p>
                                 </div>
                             </div>
                         </div>
@@ -270,8 +270,8 @@
                                     <span id="stats_card_best_day">Best Day</span>
                                 </div>
                                 <div class="card-body text-center">
-                                    <p class="fs-2 fw-bold">55.03 kWh</p>
-                                    <p class="fs-6 text-secondary">am 2022-06-01</p>
+                                    <p class="fs-2 fw-light" id="stats_best_day_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_best_day_date">...</p>
                                 </div>
                             </div>
                         </div>
@@ -283,8 +283,8 @@
                                     <span id="stats_card_best_month">Best Month</span>
                                 </div>
                                 <div class="card-body text-center">
-                                    <p class="fs-2 fw-bold">600 kWh</p>
-                                    <p class="fs-6 text-secondary">am 2022-06</p>
+                                    <p class="fs-2 fw-light" id="stats_best_month_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_best_month_date">...</p>
                                 </div>
                             </div>
                         </div>
@@ -296,8 +296,8 @@
                                     <span id="stats_card_best_year">Best Year</span>
                                 </div>
                                 <div class="card-body text-center">
-                                    <p class="fs-2 fw-bold">3000 kWh</p>
-                                    <p class="fs-6 text-secondary">in 2022</p>
+                                    <p class="fs-2 fw-light" id="stats_best_year_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_best_year_date">...</p>
                                 </div>
                             </div>
                         </div>
@@ -312,7 +312,16 @@
                                     <span id="stats_card_averages">Averages</span>
                                 </div>
                                 <div class="card-body">
-
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="statistics_text_avg_daily_prod">Average daily production</td>
+                                                <td style="text-align:right" id="statistics_value_avg_daily_prod">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -324,7 +333,20 @@
                                     <span id="stats_card_runtime">Runtime</span>
                                 </div>
                                 <div class="card-body">
-
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-flag-checkered me-1"></i></td>
+                                                <td id="statistics_text_start_date">Date of commissioning</td>
+                                                <td style="text-align:right" id="statistics_value_start_date">...</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-clock me-1"></i></td>
+                                                <td id="statistics_text_runtime">Total runtime</td>
+                                                <td style="text-align:right" id="statistics_value_runtime">...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

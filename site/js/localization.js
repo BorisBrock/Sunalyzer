@@ -30,6 +30,9 @@ let translations = [
     ["stats_card_best_year", "Best Year", "Bestes Jahr"],
     ["stats_card_averages", "Averages ", "Durchschnittswerte"],
     ["stats_card_runtime", "Runtime ", "Laufzeit"],
+    ["statistics_text_avg_daily_prod", "Average daily production ", "Durchschn. täglich erzeugt"],
+    ["statistics_text_start_date", "Date of commissioning ", "Inbetriebnahme der Anlage"],
+    ["statistics_text_runtime", "Total runtime ", "Laufzeit der Anlage"],
 
     // Dashboard
     ["dashboard_subtitle", "Last updated: ", "Letzte Aktualisierung: "],

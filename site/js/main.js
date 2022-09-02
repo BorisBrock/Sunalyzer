@@ -255,14 +255,22 @@ function updateStatistics() {
     fetchStatisticsJSON().then(stats => {
         //console.log(stats);
         if (stats["state"] == "ok") {
-            setElementVisible("row_error_banner", false);
-            setElementVisible("row_history_data", true);
+            document.getElementById("stats_highest_prod_value").innerHTML = numFormat(stats["highest_production_w"], 0) + " W";
+            document.getElementById("stats_highest_prod_date").innerHTML = stats["highest_production_date"];
 
-            TODO
-        }
-        else {
-            setElementVisible("row_error_banner", true);
-            setElementVisible("row_history_data", false);
+            document.getElementById("stats_best_day_value").innerHTML = numFormat(stats["best_day_production_kwh"], 2) + " kWh";
+            document.getElementById("stats_best_day_date").innerHTML = stats["best_day_date"];
+
+            document.getElementById("stats_best_month_value").innerHTML = numFormat(stats["best_month_production_kwh"], 2) + " kWh";
+            document.getElementById("stats_best_month_date").innerHTML = stats["best_month_date"];
+
+            document.getElementById("stats_best_year_value").innerHTML = numFormat(stats["best_year_production_kwh"], 2) + " kWh";
+            document.getElementById("stats_best_year_date").innerHTML = stats["best_year_date"];
+
+            document.getElementById("statistics_value_avg_daily_prod").innerHTML = numFormat(stats["average_daily_production_kwh"], 2);
+
+            document.getElementById("statistics_value_start_date").innerHTML = stats["start_of_operation"];
+            document.getElementById("statistics_value_runtime").innerHTML = stats["days_of_operation"];
         }
     });
 }
