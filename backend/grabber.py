@@ -77,6 +77,34 @@ def insert_current_values(
         db.execute(query)
 
 
+# Helper function to insert the high score values into the DB
+def insert_high_scores(
+        db,
+        date_str,
+        current_production_kw):
+    '''Helper function to insert high score values into the DB.'''
+    # Make sure table exists
+    query = ("CREATE TABLE IF NOT EXISTS highscores "
+             "(type STRING PRIMARY KEY, date STRING, value REAL)")
+    db.execute(query)
+    # Get current value
+    query = "SELECT * FROM highscores WHERE type IS 'production'"
+    rows = db.execute(query)
+    if not rows:
+        cur_high_score_value = 0.0
+        query = ("INSERT INTO highscores (type,date,value) "
+                 "VALUES('production','...',0.0);")
+        db.execute(query)
+    else:
+        cur_high_score_value = rows[0][2]
+    # Check if we have a high score
+    if current_production_kw > cur_high_score_value:
+        query = (f"UPDATE highscores SET "
+                 f"value = {str(current_production_kw)}, "
+                 f"date = '{date_str}' WHERE type IS 'production'")
+        db.execute(query)
+
+
 # Helper function to insert new values into the DB
 def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
     '''Helper function to insert new values into the DB.'''
@@ -128,6 +156,14 @@ def create_new_db():
         query = (f"INSERT INTO real_time VALUES"
                  f"('{str(x)}', '...', '0.0', '0.0', '0.0')")
         new_db.execute(query)
+
+    # Add highscores
+    query = ("CREATE TABLE IF NOT EXISTS highscores "
+             "(type STRING PRIMARY KEY, date STRING, value REAL)")
+    new_db.execute(query)
+    query = ("INSERT INTO highscores (type,date,value) "
+             "VALUES('production','...',0.0);")
+    new_db.execute(query)
 
 
 # Loads the device class with the given name
@@ -210,6 +246,9 @@ def update_data(device):
         device.current_power_consumed_from_pv_kw,
         device.current_power_consumed_total_kw,
         device.current_power_fed_in_kw)
+
+    # Store the high scores
+    insert_high_scores(db, day_string, device.current_power_produced_kw)
 
     # Store the real time data
     real_time_seconds_counter = real_time_seconds_counter - \

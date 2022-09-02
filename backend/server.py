@@ -155,6 +155,9 @@ def get_json_data_statistics():
     # Best year
     rows_best_year = db.execute(
         "SELECT date, MAX(produced_b-produced_a) AS produced_kwh FROM years")
+    # Highest production
+    rows_highest_prod = db.execute(
+        "SELECT * FROM highscores WHERE type IS 'production'")
     # Assemble result data set
     data = {
         "state": "ok",
@@ -167,8 +170,8 @@ def get_json_data_statistics():
         "best_month_production_kwh": rows_best_month[0][1],
         "best_year_date": rows_best_year[0][0],
         "best_year_production_kwh": rows_best_year[0][1],
-        "highest_production_w": 77.7,  # TODO
-        "highest_production_date": "2077-77-77",  # TODO
+        "highest_production_w": rows_highest_prod[0][2],
+        "highest_production_date": rows_highest_prod[0][1],
     }
     return json.dumps(data)
 
