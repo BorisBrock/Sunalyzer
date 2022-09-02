@@ -250,3 +250,27 @@ function getMonthName(index) {
 function getLocale() {
     return gCurLang == gLangDe ? "de" : "en";
 }
+
+function getUnitDays() {
+    return gCurLang == gLangDe ? "Tage" : "days";
+}
+
+function prettyPrintDateString(date) {
+    var d = new Date(date)
+    let localeDate = d.toLocaleString(getLocale(), {
+        weekday: "long",
+        day: "numeric",
+        year: "numeric",
+        month: "long",
+    });
+    return localeDate;
+}
+
+function prettyPrintDateStringWithoutDay(date) {
+    var d = new Date(date)
+    let localeDate = d.toLocaleString(getLocale(), {
+        year: "numeric",
+        month: "long",
+    });
+    return localeDate;
+}
