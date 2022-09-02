@@ -5,7 +5,7 @@ let gLangDe = 2;
 let gCurLang = gLangEn;
 
 let translations = [
-    // HTML element ID              English (1)     German (2)
+    // HTML element ID  English (1)  German (2)
 
     // Navigation bar
     ["navbar_dropdown_language", "Language", "Sprache"],
@@ -13,6 +13,7 @@ let translations = [
     // Side bar
     ["sidebar_headline_overview", "Overview", "Übersicht"],
     ["sidebar_today", "Today", "Heute"],
+    ["sidebar_statistics", "Statistics", "Statistiken"],
     ["sidebar_headline_history", "History", "Historie"],
     ["sidebar_by_day", "By Day", "Nach Tag"],
     ["sidebar_by_month", "By Month", "Nach Monat"],
@@ -20,6 +21,18 @@ let translations = [
     ["sidebar_all_time", "All Time", "Gesamt"],
     ["sidebar_headline_misc", "Misc", "Sonstiges"],
     ["sidebar_csv", "CSV Download", "CSV-Download"],
+
+    // Statistics
+    ["headline_statistics", "Statistics", "Statistiken"],
+    ["stats_card_highest_prod", "Highest Production", "Höchste Erzeugung"],
+    ["stats_card_best_day", "Best Day", "Bester Tag"],
+    ["stats_card_best_month", "Best Month", "Bester Monat"],
+    ["stats_card_best_year", "Best Year", "Bestes Jahr"],
+    ["stats_card_averages", "Averages ", "Durchschnittswerte"],
+    ["stats_card_runtime", "Runtime ", "Laufzeit"],
+    ["statistics_text_avg_daily_prod", "Average daily production ", "Durchschn. täglich erzeugt"],
+    ["statistics_text_start_date", "Date of commissioning ", "Inbetriebnahme der Anlage"],
+    ["statistics_text_runtime", "Total runtime ", "Laufzeit der Anlage"],
 
     // Dashboard
     ["dashboard_subtitle", "Last updated: ", "Letzte Aktualisierung: "],
@@ -236,4 +249,28 @@ function getMonthName(index) {
 
 function getLocale() {
     return gCurLang == gLangDe ? "de" : "en";
+}
+
+function getUnitDays() {
+    return gCurLang == gLangDe ? "Tage" : "days";
+}
+
+function prettyPrintDateString(date) {
+    var d = new Date(date)
+    let localeDate = d.toLocaleString(getLocale(), {
+        weekday: "long",
+        day: "numeric",
+        year: "numeric",
+        month: "long",
+    });
+    return localeDate;
+}
+
+function prettyPrintDateStringWithoutDay(date) {
+    var d = new Date(date)
+    let localeDate = d.toLocaleString(getLocale(), {
+        year: "numeric",
+        month: "long",
+    });
+    return localeDate;
 }

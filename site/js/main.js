@@ -250,17 +250,60 @@ async function fetchHistoryDetailsJSON() {
     return stats;
 }
 
+function updateStatistics() {
+    // Update stats
+    fetchStatisticsJSON().then(stats => {
+        //console.log(stats);
+        if (stats["state"] == "ok") {
+            document.getElementById("stats_highest_prod_value").innerHTML = numFormat(stats["highest_production_w"], 0) + " W";
+            document.getElementById("stats_highest_prod_date").innerHTML = prettyPrintDateString(stats["highest_production_date"]);
+
+            document.getElementById("stats_best_day_value").innerHTML = numFormat(stats["best_day_production_kwh"], 2) + " kWh";
+            document.getElementById("stats_best_day_date").innerHTML = prettyPrintDateString(stats["best_day_date"]);
+
+            document.getElementById("stats_best_month_value").innerHTML = numFormat(stats["best_month_production_kwh"], 2) + " kWh";
+            document.getElementById("stats_best_month_date").innerHTML = prettyPrintDateStringWithoutDay(stats["best_month_date"]);
+
+            document.getElementById("stats_best_year_value").innerHTML = numFormat(stats["best_year_production_kwh"], 2) + " kWh";
+            document.getElementById("stats_best_year_date").innerHTML = "in " + stats["best_year_date"];
+
+            document.getElementById("statistics_value_avg_daily_prod").innerHTML = numFormat(stats["average_daily_production_kwh"], 2);
+
+            document.getElementById("statistics_value_start_date").innerHTML = prettyPrintDateString(stats["start_of_operation"]);
+            document.getElementById("statistics_value_runtime").innerHTML = stats["days_of_operation"] + " " + getUnitDays();
+        }
+    });
+}
+
+// Async function to get the statistics stats
+async function fetchStatisticsJSON() {
+    const response = await fetch(gBaseUrl + 'query?type=statistics');
+    const stats = await response.json();
+    return stats;
+}
+
 
 
 function showViewDashboard() {
     setElementVisible("view_dashboard", true);
+    setElementVisible("view_statistics", false);
     setElementVisible("view_history", false);
     setElementVisible("view_csv", false);
     gDashboardVisible = true;
 }
 
+function showViewStatistics() {
+    setElementVisible("view_dashboard", false);
+    setElementVisible("view_statistics", true);
+    setElementVisible("view_history", false);
+    setElementVisible("view_csv", false);
+    gDashboardVisible = false;
+    updateStatistics();
+}
+
 function showViewHistory(mode) {
     setElementVisible("view_dashboard", false);
+    setElementVisible("view_statistics", false);
     setElementVisible("view_history", true);
     setElementVisible("view_csv", false);
     gDashboardVisible = false;
@@ -311,6 +354,7 @@ function showViewHistory(mode) {
 
 function showViewCsv() {
     setElementVisible("view_dashboard", false);
+    setElementVisible("view_statistics", false);
     setElementVisible("view_history", false);
     setElementVisible("view_csv", true);
     gDashboardVisible = false;

@@ -69,7 +69,9 @@ def get_csv():
         rows = db.execute(query)
 
         # Build file name
-        file_name = (f"Sunalyzer_{_date}.csv") if len(_date) > 0 else "Sunalyzer_All.csv"
+        file_name = (
+            f"Sunalyzer_{_date}.csv" if len(_date) > 0
+            else "Sunalyzer_All.csv")
 
         # Convert rows to CSV
         csv = rows_to_csv(rows)
@@ -129,6 +131,47 @@ def get_json_data_current():
         "today_consumed_kwh": consumed_today,
         "today_fed_in_kwh": fed_in_today,
         "today_earned": (earned_today + saved_today)
+    }
+    return json.dumps(data)
+
+
+# Returns JSON response containing available years
+def get_json_data_statistics():
+    '''Returns JSON response containing inverter statistics.'''
+    # Date based data
+    start_date = config.config_data['device']['start_date']
+    num_days = (date.today() - start_date).days
+    # Averages
+    db = Database("data/db.sqlite")
+    rows_all_time = db.execute("SELECT * FROM all_time")
+    total_production_kwh = rows_all_time[0][2]
+    average_production_kwhpd = total_production_kwh / num_days
+    # Best day
+    rows_best_day = db.execute(
+        "SELECT date, MAX(produced_b-produced_a) AS produced_kwh FROM days")
+    # Best month
+    rows_best_month = db.execute(
+        "SELECT date, MAX(produced_b-produced_a) AS produced_kwh FROM months")
+    # Best year
+    rows_best_year = db.execute(
+        "SELECT date, MAX(produced_b-produced_a) AS produced_kwh FROM years")
+    # Highest production
+    rows_highest_prod = db.execute(
+        "SELECT * FROM highscores WHERE type IS 'production'")
+    # Assemble result data set
+    data = {
+        "state": "ok",
+        "start_of_operation": str(start_date),
+        "days_of_operation": num_days,
+        "average_daily_production_kwh": average_production_kwhpd,
+        "best_day_date": rows_best_day[0][0],
+        "best_day_production_kwh": rows_best_day[0][1],
+        "best_month_date": rows_best_month[0][0],
+        "best_month_production_kwh": rows_best_month[0][1],
+        "best_year_date": rows_best_year[0][0],
+        "best_year_production_kwh": rows_best_year[0][1],
+        "highest_production_w": rows_highest_prod[0][2],
+        "highest_production_date": rows_highest_prod[0][1],
     }
     return json.dumps(data)
 
@@ -273,6 +316,9 @@ def handle_request():
             return data
         elif _type == "years_in_all_time":
             data = get_json_data_history_details("years", "")
+            return data
+        elif _type == "statistics":
+            data = get_json_data_statistics()
             return data
 
     except Exception:

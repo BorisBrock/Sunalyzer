@@ -52,6 +52,10 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-grip"></i></div>
                             Dashboard
                         </a>
+                        <a class="nav-link" href="javascript:showViewStatistics();collapseSidebar();">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-simple"></i></div>
+                            <div id="sidebar_statistics">Statistics</div>
+                        </a>
                         <a class="nav-link" href="javascript:showViewHistory(histories.TODAY);collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
                             <div id="sidebar_today">Today</div>
@@ -240,6 +244,116 @@
                     </div>
                 </div>
 
+                <!-- Statistics View -->
+                <div class="container-fluid px-4" id="view_statistics">
+                    <h1 class="mt-4" id="headline_statistics">Statistics</h1>
+
+                    <div class="row row-cols-2 row-cols-md-4 pt-5">
+
+                        <!-- Column Highest Production -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_highest_prod">Highest Production</span>
+                                </div>
+                                <div class="card-body text-center">
+                                    <p class="fs-2 fw-light" id="stats_highest_prod_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_highest_prod_date">...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Best Day -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_best_day">Best Day</span>
+                                </div>
+                                <div class="card-body text-center">
+                                    <p class="fs-2 fw-light" id="stats_best_day_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_best_day_date">...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Best Month -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_best_month">Best Month</span>
+                                </div>
+                                <div class="card-body text-center">
+                                    <p class="fs-2 fw-light" id="stats_best_month_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_best_month_date">...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Best Year -->
+                        <div class="col-xl-3">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_best_year">Best Year</span>
+                                </div>
+                                <div class="card-body text-center">
+                                    <p class="fs-2 fw-light" id="stats_best_year_value">...</p>
+                                    <p class="fs-6 text-secondary" id="stats_best_year_date">...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-2">
+
+                        <!-- Column Averages -->
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_averages">Averages</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-solar-panel me-1"></i></td>
+                                                <td id="statistics_text_avg_daily_prod">Average daily production</td>
+                                                <td style="text-align:right" id="statistics_value_avg_daily_prod">0.0</td>
+                                                <td>kWh</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column Runtime -->
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="stats_card_runtime">Runtime</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-flag-checkered me-1"></i></td>
+                                                <td id="statistics_text_start_date">Date of commissioning</td>
+                                                <td style="text-align:right" id="statistics_value_start_date">...</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-clock me-1"></i></td>
+                                                <td id="statistics_text_runtime">Total runtime</td>
+                                                <td style="text-align:right" id="statistics_value_runtime">...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <!-- History View -->
                 <div class="container-fluid px-4" id="view_history">
                     <h1 class="mt-4" id="headline_history">...</h1>
@@ -248,7 +362,8 @@
                         <div class="col-xl-6">
                             <div class="d-flex flex-row">
                                 <!-- BACK -->
-                                <button type="button" class="btn btn-outline-secondary me-2" onclick="datePrev();"><i class="fa-solid fa-angle-left"></i></button>
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="datePrev();"><i
+                                        class="fa-solid fa-angle-left"></i></button>
                                 <!-- Year -->
                                 <div id="selection_year">
                                     <select class="form-select" aria-label="Default select example" id="selection_year2"
@@ -280,7 +395,8 @@
                                     </select>
                                 </div>
                                 <!-- FORWARD -->
-                                <button type="button" class="btn btn-outline-secondary ms-2" onclick="dateNext();"><i class="fa-solid fa-angle-right"></i></button>
+                                <button type="button" class="btn btn-outline-secondary ms-2" onclick="dateNext();"><i
+                                        class="fa-solid fa-angle-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -320,7 +436,8 @@
                                                 <tr>
                                                     <td><i class="fas fa-lightbulb me-1"></i></td>
                                                     <td id="history_text_self_consumed">Self consumed</td>
-                                                    <td style="text-align:right" id="history_stat_self_consumed">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_self_consumed">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                             </tbody>
@@ -341,7 +458,8 @@
                                                 <tr class="fw-bold">
                                                     <td><i class="fas fa-lightbulb me-1"></i></td>
                                                     <td id="history_text_consumption_total">Total consumption</td>
-                                                    <td style="text-align:right" id="history_stat_consumption_total">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_consumption_total">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                             </tbody>
@@ -354,13 +472,15 @@
                                                 <tr>
                                                     <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
                                                     <td id="history_text_consumption_grid">Consumption from grid</td>
-                                                    <td style="text-align:right" id="history_stat_consumption_grid">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_consumption_grid">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-solar-panel me-1"></i></td>
                                                     <td id="history_text_consumption_self">Consumption from PV</td>
-                                                    <td style="text-align:right" id="history_stat_consumption_self">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_consumption_self">0.0
+                                                    </td>
                                                     <td>kWh</td>
                                                 </tr>
                                             </tbody>
@@ -402,7 +522,8 @@
                                                 <tr>
                                                     <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
                                                     <td id="history_text_earned_feedin">Earned with feed-in</td>
-                                                    <td style="text-align:right" id="history_stat_earned_feedin">0.0</td>
+                                                    <td style="text-align:right" id="history_stat_earned_feedin">0.0
+                                                    </td>
                                                     <td>€</td>
                                                 </tr>
                                                 <tr>
