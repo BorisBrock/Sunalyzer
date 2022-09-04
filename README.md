@@ -74,7 +74,7 @@ Sunalyzer is configured via a YAML file called *config.yml*. This file has to be
 | logging                       | Can be 'normal' (only basic logging) or 'verbose' (verbose logging for debug purposes).             |
 | time_zone                     | The time zone that will be used to generate time stamps for logged data. E.g. "Europe/Berlin".      |
 | device:type                   | Name of the device plugin to use. Currently "Fronius" and "Dummy" are supported.                    |
-| device:start_up_date          | The date on which the inverter first started production.                                            |
+| device:start_date             | The date on which the inverter first started production (YYYY-MM-DD).                               |
 | prices:price_per_grid_kwh     | Price for 1 kWh consumed from the grid (e.g. in €).                                                 |
 | prices:revenue_per_fed_in_kwh | Revenue for 1 fed in kWh (e.g. in €).                                                               |
 | server:ip                     | IP address of the web server. Should be set to 0.0.0.0.                                             |
@@ -88,7 +88,6 @@ Additional settings are required depending on the selected device plugin:
 | Setting                       | Description                                                   |
 | ----------------------------- | ------------------------------------------------------------- |
 | fronius::host_name            | IP address or host name of your fronius inverter.             |
-| fronius::start_date           | Starting date of solar power production (YYYY-MM-DD).         |
 
 ## Deveopment Environment
 
