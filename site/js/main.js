@@ -18,7 +18,6 @@ let gCurHistory = histories.DAY;
 
 let gCurDate = new Date();
 let gMinDate = null
-let gMaxDate = new Date();
 
 
 // Called when index.html has finished loading
@@ -439,7 +438,8 @@ function dateNext() {
         date.setFullYear(date.getFullYear() + 1);
     }
 
-    if (date > gMaxDate) date = new Date(gMaxDate);
+    const maxDate = new Date()
+    if (date > maxDate) date = new Date(maxDate);
 
     selectDate(date);
     updateHistoryStats();
