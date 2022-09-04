@@ -88,6 +88,7 @@ Additional settings are required depending on the selected device plugin:
 | Setting                       | Description                                                   |
 | ----------------------------- | ------------------------------------------------------------- |
 | fronius::host_name            | IP address or host name of your fronius inverter.             |
+| fronius::start_date           | Starting date of solar power production (YYYY-MM-DD).         |
 
 ## Deveopment Environment
 
