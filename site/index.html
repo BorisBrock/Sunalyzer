@@ -232,8 +232,16 @@
                         <!-- Dashboard card with 24h graph -->
                         <div class="col">
                             <div class="card mb-4">
-                                <div class="card-header h5">
-                                    <span id="dash_card_24h">Last 24 Hours</span>
+                                <div class="card-header row">
+                                    <div class="d-flex">
+                                        <span id="dash_card_24h" class="h5">Last 24 Hours</span>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        <button type="button" class="btn btn-sm btn-link">24h</button>
+                                        <button type="button" class="btn btn-sm btn-link">12h</button>
+                                        <button type="button" class="btn btn-sm btn-link">4h</button>
+                                        <button type="button" class="btn btn-sm btn-link">2h</button>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="chart_dashboard" height="250"></canvas>
@@ -317,7 +325,8 @@
                                             <tr>
                                                 <td><i class="fas fa-solar-panel me-1"></i></td>
                                                 <td id="statistics_text_avg_daily_prod">Average daily production</td>
-                                                <td style="text-align:right" id="statistics_value_avg_daily_prod">0.0</td>
+                                                <td style="text-align:right" id="statistics_value_avg_daily_prod">0.0
+                                                </td>
                                                 <td>kWh</td>
                                             </tr>
                                         </tbody>
