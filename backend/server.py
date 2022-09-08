@@ -216,10 +216,11 @@ def get_json_data_history_details(table, date_search_string):
 
 
 # Returns JSON response containing monthly data for a year
-def get_json_data_real_time():
+def get_json_data_real_time(hours):
     '''Returns JSON response containing monthly data for a year.'''
+    num_results = int(hours) * 60
     db = Database("data/db.sqlite")
-    rows = db.execute("SELECT * FROM real_time")
+    rows = db.execute(f"SELECT * FROM real_time ORDER BY ID DESC LIMIT {num_results}")
     return json.dumps(rows)
 
 
@@ -304,7 +305,8 @@ def handle_request():
             data = get_json_data_history(table, _date)
             return data
         elif _type == "real_time":
-            data = get_json_data_real_time()
+            hours = request.args['h']
+            data = get_json_data_real_time(hours)
             return data
         elif _type == "days_in_month":
             _month = request.args['date']

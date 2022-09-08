@@ -80,7 +80,8 @@ def create_new_db():
     # Current data table
     query = ("create table if not exists current"
              "(date STRING PRIMARY KEY, "
-             "produced REAL, consumed_grid REAL, consumed_pv REAL, consumed_total REAL, fed_in REAL)")
+             "produced REAL, consumed_grid REAL, "
+             "consumed_pv REAL, consumed_total REAL, fed_in REAL)")
     cursor.execute(query)
 
     # Real time data table

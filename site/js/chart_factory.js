@@ -149,7 +149,7 @@ function createDashboardChart(canvasId, data) {
             }]
         };
 
-        for (index = 0; index < data.length; index++) {
+        for (index = data.length - 1; index >= 0; index--) { // Reverse data
             labels.push(data[index][1]); // Element 1 = time
             chart_data.datasets[0].data.push(data[index][2] * 1000.0);
             chart_data.datasets[1].data.push(data[index][3] * 1000.0);
@@ -185,7 +185,7 @@ function createDashboardChart(canvasId, data) {
         gChartDashboard.data.datasets[1].data = [];
         gChartDashboard.data.datasets[2].data = [];
 
-        for (index = 0; index < data.length; index++) {
+        for (index = data.length - 1; index >= 0; index--) { // Reverse data
             gChartDashboard.data.labels.push(data[index][1]); // Element 1 = time
             gChartDashboard.data.datasets[0].data.push(data[index][2] * 1000.0);
             gChartDashboard.data.datasets[1].data.push(data[index][3] * 1000.0);

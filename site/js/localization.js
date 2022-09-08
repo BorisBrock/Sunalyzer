@@ -40,7 +40,7 @@ let translations = [
     ["dash_card_current", "Current", "Momentanwerte"],
     ["dash_card_today", "Today", "Heutige Werte"],
     ["dash_card_all_time", "All Time", "Allzeit-Werte"],
-    ["dash_card_24h", "Last 24 Hours", "Die letzten 24 Stunden"],
+    ["dash_card_24h", "Short Term History", "Aktueller Verlauf"],
 
     ["dash_text_currently_produced", "Currently produced", "Aktuell erzeugt"],
     ["dash_text_currently_consumed_grid", "Consumed from grid", "Netzbezug"],

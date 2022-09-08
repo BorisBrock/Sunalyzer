@@ -19,6 +19,8 @@ let gCurHistory = histories.DAY;
 let gCurDate = new Date();
 let gMinDate = null
 
+let gDahboardGraphTimespan = 24
+
 
 // Called when index.html has finished loading
 window.addEventListener('DOMContentLoaded', event => {
@@ -28,6 +30,7 @@ window.addEventListener('DOMContentLoaded', event => {
     setInterval(updateTime, 1000);
     setInterval(updateCurrentStats, 3000);
     setInterval(updateRealTimeGraph, 5000);
+    restoreSettings();
     showViewDashboard();
     updateCurrentStats();
     updateRealTimeGraph();
@@ -35,6 +38,12 @@ window.addEventListener('DOMContentLoaded', event => {
     updateCsvDateSelector();
     setVersion();
 });
+
+function restoreSettings() {
+    var ts = localStorage.getItem("dash_time_span");
+    if (ts != null)
+        gDahboardGraphTimespan = parseInt(ts);
+}
 
 // Called cyclically to update the current stats
 function updateCurrentStats() {
@@ -87,7 +96,7 @@ function updateRealTimeGraph() {
 
 // Async function to get the real time stats
 async function fetchRealTimeStatsJSON() {
-    const response = await fetch(gBaseUrl + 'query?type=real_time');
+    const response = await fetch(gBaseUrl + 'query?type=real_time&h=' + gDahboardGraphTimespan);
     const stats = await response.json();
     return stats;
 }
@@ -444,6 +453,13 @@ function dateNext() {
     selectDate(date);
     updateHistoryStats();
 }
+
+function changeDashboardGraphTimeSpan(hours) {
+    gDahboardGraphTimespan = hours;
+    localStorage.setItem("dash_time_span", gDahboardGraphTimespan);
+    updateRealTimeGraph();
+}
+
 
 
 function setElementVisible(name, visible) {
