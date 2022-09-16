@@ -220,7 +220,8 @@ def get_json_data_real_time(hours):
     '''Returns JSON response containing monthly data for a year.'''
     num_results = int(hours) * 60
     db = Database("data/db.sqlite")
-    rows = db.execute(f"SELECT * FROM real_time ORDER BY ID DESC LIMIT {num_results}")
+    rows = db.execute(f"SELECT * FROM real_time "
+                      f"ORDER BY ID DESC LIMIT {num_results}")
     return json.dumps(rows)
 
 
@@ -258,6 +259,17 @@ def get_json_data_history(table, search_date):
     revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])
     earned = fed_in * revenue
     saved = consumed_self * (price - revenue)
+
+    # High resolution data (only for days)
+    daily_high_res_data = ""
+    if table == "days":
+        rows = db.execute(f"SELECT * FROM high_res WHERE date='{search_date}'")
+        if rows:
+            hrdata = rows[0][1]
+            if hrdata[-1] == ',':
+                hrdata = hrdata[:-1]
+            daily_high_res_data = "[" + hrdata + "]"
+
     # Build response data
     data = {
         "state": "ok",
@@ -274,7 +286,8 @@ def get_json_data_history(table, search_date):
         "earned_feedin": earned,
         "earned_savings": saved,
         "earned_total": (earned+saved),
-        "autarky": consumed_self_rel
+        "autarky": consumed_self_rel,
+        "high_res": daily_high_res_data
     }
     return json.dumps(data)
 

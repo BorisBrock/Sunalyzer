@@ -180,6 +180,15 @@ function updateHistoryStats() {
                 "chart_usage",
                 parseFloat(stats["usage_fed_in_percent"]),
                 parseFloat(stats["usage_self_consumed_percent"]));
+
+            // Create high res chart
+            if(stats["high_res"] != "") {
+                data = JSON.parse(stats["high_res"])
+                createHighResChart("chart_history_high_res", data);
+                setElementVisible("history_card_high_res", true);
+            } else {
+                setElementVisible("history_card_high_res", false);
+            }
         }
         else {
             setElementVisible("row_error_banner", true);
@@ -325,18 +334,21 @@ function showViewHistory(mode) {
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", true);
             setElementVisible("history_card_graphs", false);
+            setElementVisible("history_card_high_res", true);
         case histories.DAY:
             document.getElementById("headline_history").innerHTML = getHistoryString("daily_data");
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", true);
             setElementVisible("history_card_graphs", false);
+            setElementVisible("history_card_high_res", true);
             break;
         case histories.MONTH:
             document.getElementById("headline_history").innerHTML = getHistoryString("monthly_data");
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", false);
+            setElementVisible("history_card_high_res", false);
             // Show the days
             setElementVisible("history_card_graphs", true);
             break;
@@ -345,6 +357,7 @@ function showViewHistory(mode) {
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", false);
             setElementVisible("selection_day", false);
+            setElementVisible("history_card_high_res", false);
             // Show the months
             setElementVisible("history_card_graphs", true);
             break;
@@ -353,6 +366,7 @@ function showViewHistory(mode) {
             setElementVisible("selection_year", false);
             setElementVisible("selection_month", false);
             setElementVisible("selection_day", false);
+            setElementVisible("history_card_high_res", false);
             // Show the years
             setElementVisible("history_card_graphs", true);
             break;

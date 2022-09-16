@@ -237,10 +237,14 @@
                                         <span id="dash_card_24h" class="h5">Last 24 Hours</span>
                                     </div>
                                     <div class="col-6 d-flex justify-content-end align-items-center">
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(2);" class="btn btn-sm btn-link">2h</button>
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(4);" class="btn btn-sm btn-link">4h</button>
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(12);" class="btn btn-sm btn-link">12h</button>
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(24);" class="btn btn-sm btn-link">24h</button>
+                                        <button type="button" onclick="changeDashboardGraphTimeSpan(2);"
+                                            class="btn btn-sm btn-link">2h</button>
+                                        <button type="button" onclick="changeDashboardGraphTimeSpan(4);"
+                                            class="btn btn-sm btn-link">4h</button>
+                                        <button type="button" onclick="changeDashboardGraphTimeSpan(12);"
+                                            class="btn btn-sm btn-link">12h</button>
+                                        <button type="button" onclick="changeDashboardGraphTimeSpan(24);"
+                                            class="btn btn-sm btn-link">24h</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -584,7 +588,20 @@
 
                             </div>
                         </div>
+                    </div>
 
+                    <!-- High Res Data Graph-->
+                    <div class="row" id="history_card_high_res">
+                        <div class="col">
+                            <div class="card mb-4">
+                                <div class="card-header h5">
+                                    <span id="history_card_high_res_data_text">Course of the day</span>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chart_history_high_res" height="250"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- No data -->

@@ -4,6 +4,7 @@ let gChartUsage = null
 let gChartDashboard = null
 let gChartHistoryDetailsProduced = null
 let gChartHistoryDetailsConsumed = null
+let gChartHistoryHighRes= null
 
 // Colors
 const FILL_OPACITY = "20";
@@ -192,6 +193,86 @@ function createDashboardChart(canvasId, data) {
             gChartDashboard.data.datasets[2].data.push(data[index][4] * 1000.0);
         }
         gChartDashboard.update();
+    }
+}
+
+// Creates a chart for the history daily/high res view
+function createHighResChart(canvasId, data) {
+
+    if (gChartHistoryHighRes == null) {
+        // Create new chart
+        const labels = [];
+        const chart_data = {
+            labels: labels,
+            datasets: [{
+                label: getChartString("chart_produced_w"),
+                data: [],
+                fill: true,
+                borderColor: COLOR_PRODUCTION_SELF_CONSUMED,
+                backgroundColor: COLOR_PRODUCTION_SELF_CONSUMED_FILL,
+                borderWidth: 2
+            },
+            {
+                label: getChartString("chart_consumed_w"),
+                data: [],
+                fill: true,
+                borderColor: COLOR_CONSUMED_FROM_GRID,
+                backgroundColor: COLOR_CONSUMED_FROM_GRID_FILL,
+                borderWidth: 2
+            },
+            {
+                label: getChartString("chart_fed_in_w"),
+                data: [],
+                fill: true,
+                borderColor: COLOR_PRODUCTION_FED_IN,
+                backgroundColor: COLOR_PRODUCTION_FED_IN_FILL,
+                borderWidth: 2
+            }]
+        };
+
+        for (index = 0; index < data.length; index++) {
+            labels.push(sampleIndexToTime(index));
+            chart_data.datasets[0].data.push(data[index][0]);
+            chart_data.datasets[1].data.push(data[index][1]);
+            chart_data.datasets[2].data.push(data[index][2]);
+        }
+
+        gChartHistoryHighRes = new Chart(canvasId, {
+            type: "line",
+            responsive: true,
+            data: chart_data,
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                    display: false
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                locale: getLocale()
+            }
+        });
+    }
+    else {
+        // Update chart
+        gChartHistoryHighRes.data.labels = [];
+        gChartHistoryHighRes.data.datasets[0].data = [];
+        gChartHistoryHighRes.data.datasets[1].data = [];
+        gChartHistoryHighRes.data.datasets[2].data = [];
+
+        for (index = 0; index < data.length; index++) {
+            gChartHistoryHighRes.data.labels.push(sampleIndexToTime(index));
+            gChartHistoryHighRes.data.datasets[0].data.push(data[index][0]);
+            gChartHistoryHighRes.data.datasets[1].data.push(data[index][1]);
+            gChartHistoryHighRes.data.datasets[2].data.push(data[index][2]);
+        }
+        gChartHistoryHighRes.update();
     }
 }
 
