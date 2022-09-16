@@ -232,19 +232,21 @@
                         <!-- Dashboard card with 24h graph -->
                         <div class="col">
                             <div class="card mb-4">
-                                <div class="card-header row">
-                                    <div class="col-6 d-flex">
-                                        <span id="dash_card_24h" class="h5">Last 24 Hours</span>
-                                    </div>
-                                    <div class="col-6 d-flex justify-content-end align-items-center">
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(2);"
-                                            class="btn btn-sm btn-link">2h</button>
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(4);"
-                                            class="btn btn-sm btn-link">4h</button>
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(12);"
-                                            class="btn btn-sm btn-link">12h</button>
-                                        <button type="button" onclick="changeDashboardGraphTimeSpan(24);"
-                                            class="btn btn-sm btn-link">24h</button>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-6 d-flex">
+                                            <span id="dash_card_24h" class="h5">Last 24 Hours</span>
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-end align-items-center">
+                                            <button type="button" onclick="changeDashboardGraphTimeSpan(2);"
+                                                class="btn btn-sm btn-link">2h</button>
+                                            <button type="button" onclick="changeDashboardGraphTimeSpan(4);"
+                                                class="btn btn-sm btn-link">4h</button>
+                                            <button type="button" onclick="changeDashboardGraphTimeSpan(12);"
+                                                class="btn btn-sm btn-link">12h</button>
+                                            <button type="button" onclick="changeDashboardGraphTimeSpan(24);"
+                                                class="btn btn-sm btn-link">24h</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -632,7 +634,8 @@
                                 <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_day"
                                     autocomplete="off" onclick="updateCsvDateSelector();">
                                 <label class="btn btn-outline-primary" for="csv_range_rad_day"
-                                    id="csv_range_rad_lbl_day">One day</label>
+                                    id="csv_range_rad_lbl_day">One
+                                    day</label>
 
                                 <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_month"
                                     autocomplete="off" onclick="updateCsvDateSelector();">
@@ -642,12 +645,14 @@
                                 <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_year"
                                     autocomplete="off" onclick="updateCsvDateSelector();" checked>
                                 <label class="btn btn-outline-primary" for="csv_range_rad_year"
-                                    id="csv_range_rad_lbl_year">One year</label>
+                                    id="csv_range_rad_lbl_year">One
+                                    year</label>
 
                                 <input type="radio" class="btn-check" name="options_range" id="csv_range_rad_all"
                                     autocomplete="off" onclick="updateCsvDateSelector();">
                                 <label class="btn btn-outline-primary" for="csv_range_rad_all"
-                                    id="csv_range_rad_lbl_all">All time</label>
+                                    id="csv_range_rad_lbl_all">All
+                                    time</label>
                             </div>
                         </div>
 
@@ -698,18 +703,21 @@
                                 <input type="radio" class="btn-check" name="options_res" id="csv_res_rad_day"
                                     autocomplete="off" checked>
                                 <label class="btn btn-outline-primary" for="csv_res_rad_day"
-                                    id="csv_res_rad_lbl_day">Single days</label>
+                                    id="csv_res_rad_lbl_day">Single
+                                    days</label>
 
                                 <input type="radio" class="btn-check" name="options_res" id="csv_res_rad_month"
                                     autocomplete="off">
                                 <label class="btn btn-outline-primary" for="csv_res_rad_month"
-                                    id="csv_res_rad_lbl_month">Summed up by
+                                    id="csv_res_rad_lbl_month">Summed
+                                    up by
                                     month</label>
 
                                 <input type="radio" class="btn-check" name="options_res" id="csv_res_rad_year"
                                     autocomplete="off">
                                 <label class="btn btn-outline-primary" for="csv_res_rad_year"
-                                    id="csv_res_rad_lbl_year">Summed up by year</label>
+                                    id="csv_res_rad_lbl_year">Summed
+                                    up by year</label>
                             </div>
                         </div>
 
