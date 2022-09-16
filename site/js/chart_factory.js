@@ -232,9 +232,9 @@ function createHighResChart(canvasId, data) {
 
         for (index = 0; index < data.length; index++) {
             labels.push(sampleIndexToTime(index));
-            chart_data.datasets[0].data.push(data[index][0]);
-            chart_data.datasets[1].data.push(data[index][1]);
-            chart_data.datasets[2].data.push(data[index][2]);
+            chart_data.datasets[0].data.push(data[index][0] * 1000.0);
+            chart_data.datasets[1].data.push(data[index][1] * 1000.0);
+            chart_data.datasets[2].data.push(data[index][2] * 1000.0);
         }
 
         gChartHistoryHighRes = new Chart(canvasId, {
@@ -268,9 +268,9 @@ function createHighResChart(canvasId, data) {
 
         for (index = 0; index < data.length; index++) {
             gChartHistoryHighRes.data.labels.push(sampleIndexToTime(index));
-            gChartHistoryHighRes.data.datasets[0].data.push(data[index][0]);
-            gChartHistoryHighRes.data.datasets[1].data.push(data[index][1]);
-            gChartHistoryHighRes.data.datasets[2].data.push(data[index][2]);
+            gChartHistoryHighRes.data.datasets[0].data.push(data[index][0] * 1000.0);
+            gChartHistoryHighRes.data.datasets[1].data.push(data[index][1] * 1000.0);
+            gChartHistoryHighRes.data.datasets[2].data.push(data[index][2] * 1000.0);
         }
         gChartHistoryHighRes.update();
     }
