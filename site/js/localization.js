@@ -74,7 +74,7 @@ let translations = [
     ["history_card_graph_consumption_text", "Consumption Details", "Zeitverlauf des Verbrauchs"],
     ["history_card_autarky", "Autarky", "Autarkie"],
     ["history_text_autarky", "Achieved autarky", "Erreichte Autarkie"],
-
+    ["history_card_high_res_data_text", "Course of the Day", "Tagesverlauf"],
 
     // CSV download
     ["csv_subtitle", "Download .csv reports ", "Report-Dateien im .csv-Format herunterladen"],
@@ -253,6 +253,13 @@ function getLocale() {
 
 function getUnitDays() {
     return gCurLang == gLangDe ? "Tage" : "days";
+}
+
+function sampleIndexToTime(index) {
+    let m = index % 60;
+    let h = Math.floor(index / 60) % 24;
+    let mstr = (m < 10) ? "0" + m : "" + m;
+    return "" + h + ":" + mstr;
 }
 
 function prettyPrintDateString(date) {

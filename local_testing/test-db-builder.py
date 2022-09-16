@@ -84,6 +84,11 @@ def create_new_db():
              "consumed_pv REAL, consumed_total REAL, fed_in REAL)")
     cursor.execute(query)
 
+    # Make sure table exists
+    query = ("create table if not exists high_res "
+             "(date STRING PRIMARY KEY, hrvalues STRING)")
+    cursor.execute(query)
+
     # Real time data table
     query = ("create table if not exists real_time"
              "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -111,7 +116,7 @@ def create_new_db():
     connection.close()
 
 
-def create_data(_date, _cursor):
+def create_data(_date, _cursor, _is_a_call):
     global global_ctr_produced
     global global_ctr_consumed
     global global_ctr_fed_in
@@ -156,6 +161,19 @@ def create_data(_date, _cursor):
         global_ctr_consumed,
         global_ctr_fed_in)
 
+    # High res data
+    if _is_a_call:
+        hrdata = ""
+        for i in range(1440):
+            prod = random() * 200 + 1000
+            con = random() * 50 + 100
+            fed = prod - con
+            hrdata += f"[{str(round(prod, 3))},{str(round(con, 3))},{str(round(fed, 3))}],"
+        # Create new row
+        query = (f"INSERT INTO high_res (date,hrvalues) "
+                f"VALUES ('{day_string}', '{hrdata}');")
+        _cursor.execute(query)
+
 
 # Main loop
 def main():
@@ -173,9 +191,9 @@ def main():
     for i in range(num_days):
         cur_date = cur_date + timedelta(1)
         print(f"Creating data for {cur_date}")
-        create_data(cur_date, cursor)  # A
+        create_data(cur_date, cursor, True)  # A
         update_counters()
-        create_data(cur_date, cursor)  # B
+        create_data(cur_date, cursor, False)  # B
 
     connection.commit()
     connection.close()

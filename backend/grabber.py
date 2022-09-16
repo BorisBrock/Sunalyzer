@@ -120,6 +120,38 @@ def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
     db.execute(query)
 
 
+# Helper function to insert high res values into the DB
+def insert_high_res_values(db, day_string, produced, consumed, fed_in):
+    '''Helper function to insert high res values into the DB.'''
+    # Make sure table exists
+    query = ("create table if not exists high_res "
+             "(date STRING PRIMARY KEY, hrvalues STRING)")
+    db.execute(query)
+
+    # Get current entry
+    query = (f"SELECT * FROM high_res WHERE date='{day_string}'")
+    rows = db.execute(query)
+    old_values = ""
+    if not rows:
+        # Create new row
+        query = (f"INSERT INTO high_res (date,hrvalues) "
+                 f"VALUES ('{day_string}', '');")
+        db.execute(query)
+    else:
+        old_values = rows[0][1]
+
+    # Append new values to old values
+    old_values += (f"[{str(round(produced, 3))},"
+                   f"{str(round(consumed, 3))},"
+                   f"{str(round(fed_in, 3))}],")
+
+    # Update DB
+    query = (f"UPDATE high_res SET "
+             f"hrvalues = '{old_values}' "
+             f"WHERE date='{day_string}'")
+    db.execute(query)
+
+
 # Helper function to create a new DB
 def create_new_db():
     '''Helper function to create a new DB.'''
@@ -163,6 +195,11 @@ def create_new_db():
     new_db.execute(query)
     query = ("INSERT INTO highscores (type,date,value) "
              "VALUES('production','...',0.0);")
+    new_db.execute(query)
+
+    # Add high res data table
+    query = ("CREATE TABLE IF NOT EXISTS high_res "
+             "(date STRING PRIMARY KEY, hrvalues STRING)")
     new_db.execute(query)
 
 
@@ -266,6 +303,13 @@ def update_data(device):
         insert_real_time_values(
             db,
             time_string,
+            device.current_power_produced_kw,
+            device.current_power_consumed_total_kw,
+            device.current_power_fed_in_kw)
+
+        insert_high_res_values(
+            db,
+            day_string,
             device.current_power_produced_kw,
             device.current_power_consumed_total_kw,
             device.current_power_fed_in_kw)
