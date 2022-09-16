@@ -185,6 +185,9 @@ function updateHistoryStats() {
             if(stats["high_res"] != "") {
                 data = JSON.parse(stats["high_res"])
                 createHighResChart("chart_history_high_res", data);
+                setElementVisible("history_card_high_res", true);
+            } else {
+                setElementVisible("history_card_high_res", false);
             }
         }
         else {
