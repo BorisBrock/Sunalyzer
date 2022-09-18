@@ -4,7 +4,7 @@ let gChartUsage = null
 let gChartDashboard = null
 let gChartHistoryDetailsProduced = null
 let gChartHistoryDetailsConsumed = null
-let gChartHistoryHighRes= null
+let gChartHistoryHighRes = null
 
 // Colors
 const FILL_OPACITY = "20";
@@ -175,7 +175,29 @@ function createDashboardChart(canvasId, data) {
                     mode: 'index',
                     intersect: false
                 },
-                locale: getLocale()
+                locale: getLocale(),
+                plugins: {
+                    zoom: {
+                        zoom: {
+                            enabled: true,
+                            wheel: {
+                                enabled: true,
+                                speed: 0.1
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x',
+                        },
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                        },
+                        limits: {
+                            x: {min: 0, max: 1440, minRange: 50}
+                          },
+                    }
+                }
             }
         });
     }
