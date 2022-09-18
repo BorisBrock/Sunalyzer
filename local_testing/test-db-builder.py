@@ -165,8 +165,8 @@ def create_data(_date, _cursor, _is_a_call):
     if _is_a_call:
         hrdata = ""
         for i in range(1440):
-            prod = random() * 200 + 1000
-            con = random() * 50 + 100
+            prod = random() * 2 + 1
+            con = random() * 0.5 + 0.1
             fed = prod - con
             m = i % 60
             h = i // 60
