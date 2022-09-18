@@ -121,7 +121,7 @@ def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
 
 
 # Helper function to insert high res values into the DB
-def insert_high_res_values(db, day_string, produced, consumed, fed_in):
+def insert_high_res_values(db, day_string, time_string, produced, consumed, fed_in):
     '''Helper function to insert high res values into the DB.'''
     # Make sure table exists
     query = ("create table if not exists high_res "
@@ -141,9 +141,11 @@ def insert_high_res_values(db, day_string, produced, consumed, fed_in):
         old_values = rows[0][1]
 
     # Append new values to old values
-    old_values += (f"[{str(round(produced, 3))},"
-                   f"{str(round(consumed, 3))},"
-                   f"{str(round(fed_in, 3))}],")
+    new_value = (f"[\"{time_string}\","
+                 f"{str(round(produced, 3))},"
+                 f"{str(round(consumed, 3))},"
+                 f"{str(round(fed_in, 3))}],")
+    old_values += new_value
 
     # Update DB
     query = (f"UPDATE high_res SET "
@@ -310,6 +312,7 @@ def update_data(device):
         insert_high_res_values(
             db,
             day_string,
+            time_string,
             device.current_power_produced_kw,
             device.current_power_consumed_total_kw,
             device.current_power_fed_in_kw)
