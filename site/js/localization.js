@@ -255,13 +255,6 @@ function getUnitDays() {
     return gCurLang == gLangDe ? "Tage" : "days";
 }
 
-function sampleIndexToTime(index) {
-    let m = index % 60;
-    let h = Math.floor(index / 60) % 24;
-    let mstr = (m < 10) ? "0" + m : "" + m;
-    return "" + h + ":" + mstr;
-}
-
 function prettyPrintDateString(date) {
     var d = new Date(date)
     let localeDate = d.toLocaleString(getLocale(), {

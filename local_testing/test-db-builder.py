@@ -165,10 +165,13 @@ def create_data(_date, _cursor, _is_a_call):
     if _is_a_call:
         hrdata = ""
         for i in range(1440):
-            prod = random() * 200 + 1000
-            con = random() * 50 + 100
+            prod = random() * 2 + 1
+            con = random() * 0.5 + 0.1
             fed = prod - con
-            hrdata += f"[{str(round(prod, 3))},{str(round(con, 3))},{str(round(fed, 3))}],"
+            m = i % 60
+            h = i // 60
+            tstr = str(h) + ":" + (str(m) if m > 9 else "0" + str(m))
+            hrdata += f"[\"{tstr}\",{str(round(prod, 3))},{str(round(con, 3))},{str(round(fed, 3))}],"
         # Create new row
         query = (f"INSERT INTO high_res (date,hrvalues) "
                 f"VALUES ('{day_string}', '{hrdata}');")
