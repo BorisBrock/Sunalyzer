@@ -360,9 +360,10 @@ def main():
         exit()
 
     # Start the web server
-    app.run(
-        host=config.config_data['server']['ip'],
-        port=config.config_data['server']['port'])
+    from waitress import serve
+    serve(app,
+          host=config.config_data['server']['ip'],
+          port=config.config_data['server']['port'])
 
     # Exit
     print("Server: Exiting main loop")
