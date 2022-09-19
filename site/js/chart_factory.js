@@ -179,10 +179,8 @@ function createDashboardChart(canvasId, data) {
                 plugins: {
                     zoom: {
                         zoom: {
-                            enabled: true,
                             wheel: {
-                                enabled: true,
-                                speed: 0.1
+                                enabled: true
                             },
                             pinch: {
                                 enabled: true
@@ -192,10 +190,7 @@ function createDashboardChart(canvasId, data) {
                         pan: {
                             enabled: true,
                             mode: 'x',
-                        },
-                        limits: {
-                            x: {min: 0, max: 1440, minRange: 50}
-                          },
+                        }
                     }
                 }
             }
