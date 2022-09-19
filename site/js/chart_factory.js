@@ -4,7 +4,7 @@ let gChartUsage = null
 let gChartDashboard = null
 let gChartHistoryDetailsProduced = null
 let gChartHistoryDetailsConsumed = null
-let gChartHistoryHighRes= null
+let gChartHistoryHighRes = null
 
 // Colors
 const FILL_OPACITY = "20";
@@ -150,11 +150,14 @@ function createDashboardChart(canvasId, data) {
             }]
         };
 
+        let max = 0.0;
         for (index = data.length - 1; index >= 0; index--) { // Reverse data
             labels.push(data[index][1]); // Element 1 = time
-            chart_data.datasets[0].data.push(data[index][2] * 1000.0);
-            chart_data.datasets[1].data.push(data[index][3] * 1000.0);
-            chart_data.datasets[2].data.push(data[index][4] * 1000.0);
+            for (i = 0; i < 3; ++i) {
+                let value = data[index][2 + i] * 1000.0;
+                chart_data.datasets[i].data.push(value);
+                if (value > max) max = value;
+            }
         }
 
         gChartDashboard = new Chart(canvasId, {
@@ -175,7 +178,30 @@ function createDashboardChart(canvasId, data) {
                     mode: 'index',
                     intersect: false
                 },
-                locale: getLocale()
+                scales: {
+                    y: {
+                        min: 0.0,
+                        max: max,
+                    }
+                },
+                locale: getLocale(),
+                plugins: {
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x',
+                        },
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                        }
+                    }
+                }
             }
         });
     }
@@ -186,12 +212,16 @@ function createDashboardChart(canvasId, data) {
         gChartDashboard.data.datasets[1].data = [];
         gChartDashboard.data.datasets[2].data = [];
 
+        let max = 0.0;
         for (index = data.length - 1; index >= 0; index--) { // Reverse data
             gChartDashboard.data.labels.push(data[index][1]); // Element 1 = time
-            gChartDashboard.data.datasets[0].data.push(data[index][2] * 1000.0);
-            gChartDashboard.data.datasets[1].data.push(data[index][3] * 1000.0);
-            gChartDashboard.data.datasets[2].data.push(data[index][4] * 1000.0);
+            for (i = 0; i < 3; ++i) {
+                let value = data[index][2 + i] * 1000.0;
+                gChartDashboard.data.datasets[i].data.push(value);
+                if (value > max) max = value;
+            }
         }
+        gChartDashboard.options.scales.y.max = max;
         gChartDashboard.update();
     }
 }
@@ -230,11 +260,14 @@ function createHighResChart(canvasId, data) {
             }]
         };
 
+        let max = 0.0;
         for (index = 0; index < data.length; index++) {
             labels.push(data[index][0]);
-            chart_data.datasets[0].data.push(data[index][1] * 1000.0);
-            chart_data.datasets[1].data.push(data[index][2] * 1000.0);
-            chart_data.datasets[2].data.push(data[index][3] * 1000.0);
+            for (i = 0; i < 3; ++i) {
+                let value = data[index][1 + i] * 1000.0;
+                chart_data.datasets[i].data.push(value);
+                if (value > max) max = value;
+            }
         }
 
         gChartHistoryHighRes = new Chart(canvasId, {
@@ -255,7 +288,30 @@ function createHighResChart(canvasId, data) {
                     mode: 'index',
                     intersect: false
                 },
-                locale: getLocale()
+                scales: {
+                    y: {
+                        min: 0.0,
+                        max: max,
+                    }
+                },
+                locale: getLocale(),
+                plugins: {
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x',
+                        },
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                        }
+                    }
+                }
             }
         });
     }
@@ -266,12 +322,17 @@ function createHighResChart(canvasId, data) {
         gChartHistoryHighRes.data.datasets[1].data = [];
         gChartHistoryHighRes.data.datasets[2].data = [];
 
+        let max = 0.0;
         for (index = 0; index < data.length; index++) {
             gChartHistoryHighRes.data.labels.push(data[index][0]);
-            gChartHistoryHighRes.data.datasets[0].data.push(data[index][1] * 1000.0);
-            gChartHistoryHighRes.data.datasets[1].data.push(data[index][2] * 1000.0);
-            gChartHistoryHighRes.data.datasets[2].data.push(data[index][3] * 1000.0);
+            for (i = 0; i < 3; ++i) {
+                let value = data[index][1 + i] * 1000.0;
+                gChartHistoryHighRes.data.datasets[i].data.push(value);
+                if (value > max) max = value;
+            }
         }
+
+        gChartDashboard.options.scales.y.max = max;
         gChartHistoryHighRes.update();
     }
 }
