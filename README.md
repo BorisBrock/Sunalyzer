@@ -11,6 +11,19 @@ Sunalyzer can easily be self hosted on a Raspberry Pi or a NAS by using Docker. 
 
 ![Screenshot](doc/screenshot.png)
 
+## Main Features
+
+- 100% free and open source.
+- Easy to set up and configure (e.g. on a Raspberry Pi or a NAS).
+- Fully local storage of collected data. No cloud or 3rd party involved.
+- Hardware vendor independent.
+- Beautiful and highly dynamic user interface. Desktop and mobile friendly.
+- Visualization of all important values via graphs.
+- Detailled information and statistics with lots of useful information.
+- High resolution historical data (1 minute resolution) is kept.
+- Very compact database: roughly 15mb of storage are required per year.
+- CSV download (manually or via API) of all relevant data.
+
 ## Supported Languages
 
 Currently Sunalyzer provides an **English** and a **German** user interface. The language can be changed on the fly via the user interface.
@@ -96,6 +109,6 @@ Sunalyzer is currently being developed using the following tools and libraries:
 * **Development Environment**: Visual Studio Code
 * **Programming languages**: Python 3.10, JavaScript, HTML
 * **Database**: SQlite
-* **Frameworks**: Bootstrap, Chart.js, Fontawesome
+* **Frameworks**: Bootstrap, Chart.js, hammer.js, Fontawesome
 * **DevOps**: flake8, pytest, htmlhint, ESlint
 * **Deployment**: Docker
