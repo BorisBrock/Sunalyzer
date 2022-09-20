@@ -297,7 +297,7 @@ def update_data(device):
         # Time string
         time_string = datetime.now().strftime("%H:%M")
         # Store in data base
-        if config.verbose_logging:
+        if logging.getLogger().level == logging.DEBUG:
             logging.debug((f"Grabber: capturing real time data({time_string}:"
                            f"{device.current_power_produced_kw}, "
                            f"{device.current_power_consumed_total_kw}, "
@@ -355,7 +355,7 @@ def main():
         exit()
 
     # Set log level
-    logging.setLevel(config.log_level)
+    logging.getLogger().setLevel(config.log_level)
 
     # Set time zone
     set_time_zone(config.config_data.get("time_zone"))
@@ -379,7 +379,7 @@ def main():
     # Grabber main loop
     logging.debug("Grabber: Entering main loop")
     while run:
-        if config.verbose_logging:
+        if logging.getLogger().level == logging.DEBUG:
             time_string = datetime.now().strftime("%H:%M")
             logging.debug(f"Grabber: {time_string}: Updating device data")
 
