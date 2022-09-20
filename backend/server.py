@@ -2,6 +2,7 @@ import json
 from datetime import date
 import traceback
 from flask import Flask, request, send_from_directory, make_response
+from flask_compress import Compress
 
 # Project imports
 from config import Config
@@ -15,6 +16,7 @@ config = None
 
 # Main Flask web server application
 app = Flask(__name__)
+Compress(app)
 
 
 # Converts the given rows to a CSV string
@@ -360,9 +362,10 @@ def main():
         exit()
 
     # Start the web server
-    app.run(
-        host=config.config_data['server']['ip'],
-        port=config.config_data['server']['port'])
+    from waitress import serve
+    serve(app,
+          host=config.config_data['server']['ip'],
+          port=config.config_data['server']['port'])
 
     # Exit
     print("Server: Exiting main loop")
