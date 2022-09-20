@@ -1,12 +1,14 @@
 import requests
+import logging
 
 
 # Fronius Symo/Gn24 devices
 class Fronius:
     def __init__(self, config):
         # Demo code for config access
-        print(f"""Fronius device:
-            configured host name is {config.config_data['fronius']['host_name']}""")
+        logging.info(f"Fronius device: "
+                     f"configured host name is "
+                     f"{config.config_data['fronius']['host_name']}")
 
         self.verbose_logging = config.verbose_logging
         self.host_name = config.config_data['fronius']['host_name']
@@ -29,7 +31,8 @@ class Fronius:
         try:
             self.update()
         except Exception:
-            print("Fronius device: Error: connecting to the device failed")
+            logging.error(
+                "Fronius device: Error: connecting to the device failed")
             raise
 
     def copy_data(self, inverter_data, meter_data):
@@ -39,7 +42,8 @@ class Fronius:
         total_produced_kwh = float(str_total_produced_wh) * 0.001
         # Meter data
         str_total_consumed_from_grid_wh = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
-        total_consumed_from_grid_kwh = float(str_total_consumed_from_grid_wh) * 0.001
+        total_consumed_from_grid_kwh = float(
+            str_total_consumed_from_grid_wh) * 0.001
         str_total_fed_in_wh = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Minus_Absolute"]
         total_fed_in_kwh = float(str_total_fed_in_wh) * 0.001
         # Compute other values
@@ -47,13 +51,13 @@ class Fronius:
         total_consumption_kwh = total_consumed_from_grid_kwh + total_self_consumption_kwh
 
         # Logging
-        if self.verbose_logging:
-            print(f"Fronius device: Absolute values:\n"
-                  f" - Total produced: {str(total_produced_kwh)} kWh\n"
-                  f" - Total grid consumption: {str(total_consumed_from_grid_kwh)} kWh\n"
-                  f" - Total self consumption: {str(total_self_consumption_kwh)} kWh\n"
-                  f" - Total consumption: {str(total_consumption_kwh)} kWh\n"
-                  f" - Total fed in: {str(total_fed_in_kwh)} kWh")
+        if logging.getLogger().level == logging.DEBUG:
+            logging.debug(f"Fronius device: Absolute values:\n"
+                          f" - Total produced: {str(total_produced_kwh)} kWh\n"
+                          f" - Total grid consumption: {str(total_consumed_from_grid_kwh)} kWh\n"
+                          f" - Total self consumption: {str(total_self_consumption_kwh)} kWh\n"
+                          f" - Total consumption: {str(total_consumption_kwh)} kWh\n"
+                          f" - Total fed in: {str(total_fed_in_kwh)} kWh")
 
         # Total/absolute values
         self.total_energy_produced_kwh = total_produced_kwh
@@ -62,7 +66,8 @@ class Fronius:
 
         # Now extract the momentary values
         str_cur_production_w = inverter_data["Body"]["Data"]["Site"]["P_PV"]
-        cur_production_kw = 0.0 if str_cur_production_w is None else float(str_cur_production_w) * 0.001
+        cur_production_kw = 0.0 if str_cur_production_w is None else float(
+            str_cur_production_w) * 0.001
         str_grid_power_w = inverter_data["Body"]["Data"]["Site"]["P_Grid"]
         grid_power_kw = float(str_grid_power_w) * 0.001
         cur_feed_in_kw = (-grid_power_kw) if grid_power_kw < 0.0 else 0.0
@@ -73,13 +78,13 @@ class Fronius:
         cur_consumption_total = cur_consumption_from_grid + cur_consumption_from_pv
 
         # Logging
-        if self.verbose_logging:
-            print(f"Fronius device: Momentary values:\n"
-                  f" - Current production: {str(cur_production_kw)} kW\n"
-                  f" - Current feed-in: {str(cur_feed_in_kw)} kW\n"
-                  f" - Current consumption from grid: {str(cur_consumption_from_grid)}\n"
-                  f" - Current consumption from PV: {str(cur_consumption_from_pv)}\n"
-                  f" - Current total consumption: {str(cur_consumption_total)}")
+        if logging.getLogger().level == logging.DEBUG:
+            logging.debug(f"Fronius device: Momentary values:\n"
+                          f" - Current production: {str(cur_production_kw)} kW\n"
+                          f" - Current feed-in: {str(cur_feed_in_kw)} kW\n"
+                          f" - Current consumption from grid: {str(cur_consumption_from_grid)}\n"
+                          f" - Current consumption from PV: {str(cur_consumption_from_pv)}\n"
+                          f" - Current total consumption: {str(cur_consumption_total)}")
 
         # Store results
         self.current_power_produced_kw = cur_production_kw
@@ -100,10 +105,10 @@ class Fronius:
             # Extract and process relevant data
             self.copy_data(r_inverter.json(), r_meter.json())
         except requests.exceptions.Timeout:
-            print(f"Fronius device: Timeout requesting "
-                  f"'{self.url_inverter}' or '{self.url_meter}'")
+            logging.error(f"Fronius device: Timeout requesting "
+                          f"'{self.url_inverter}' or '{self.url_meter}'")
             raise
         except requests.exceptions.RequestException as e:
-            print(f"Fronius device: requests exception {e} for URL "
-                  f"'{self.url_inverter}' or '{self.url_meter}'")
+            logging.error(f"Fronius device: requests exception {e} for URL "
+                          f"'{self.url_inverter}' or '{self.url_meter}'")
             raise

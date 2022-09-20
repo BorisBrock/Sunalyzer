@@ -153,6 +153,7 @@ function updateHistoryStats() {
         if (stats["state"] == "ok") {
             setElementVisible("row_error_banner", false);
             setElementVisible("row_history_data", true);
+            setElementVisible("history_card_high_res", true);   
 
             document.getElementById("history_stat_produced").innerHTML = numFormat(stats["produced_kwh"], 2);
 
@@ -193,6 +194,7 @@ function updateHistoryStats() {
         else {
             setElementVisible("row_error_banner", true);
             setElementVisible("row_history_data", false);
+            setElementVisible("history_card_high_res", false);
         }
     });
 

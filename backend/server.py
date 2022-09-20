@@ -1,5 +1,6 @@
 import json
 from datetime import date
+import logging
 import traceback
 from flask import Flask, request, send_from_directory, make_response
 from flask_compress import Compress
@@ -86,9 +87,8 @@ def get_csv():
         return response
 
     except Exception:
+        logging.exception("Bad CSV request")
         exception_string = traceback.print_exc()
-        print("Server: Bad CSV request:")
-        print(exception_string)
         data = {"state": "error", "message": exception_string}
         return json.dumps(data), 404
 
@@ -232,6 +232,12 @@ def get_json_data_history(table, search_date):
     '''Returns JSON response containing historical data.'''
     db = Database("data/db.sqlite")
     rows = db.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
+    # No data?
+    if not rows:
+        data = {
+            "state": "nodata"
+        }
+        return json.dumps(data)
     # Compute data from sqlite columns
     produced = rows[0][2] - rows[0][1]
     consumed = rows[0][4] - rows[0][3]
@@ -303,8 +309,7 @@ def handle_request():
     '''Answers all query requests.'''
     try:
         _type = request.args['type']
-        if config.verbose_logging:
-            print(f"Server: REST request of type '{_type}' received")
+        logging.debug(f"Server: REST request of type '{_type}' received")
 
         if _type == "current":
             data = get_json_data_current()
@@ -315,8 +320,6 @@ def handle_request():
         elif _type == "historical":
             table = request.args['table']
             _date = request.args['date']
-            if config.verbose_logging:
-                print(f"  Request details: table: '{table}', date: {_date}")
             data = get_json_data_history(table, _date)
             return data
         elif _type == "real_time":
@@ -339,8 +342,7 @@ def handle_request():
             return data
 
     except Exception:
-        print("Server: Error:")
-        print(traceback.print_exc())
+        logging.exception("Error while handling HTTP request")
         data = {"state": "error"}
         return json.dumps(data)
 
@@ -351,15 +353,25 @@ def main():
 
     global config
 
+    # Set up logging
+    logging.basicConfig(
+        filename='data/server.log', filemode='w',
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        level=logging.INFO,
+        datefmt='%Y-%m-%d %H:%M:%S')
+
     # Print version
-    print(f"Starting Sunalyzer grabber version {version.get_version()}")
+    logging.info(f"Starting Sunalyzer server version {version.get_version()}")
 
     # Read the configuration from disk
     try:
-        print("Server: Reading backend configuration from config.yml")
+        logging.info("Server: Reading backend configuration from config.yml")
         config = Config("data/config.yml")
     except Exception:
         exit()
+
+    # Set log level
+    logging.getLogger().setLevel(config.log_level)
 
     # Start the web server
     from waitress import serve
@@ -368,8 +380,8 @@ def main():
           port=config.config_data['server']['port'])
 
     # Exit
-    print("Server: Exiting main loop")
-    print("Server: Shutting down gracefully")
+    logging.info("Server: Exiting main loop")
+    logging.info("Server: Shutting down gracefully")
 
 
 # Main entry point of the application

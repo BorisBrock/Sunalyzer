@@ -1,5 +1,6 @@
 import os
 import time
+import logging
 import importlib
 import signal
 from os.path import exists
@@ -121,7 +122,13 @@ def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
 
 
 # Helper function to insert high res values into the DB
-def insert_high_res_values(db, day_string, time_string, produced, consumed, fed_in):
+def insert_high_res_values(
+        db,
+        day_string,
+        time_string,
+        produced,
+        consumed,
+        fed_in):
     '''Helper function to insert high res values into the DB.'''
     # Make sure table exists
     query = ("create table if not exists high_res "
@@ -218,12 +225,12 @@ def load_device_plugin(device_name):
 def set_time_zone(tz):
     '''Sets the time zone environment variable.'''
     if tz is None:
-        print("Grabber: Warning: No time zone set")
+        logging.warn("Grabber: Warning: No time zone set")
     else:
-        print(f"Grabber: Setting tme zone to {tz}")
+        logging.info(f"Grabber: Setting tme zone to {tz}")
         os.environ['TZ'] = tz
         time.tzset()
-        print(f"Grabber: Time is now {time.strftime('%X %x %Z')}")
+        logging.info(f"Grabber: Time is now {time.strftime('%X %x %Z')}")
 
 
 # Updates data in the data base
@@ -296,11 +303,11 @@ def update_data(device):
         # Time string
         time_string = datetime.now().strftime("%H:%M")
         # Store in data base
-        if config.verbose_logging:
-            print((f"Grabber: capturing real time data({time_string}:"
-                   f"{device.current_power_produced_kw}, "
-                   f"{device.current_power_consumed_total_kw}, "
-                   f"{device.current_power_fed_in_kw})"))
+        if logging.getLogger().level == logging.DEBUG:
+            logging.debug((f"Grabber: capturing real time data({time_string}:"
+                           f"{device.current_power_produced_kw}, "
+                           f"{device.current_power_consumed_total_kw}, "
+                           f"{device.current_power_fed_in_kw})"))
 
         insert_real_time_values(
             db,
@@ -323,7 +330,7 @@ def update_data(device):
 # This is called when SIGTERM is received
 def handler_stop_signals(signum, frame):
     global run
-    print("Grabber: SIGTERM/SIGINT received")
+    logging.debug("Grabber: SIGTERM/SIGINT received")
     run = False
 
 
@@ -337,15 +344,25 @@ def main():
     signal.signal(signal.SIGINT, handler_stop_signals)
     signal.signal(signal.SIGTERM, handler_stop_signals)
 
+    # Set up logging
+    logging.basicConfig(
+        filename='data/grabber.log', filemode='w',
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        level=logging.INFO,
+        datefmt='%Y-%m-%d %H:%M:%S')
+
     # Print version
-    print(f"Starting Sunalyzer grabber version {version.get_version()}")
+    logging.info(f"Starting Sunalyzer grabber version {version.get_version()}")
 
     # Read the configuration from disk
     try:
-        print("Grabber: Reading backend configuration from config.yml")
+        logging.info("Grabber: Reading backend configuration from config.yml")
         config = Config("data/config.yml")
     except Exception:
         exit()
+
+    # Set log level
+    logging.getLogger().setLevel(config.log_level)
 
     # Set time zone
     set_time_zone(config.config_data.get("time_zone"))
@@ -353,37 +370,35 @@ def main():
     # Dynamically load the device
     try:
         device_name = config.config_data['device']['type']
-        print(f"Grabber: Loading device adapter '{device_name}'")
+        logging.info(f"Grabber: Loading device adapter '{device_name}'")
         device = load_device_plugin(device_name)
     except Exception:
-        print("Grabber: Error: creating the device adapter failed")
-        print(traceback.print_exc())
+        logging.exception("creating the device adapter failed")
         exit()
 
     # Prepare the data base
-    print("Grabber: Checking if data base exists")
+    logging.info("Grabber: Checking if data base exists")
     if not exists("data/db.sqlite"):
-        print("Grabber: Data base does not exist. Creating new one")
+        logging.info("Grabber: Data base does not exist. Creating new one")
         create_new_db()
 
     # Grabber main loop
-    print("Grabber: Entering main loop")
+    logging.debug("Grabber: Entering main loop")
     while run:
-        if config.verbose_logging:
+        if logging.getLogger().level == logging.DEBUG:
             time_string = datetime.now().strftime("%H:%M")
-            print(f"Grabber: {time_string}: Updating device data")
+            logging.debug(f"Grabber: {time_string}: Updating device data")
 
         try:
             update_data(device)
         except Exception:
-            print("Grabber: Error: updating data from device failed")
-            print(traceback.print_exc())
+            logging.exception("Updating data from device failed")
 
         time.sleep(config.config_data['grabber']['interval_s'])
 
     # Exit
-    print("Grabber: Exiting main loop")
-    print("Grabber: Shutting down gracefully")
+    logging.info("Grabber: Exiting main loop")
+    logging.info("Grabber: Shutting down gracefully")
 
 
 # Main entry point of the application
