@@ -1,5 +1,6 @@
 import yaml
 import traceback
+import logging
 
 
 class Config:
@@ -9,16 +10,16 @@ class Config:
                 self.config_data = yaml.safe_load(file)
                 self.load_settings(self.config_data)
         except Exception as e:
-            print("""Config error:
-                loading/parsing the configuration file failed""")
-            print(e)
+            logging.error("Config error: "
+                          "loading/parsing the configuration file failed")
+            logging.error(e)
             traceback.print_exc()
             exit()
 
     def load_settings(self, yaml_data):
         '''Copy settings from the yaml data for easier access.'''
         # Logging
-        self.verbose_logging = False
+        self.log_level = logging.INFO
         if self.config_data['logging'] == 'verbose':
-            print("Verbose logging is enabled")
-            self.verbose_logging = True
+            logging.info("Verbose logging is enabled")
+            self.log_level = logging.DEBUG
