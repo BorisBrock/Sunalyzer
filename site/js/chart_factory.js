@@ -181,7 +181,7 @@ function createDashboardChart(canvasId, data) {
                 scales: {
                     y: {
                         min: 0.0,
-                        max: max,
+                        max: Math.ceil(max),
                     }
                 },
                 locale: getLocale(),
@@ -221,7 +221,7 @@ function createDashboardChart(canvasId, data) {
                 if (value > max) max = value;
             }
         }
-        gChartDashboard.options.scales.y.max = max;
+        gChartDashboard.options.scales.y.max = Math.ceil(max);
         gChartDashboard.update();
     }
 }
@@ -291,7 +291,7 @@ function createHighResChart(canvasId, data) {
                 scales: {
                     y: {
                         min: 0.0,
-                        max: max,
+                        max: Math.ceil(max),
                     }
                 },
                 locale: getLocale(),
@@ -332,7 +332,7 @@ function createHighResChart(canvasId, data) {
             }
         }
 
-        gChartDashboard.options.scales.y.max = max;
+        gChartDashboard.options.scales.y.max = Math.ceil(max);
         gChartHistoryHighRes.update();
     }
 }
