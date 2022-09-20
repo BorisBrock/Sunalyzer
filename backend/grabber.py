@@ -122,7 +122,13 @@ def insert_real_time_values(db, time_string2, produced, consumed, fed_in):
 
 
 # Helper function to insert high res values into the DB
-def insert_high_res_values(db, day_string, time_string, produced, consumed, fed_in):
+def insert_high_res_values(
+        db,
+        day_string,
+        time_string,
+        produced,
+        consumed,
+        fed_in):
     '''Helper function to insert high res values into the DB.'''
     # Make sure table exists
     query = ("create table if not exists high_res "

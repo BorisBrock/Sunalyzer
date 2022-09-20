@@ -1,5 +1,6 @@
 import json
 from datetime import date
+import logging
 import traceback
 from flask import Flask, request, send_from_directory, make_response
 from flask_compress import Compress
@@ -87,8 +88,8 @@ def get_csv():
 
     except Exception:
         exception_string = traceback.print_exc()
-        print("Server: Bad CSV request:")
-        print(exception_string)
+        logging.error("Server: Bad CSV request:")
+        logging.error(exception_string)
         data = {"state": "error", "message": exception_string}
         return json.dumps(data), 404
 
@@ -303,8 +304,7 @@ def handle_request():
     '''Answers all query requests.'''
     try:
         _type = request.args['type']
-        if config.verbose_logging:
-            print(f"Server: REST request of type '{_type}' received")
+        logging.debug(f"Server: REST request of type '{_type}' received")
 
         if _type == "current":
             data = get_json_data_current()
@@ -315,8 +315,6 @@ def handle_request():
         elif _type == "historical":
             table = request.args['table']
             _date = request.args['date']
-            if config.verbose_logging:
-                print(f"  Request details: table: '{table}', date: {_date}")
             data = get_json_data_history(table, _date)
             return data
         elif _type == "real_time":
@@ -339,8 +337,8 @@ def handle_request():
             return data
 
     except Exception:
-        print("Server: Error:")
-        print(traceback.print_exc())
+        logging.error("Server: Error:")
+        logging.error(traceback.print_exc())
         data = {"state": "error"}
         return json.dumps(data)
 
@@ -352,14 +350,17 @@ def main():
     global config
 
     # Print version
-    print(f"Starting Sunalyzer grabber version {version.get_version()}")
+    logging.info(f"Starting Sunalyzer server version {version.get_version()}")
 
     # Read the configuration from disk
     try:
-        print("Server: Reading backend configuration from config.yml")
+        logging.info("Server: Reading backend configuration from config.yml")
         config = Config("data/config.yml")
     except Exception:
         exit()
+
+    # Set log level
+    logging.getLogger().setLevel(config.log_level)
 
     # Start the web server
     from waitress import serve
@@ -368,8 +369,8 @@ def main():
           port=config.config_data['server']['port'])
 
     # Exit
-    print("Server: Exiting main loop")
-    print("Server: Shutting down gracefully")
+    logging.info("Server: Exiting main loop")
+    logging.info("Server: Shutting down gracefully")
 
 
 # Main entry point of the application
