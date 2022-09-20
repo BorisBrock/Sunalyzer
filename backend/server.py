@@ -87,9 +87,8 @@ def get_csv():
         return response
 
     except Exception:
+        logging.exception("Bad CSV request")
         exception_string = traceback.print_exc()
-        logging.error("Server: Bad CSV request:")
-        logging.error(exception_string)
         data = {"state": "error", "message": exception_string}
         return json.dumps(data), 404
 
@@ -233,6 +232,12 @@ def get_json_data_history(table, search_date):
     '''Returns JSON response containing historical data.'''
     db = Database("data/db.sqlite")
     rows = db.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
+    # No data?
+    if not rows:
+        data = {
+            "state": "nodata"
+        }
+        return json.dumps(data)
     # Compute data from sqlite columns
     produced = rows[0][2] - rows[0][1]
     consumed = rows[0][4] - rows[0][3]
@@ -337,8 +342,7 @@ def handle_request():
             return data
 
     except Exception:
-        logging.error("Server: Error:")
-        logging.error(traceback.print_exc())
+        logging.exception("Error while handling HTTP request")
         data = {"state": "error"}
         return json.dumps(data)
 
@@ -348,6 +352,13 @@ def main():
     '''Main loop.'''
 
     global config
+
+    # Set up logging
+    logging.basicConfig(
+        filename='data/server.log', filemode='w',
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        level=logging.INFO,
+        datefmt='%Y-%m-%d %H:%M:%S')
 
     # Print version
     logging.info(f"Starting Sunalyzer server version {version.get_version()}")

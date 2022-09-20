@@ -346,6 +346,7 @@ def main():
 
     # Set up logging
     logging.basicConfig(
+        filename='data/grabber.log', filemode='w',
         format='%(asctime)s %(levelname)-8s %(message)s',
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S')
@@ -372,8 +373,7 @@ def main():
         logging.info(f"Grabber: Loading device adapter '{device_name}'")
         device = load_device_plugin(device_name)
     except Exception:
-        logging.error("Grabber: creating the device adapter failed")
-        logging.error(traceback.print_exc())
+        logging.exception("creating the device adapter failed")
         exit()
 
     # Prepare the data base
@@ -392,8 +392,7 @@ def main():
         try:
             update_data(device)
         except Exception:
-            logging.error("Grabber: Error: updating data from device failed")
-            logging.error(traceback.print_exc())
+            logging.exception("Updating data from device failed")
 
         time.sleep(config.config_data['grabber']['interval_s'])
 
