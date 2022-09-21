@@ -10,7 +10,6 @@ class Fronius:
                      f"configured host name is "
                      f"{config.config_data['fronius']['host_name']}")
 
-        self.verbose_logging = config.verbose_logging
         self.host_name = config.config_data['fronius']['host_name']
 
         self.url_inverter = (
