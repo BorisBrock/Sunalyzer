@@ -159,6 +159,7 @@ function createDashboardChart(canvasId, data) {
                 if (value > max) max = value;
             }
         }
+        max = (Math.ceil(max) + 100) - (Math.ceil(max) % 100);
 
         gChartDashboard = new Chart(canvasId, {
             type: "line",
@@ -181,7 +182,7 @@ function createDashboardChart(canvasId, data) {
                 scales: {
                     y: {
                         min: 0.0,
-                        max: Math.ceil(max),
+                        max: max,
                     }
                 },
                 locale: getLocale(),
@@ -221,7 +222,8 @@ function createDashboardChart(canvasId, data) {
                 if (value > max) max = value;
             }
         }
-        gChartDashboard.options.scales.y.max = Math.ceil(max);
+        max = (Math.ceil(max) + 100) - (Math.ceil(max) % 100);
+        gChartDashboard.options.scales.y.max = max;
         gChartDashboard.update();
     }
 }
@@ -269,6 +271,7 @@ function createHighResChart(canvasId, data) {
                 if (value > max) max = value;
             }
         }
+        max = (Math.ceil(max) + 100) - (Math.ceil(max) % 100);
 
         gChartHistoryHighRes = new Chart(canvasId, {
             type: "line",
@@ -291,7 +294,7 @@ function createHighResChart(canvasId, data) {
                 scales: {
                     y: {
                         min: 0.0,
-                        max: Math.ceil(max),
+                        max: max,
                     }
                 },
                 locale: getLocale(),
@@ -332,7 +335,8 @@ function createHighResChart(canvasId, data) {
             }
         }
 
-        gChartDashboard.options.scales.y.max = Math.ceil(max);
+        max = (Math.ceil(max) + 100) - (Math.ceil(max) % 100);
+        gChartDashboard.options.scales.y.max = max;
         gChartHistoryHighRes.update();
     }
 }
