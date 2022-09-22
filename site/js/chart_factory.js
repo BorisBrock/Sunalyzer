@@ -336,7 +336,7 @@ function createHighResChart(canvasId, data) {
         }
 
         max = (Math.ceil(max) + 100) - (Math.ceil(max) % 100);
-        gChartDashboard.options.scales.y.max = max;
+        gChartHistoryHighRes.options.scales.y.max = max;
         gChartHistoryHighRes.update();
     }
 }
