@@ -106,49 +106,931 @@
                                 id="dashboard_subtitle_time">...</span></li>
                     </ol>
 
-                    <div class="row row-cols-1 row-cols-md-2">
+                    <div class="row row-cols-1">
 
-                        <!-- Column Current -->
-                        <div class="col-xl-4">
+                        <!-- Column Info Graphic -->
+                        <div class="col-xl-6 col-xxl-3">
                             <div class="card mb-4">
                                 <div class="card-header h5">
                                     <span id="dash_card_current">Current</span>
                                 </div>
-                                <div class="card-body">
-                                    <table class="table table-borderless">
-                                        <tbody>
-                                            <tr>
-                                                <td><i class="fas fa-solar-panel me-1"></i></td>
-                                                <td id="dash_text_currently_produced">Currently produced</td>
-                                                <td style="text-align:right" id="dash_currently_produced">0.0</td>
-                                                <td>W</td>
-                                            </tr>
-                                            <tr>
-                                                <td><i class="fas fa-lightbulb me-1"></i></td>
-                                                <td id="dash_text_currently_consumed_pv">Consumed from PV</td>
-                                                <td style="text-align:right" id="dash_currently_consumed_pv">0.0</td>
-                                                <td>W</td>
-                                            </tr>
-                                            <tr>
-                                                <td><i class="fas fa-lightbulb me-1"></i></td>
-                                                <td id="dash_text_currently_consumed_grid">Consumed from grid</td>
-                                                <td style="text-align:right" id="dash_currently_consumed_grid">0.0</td>
-                                                <td>W</td>
-                                            </tr>
-                                            <tr>
-                                                <td><i class="fas fa-plug-circle-bolt me-1"></i></td>
-                                                <td id="dash_text_currently_fed_in">Currently fed in</td>
-                                                <td style="text-align:right" id="dash_currently_fed_in">0.0</td>
-                                                <td>W</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="card-body align-items-center d-flex justify-content-center">
+                                    <svg width="240" height="240" viewBox="0 0 63.5 63.5" version="1.1" id="svg5"
+                                        inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+                                        sodipodi:docname="dashboard_info_template.svg" xml:space="preserve"
+                                        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                                        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                                        <sodipodi:namedview id="namedview7" pagecolor="#ffffff" bordercolor="#666666"
+                                            borderopacity="1.0" inkscape:showpageshadow="2" inkscape:pageopacity="0.0"
+                                            inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1"
+                                            inkscape:document-units="mm" showgrid="false" inkscape:zoom="4"
+                                            inkscape:cx="87.125" inkscape:cy="116.125" inkscape:window-width="1920"
+                                            inkscape:window-height="995" inkscape:window-x="0" inkscape:window-y="0"
+                                            inkscape:window-maximized="1" inkscape:current-layer="layer1" />
+                                        <defs id="defs2" />
+                                        <g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1">
+                                            <circle style="fill:#8e44ad;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_grid_home_1" cx="16" cy="24" r="2" />
+                                            <circle style="fill:#2980b9;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_grid_1" cx="22.68601" cy="12.483916" r="2" />
+                                            <circle style="fill:#2980b9;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_grid_2" cx="28.867659" cy="12.483916" r="2" />
+                                            <circle style="fill:#2980b9;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_grid_3" cx="35.011929" cy="12.483916" r="2" />
+                                            <circle style="fill:#2980b9;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_grid_4" cx="41.051388" cy="12.483916" r="2" />
+                                            <circle style="fill:#8e44ad;fill-opacity:1;stroke:none;stroke-width:2.05036"
+                                                id="dot_grid_home_2" cx="19" cy="29" r="2" />
+                                            <circle
+                                                style="fill:#8e44ad;fill-opacity:1;stroke:none;stroke-width:1.82173;stroke-dasharray:none"
+                                                id="dot_grid_home_3" cx="22" cy="34" r="2" />
+                                            <circle
+                                                style="fill:#8e44ad;fill-opacity:1;stroke:none;stroke-width:1.82173;stroke-dasharray:none"
+                                                id="dot_grid_home_4" cx="25" cy="39" r="2" /><text xml:space="preserve"
+                                                style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;white-space:pre;inline-size:14.6602;display:inline;fill:#2980b9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+                                                x="41.974358" y="8.7891254" id="txt_pv_grid"
+                                                transform="translate(-18.123958,-0.66145834)">
+                                                <tspan x="41.974358" y="8.7891254" id="tspan1285">
+                                                    <tspan style="text-align:center" id="tspan1283">1000</tspan>
+                                                </tspan>
+                                            </text><text xml:space="preserve"
+                                                style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#8e44ad;fill-opacity:1;stroke:none;stroke-width:0.264583"
+                                                x="3.523174" y="39.406162" id="txt_grid_home">
+                                                <tspan sodipodi:role="line" x="13.523174" y="39.406162"
+                                                    style="font-size:4.23333px;text-align:end;text-anchor:end;fill:#8e44ad;fill-opacity:1;stroke-width:0.264583"
+                                                    id="tspan8210">2000</tspan>
+                                            </text><text xml:space="preserve"
+                                                style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#e67e22;fill-opacity:1;stroke:none;stroke-width:0.264583"
+                                                x="44.989857" y="39.406071" id="txt_pv_home">
+                                                <tspan sodipodi:role="line" x="44.989857" y="39.406071"
+                                                    style="font-size:4.23333px;text-align:start;text-anchor:start;fill:#e67e22;fill-opacity:1;stroke-width:0.264583"
+                                                    id="tspan8208">3000</tspan>
+                                            </text>
+                                            <circle style="fill:#e67e22;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_home_1" cx="47" cy="24" r="2" />
+                                            <circle style="fill:#e67e22;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_home_2" cx="44" cy="29" r="2" />
+                                            <circle style="fill:#e67e22;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_home_3" cx="41" cy="34" r="2" />
+                                            <circle style="fill:#e67e22;fill-opacity:1;stroke:none;stroke-width:3.07539"
+                                                id="dot_pv_home_4" cx="38" cy="39" r="2" />
+                                            <g id="g3651" transform="matrix(0.031552,0,0,0.031552,44.9506,4)">
+                                                <path style="fill:#e67e22;fill-opacity:0.68000001"
+                                                    d="M 508,254 C 508,394.4 394.4,508 254,508 113.6,508 0,394.4 0,254 0,113.6 113.6,0 254,0 c 110.8,0 204.8,70.8 239.6,169.6 7.6,21.2 12,43.6 13.6,66.8 0.8,6 0.8,11.6 0.8,17.6 z"
+                                                    id="path3007" />
+                                                <rect x="240" y="227.2" style="fill:#ffffff" width="27.6" height="168.8"
+                                                    id="rect3009" />
+                                                <rect x="240" y="227.2" style="fill:#e6e9ee" width="27.6"
+                                                    height="40.799999" id="rect3011" />
+                                                <path style="fill:#e67e22;fill-opacity:1"
+                                                    d="M 62.8,420.8 C 109.2,474 177.6,508 254,508 c 76.4,0 144.8,-33.6 191.2,-87.2 z"
+                                                    id="path3013" />
+                                                <path style="fill:#e6e9ee"
+                                                    d="m 301.2,420.8 h -94.4 v -5.6 c 0,-10.4 8.4,-19.2 19.2,-19.2 h 56 c 10.4,0 19.2,8.4 19.2,19.2 z"
+                                                    id="path3015" />
+                                                <path style="fill:#ffffff"
+                                                    d="M 424.8,252 H 83.2 C 80,252 78.4,247.6 80,242.4 L 115.2,108 c 0.8,-3.2 3.6,-6 6,-6 H 386 c 2.4,0 5.2,2.8 6,6 l 35.2,134.4 c 2,5.2 0.8,9.6 -2.4,9.6 z"
+                                                    id="path3017" />
+                                                <polygon style="fill:#54c0eb"
+                                                    points="124.4,106 118,131.2 176.4,131.2 180,106 "
+                                                    id="polygon3019" />
+                                                <g id="g3041">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="170.8,106 173.2,106 169.2,131.2 166.8,131.2 "
+                                                        id="polygon3021" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="160.8,106 163.2,106 158.8,131.2 156.4,131.2 "
+                                                        id="polygon3023" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="150.8,106 153.2,106 148.4,131.2 146,131.2 "
+                                                        id="polygon3025" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="141.2,106 143.6,106 138,131.2 135.6,131.2 "
+                                                        id="polygon3027" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="131.2,106 133.6,106 128,131.2 125.2,131.2 "
+                                                        id="polygon3029" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="177.2,126.8 176.8,127.6 118.8,127.6 119.2,126.8 "
+                                                        id="polygon3031" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="177.6,122 177.6,123.2 120,123.2 120.4,122 "
+                                                        id="polygon3033" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="178.4,117.6 178,118.8 121.2,118.8 121.2,117.6 "
+                                                        id="polygon3035" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="178.8,113.2 178.8,114.4 122.4,114.4 122.4,113.2 "
+                                                        id="polygon3037" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="179.6,108.8 179.6,110 123.2,110 123.6,108.8 "
+                                                        id="polygon3039" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="192.4,106 189.2,131.2 247.6,131.2 248,106 "
+                                                    id="polygon3043" />
+                                                <g id="g3065">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="238.8,106 240.8,106 240.4,131.2 238,131.2 "
+                                                        id="polygon3045" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="228.8,106 231.2,106 230,131.2 227.6,131.2 "
+                                                        id="polygon3047" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="218.8,106 221.2,106 219.6,131.2 217.2,131.2 "
+                                                        id="polygon3049" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="209.2,106 211.2,106 209.2,131.2 206.8,131.2 "
+                                                        id="polygon3051" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="199.2,106 201.6,106 198.8,131.2 196.4,131.2 "
+                                                        id="polygon3053" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.6,126.8 247.6,127.6 189.6,127.6 189.6,126.8 "
+                                                        id="polygon3055" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.6,122 247.6,123.2 190,123.2 190.4,122 "
+                                                        id="polygon3057" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.6,117.6 247.6,118.8 190.8,118.8 190.8,117.6 "
+                                                        id="polygon3059" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.6,113.2 247.6,114.4 191.2,114.4 191.2,113.2 "
+                                                        id="polygon3061" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="248,108.8 248,110 191.6,110 192,108.8 "
+                                                        id="polygon3063" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="260,106 260.4,131.2 318.8,131.2 316,106 "
+                                                    id="polygon3067" />
+                                                <g id="g3089">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="306.4,106 308.8,106 311.6,131.2 309.2,131.2 "
+                                                        id="polygon3069" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="296.8,106 299.2,106 301.2,131.2 298.8,131.2 "
+                                                        id="polygon3071" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="286.8,106 289.2,106 290.8,131.2 288.4,131.2 "
+                                                        id="polygon3073" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="276.8,106 279.2,106 280.4,131.2 278,131.2 "
+                                                        id="polygon3075" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="267.2,106 269.2,106 270,131.2 267.6,131.2 "
+                                                        id="polygon3077" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="318.4,126.8 318.4,127.6 260.4,127.6 260.4,126.8 "
+                                                        id="polygon3079" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="317.6,122 318,123.2 260.4,123.2 260.4,122 "
+                                                        id="polygon3081" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="317.2,117.6 317.2,118.8 260.4,118.8 260.4,117.6 "
+                                                        id="polygon3083" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="316.8,113.2 316.8,114.4 260,114.4 260,113.2 "
+                                                        id="polygon3085" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="316,108.8 316.4,110 260,110 260,108.8 "
+                                                        id="polygon3087" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="328,106 331.6,131.2 390,131.2 383.6,106 "
+                                                    id="polygon3091" />
+                                                <g id="g3113">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="374.4,106 376.8,106 382.8,131.2 380.4,131.2 "
+                                                        id="polygon3093" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="364.4,106 366.8,106 372.4,131.2 370,131.2 "
+                                                        id="polygon3095" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="354.8,106 357.2,106 362,131.2 359.6,131.2 "
+                                                        id="polygon3097" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="344.8,106 347.2,106 351.6,131.2 349.2,131.2 "
+                                                        id="polygon3099" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="334.8,106 337.2,106 341.2,131.2 338.8,131.2 "
+                                                        id="polygon3101" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="388.8,126.8 389.2,127.6 331.2,127.6 330.8,126.8 "
+                                                        id="polygon3103" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="387.6,122 388,123.2 330.4,123.2 330.4,122 "
+                                                        id="polygon3105" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="386.4,117.6 386.8,118.8 330,118.8 329.6,117.6 "
+                                                        id="polygon3107" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="385.6,113.2 385.6,114.4 329.2,114.4 329.2,113.2 "
+                                                        id="polygon3109" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="384.4,108.8 384.8,110 328.4,110 328.4,108.8 "
+                                                        id="polygon3111" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="116.8,136.4 110,164.4 171.6,164.4 175.6,136.4 "
+                                                    id="polygon3115" />
+                                                <g id="g3137">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="166,136.4 168.4,136.4 164,164.4 161.6,164.4 "
+                                                        id="polygon3117" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="155.6,136.4 158,136.4 153.2,164.4 150.4,164.4 "
+                                                        id="polygon3119" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="145.2,136.4 147.6,136.4 142,164.4 139.6,164.4 "
+                                                        id="polygon3121" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="134.4,136.4 137.2,136.4 131.2,164.4 128.4,164.4 "
+                                                        id="polygon3123" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="124,136.4 126.8,136.4 120,164.4 117.6,164.4 "
+                                                        id="polygon3125" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="172.4,159.6 172.4,160.8 110.8,160.8 111.2,159.6 "
+                                                        id="polygon3127" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="173.2,154.4 172.8,155.6 112,155.6 112.4,154.4 "
+                                                        id="polygon3129" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="174,149.6 173.6,150.8 113.2,150.8 113.6,149.6 "
+                                                        id="polygon3131" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="174.4,144.4 174.4,145.6 114.4,145.6 114.8,144.4 "
+                                                        id="polygon3133" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="175.2,139.6 175.2,140.8 115.6,140.8 116,139.6 "
+                                                        id="polygon3135" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="188.8,136.4 185.2,164.4 247.2,164.4 247.6,136.4 "
+                                                    id="polygon3139" />
+                                                <g id="g3161">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="237.6,136.4 240.4,136.4 239.6,164.4 236.8,164.4 "
+                                                        id="polygon3141" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="227.2,136.4 229.6,136.4 228.4,164.4 226,164.4 "
+                                                        id="polygon3143" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="216.8,136.4 219.2,136.4 217.6,164.4 214.8,164.4 "
+                                                        id="polygon3145" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="206.4,136.4 208.8,136.4 206.4,164.4 204,164.4 "
+                                                        id="polygon3147" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="196,136.4 198.4,136.4 195.6,164.4 193.2,164.4 "
+                                                        id="polygon3149" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.2,159.6 247.2,160.8 185.6,160.8 186,159.6 "
+                                                        id="polygon3151" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.2,154.4 247.2,155.6 186.4,155.6 186.4,154.4 "
+                                                        id="polygon3153" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.2,149.6 247.2,150.8 186.8,150.8 187.2,149.6 "
+                                                        id="polygon3155" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.6,144.4 247.6,145.6 187.6,145.6 187.6,144.4 "
+                                                        id="polygon3157" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.6,139.6 247.6,140.8 188,140.8 188.4,139.6 "
+                                                        id="polygon3159" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="260.4,136.4 260.8,164.4 322.8,164.4 319.2,136.4 "
+                                                    id="polygon3163" />
+                                                <g id="g3185">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="309.6,136.4 312,136.4 314.8,164.4 312.4,164.4 "
+                                                        id="polygon3165" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="299.2,136.4 301.6,136.4 304,164.4 301.6,164.4 "
+                                                        id="polygon3167" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="288.8,136.4 291.2,136.4 293.2,164.4 290.4,164.4 "
+                                                        id="polygon3169" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="278.4,136.4 280.8,136.4 282,164.4 279.6,164.4 "
+                                                        id="polygon3171" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="268,136.4 270.4,136.4 271.2,164.4 268.4,164.4 "
+                                                        id="polygon3173" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="322,159.6 322.4,160.8 260.8,160.8 260.8,159.6 "
+                                                        id="polygon3175" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="321.6,154.4 321.6,155.6 260.8,155.6 260.8,154.4 "
+                                                        id="polygon3177" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="320.8,149.6 321.2,150.8 260.8,150.8 260.4,149.6 "
+                                                        id="polygon3179" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="320.4,144.4 320.4,145.6 260.4,145.6 260.4,144.4 "
+                                                        id="polygon3181" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="319.6,139.6 320,140.8 260.4,140.8 260.4,139.6 "
+                                                        id="polygon3183" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="332.4,136.4 336.4,164.4 398.4,164.4 391.2,136.4 "
+                                                    id="polygon3187" />
+                                                <g id="g3209">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="381.6,136.4 384,136.4 390.4,164.4 388,164.4 "
+                                                        id="polygon3189" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="370.8,136.4 373.6,136.4 379.6,164.4 376.8,164.4 "
+                                                        id="polygon3191" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="360.4,136.4 362.8,136.4 368.4,164.4 366,164.4 "
+                                                        id="polygon3193" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="350,136.4 352.4,136.4 357.6,164.4 354.8,164.4 "
+                                                        id="polygon3195" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="339.6,136.4 342,136.4 346.4,164.4 344,164.4 "
+                                                        id="polygon3197" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="396.8,159.6 397.2,160.8 335.6,160.8 335.6,159.6 "
+                                                        id="polygon3199" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="395.6,154.4 396,155.6 335.2,155.6 334.8,154.4 "
+                                                        id="polygon3201" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="394.4,149.6 394.8,150.8 334.4,150.8 334,149.6 "
+                                                        id="polygon3203" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="393.2,144.4 393.6,145.6 333.6,145.6 333.6,144.4 "
+                                                        id="polygon3205" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="392,139.6 392.4,140.8 332.8,140.8 332.8,139.6 "
+                                                        id="polygon3207" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="108.4,170.4 100.4,202.4 166.4,202.4 170.8,170.4 "
+                                                    id="polygon3211" />
+                                                <g id="g3233">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="160.4,170.4 163.2,170.4 158.4,202.4 155.6,202.4 "
+                                                        id="polygon3213" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="149.6,170.4 152,170.4 146.4,202.4 143.6,202.4 "
+                                                        id="polygon3215" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="138.4,170.4 140.8,170.4 134.8,202.4 132,202.4 "
+                                                        id="polygon3217" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="127.2,170.4 130,170.4 123.2,202.4 120.4,202.4 "
+                                                        id="polygon3219" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="116,170.4 118.8,170.4 111.6,202.4 108.8,202.4 "
+                                                        id="polygon3221" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="167.2,196.8 166.8,198 101.6,198 102,196.8 "
+                                                        id="polygon3223" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="168,190.8 167.6,192.4 102.8,192.4 103.2,190.8 "
+                                                        id="polygon3225" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="168.8,185.2 168.8,186.4 104.4,186.4 104.8,185.2 "
+                                                        id="polygon3227" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="169.6,179.6 169.2,180.8 105.6,180.8 106,179.6 "
+                                                        id="polygon3229" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="170.4,174 170,175.6 107.2,175.6 107.6,174 "
+                                                        id="polygon3231" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="184.8,170.4 180.8,202.4 246.8,202.4 247.2,170.4 "
+                                                    id="polygon3235" />
+                                                <g id="g3257">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="236.8,170.4 239.2,170.4 238.4,202.4 236,202.4 "
+                                                        id="polygon3237" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="225.6,170.4 228.4,170.4 226.8,202.4 224,202.4 "
+                                                        id="polygon3239" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="214.4,170.4 217.2,170.4 215.2,202.4 212.4,202.4 "
+                                                        id="polygon3241" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="203.6,170.4 206,170.4 203.6,202.4 200.8,202.4 "
+                                                        id="polygon3243" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="192.4,170.4 195.2,170.4 192,202.4 189.2,202.4 "
+                                                        id="polygon3245" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.8,196.8 246.8,198 181.2,198 181.6,196.8 "
+                                                        id="polygon3247" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.8,190.8 246.8,192.4 182,192.4 182,190.8 "
+                                                        id="polygon3249" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.8,185.2 246.8,186.4 182.8,186.4 182.8,185.2 "
+                                                        id="polygon3251" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.2,179.6 247.2,180.8 183.2,180.8 183.6,179.6 "
+                                                        id="polygon3253" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="247.2,174 247.2,175.6 184,175.6 184,174 "
+                                                        id="polygon3255" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="260.8,170.4 261.2,202.4 327.2,202.4 323.6,170.4 "
+                                                    id="polygon3259" />
+                                                <g id="g3281">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="312.8,170.4 315.6,170.4 318.8,202.4 316,202.4 "
+                                                        id="polygon3261" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="302,170.4 304.4,170.4 307.2,202.4 304.4,202.4 "
+                                                        id="polygon3263" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="290.8,170.4 293.6,170.4 295.6,202.4 292.8,202.4 "
+                                                        id="polygon3265" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="279.6,170.4 282.4,170.4 284,202.4 281.2,202.4 "
+                                                        id="polygon3267" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="268.8,170.4 271.2,170.4 272.4,202.4 269.6,202.4 "
+                                                        id="polygon3269" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="326.4,196.8 326.8,198 261.2,198 261.2,196.8 "
+                                                        id="polygon3271" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="325.6,190.8 326,192.4 261.2,192.4 261.2,190.8 "
+                                                        id="polygon3273" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="325.2,185.2 325.2,186.4 261.2,186.4 261.2,185.2 "
+                                                        id="polygon3275" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="324.4,179.6 324.8,180.8 260.8,180.8 260.8,179.6 "
+                                                        id="polygon3277" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="324,174 324,175.6 260.8,175.6 260.8,174 "
+                                                        id="polygon3279" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="337.2,170.4 341.6,202.4 407.6,202.4 399.6,170.4 "
+                                                    id="polygon3283" />
+                                                <g id="g3305">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="389.2,170.4 392,170.4 399.2,202.4 396.4,202.4 "
+                                                        id="polygon3285" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="378,170.4 380.8,170.4 387.6,202.4 384.8,202.4 "
+                                                        id="polygon3287" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="367.2,170.4 369.6,170.4 376,202.4 373.2,202.4 "
+                                                        id="polygon3289" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="356,170.4 358.8,170.4 364.4,202.4 361.6,202.4 "
+                                                        id="polygon3291" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="344.8,170.4 347.6,170.4 352.4,202.4 350,202.4 "
+                                                        id="polygon3293" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="406,196.8 406.4,198 340.8,198 340.8,196.8 "
+                                                        id="polygon3295" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="404.8,190.8 405.2,192.4 340,192.4 340,190.8 "
+                                                        id="polygon3297" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="403.2,185.2 403.6,186.4 339.2,186.4 339.2,185.2 "
+                                                        id="polygon3299" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="402,179.6 402.4,180.8 338.4,180.8 338.4,179.6 "
+                                                        id="polygon3301" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="400.4,174 400.8,175.6 338,175.6 337.6,174 "
+                                                        id="polygon3303" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="98.8,208.8 90,245.2 160.4,245.2 165.6,208.8 "
+                                                    id="polygon3307" />
+                                                <g id="g3329">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="154.4,208.8 157.2,208.8 151.6,245.2 148.8,245.2 "
+                                                        id="polygon3309" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="142.4,208.8 145.2,208.8 139.2,245.2 136,245.2 "
+                                                        id="polygon3311" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="130.8,208.8 133.6,208.8 126.4,245.2 123.6,245.2 "
+                                                        id="polygon3313" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="118.8,208.8 121.6,208.8 114,245.2 111.2,245.2 "
+                                                        id="polygon3315" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="107.2,208.8 110,208.8 101.6,245.2 98.8,245.2 "
+                                                        id="polygon3317" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="161.2,238.8 160.8,240.4 91.2,240.4 91.6,238.8 "
+                                                        id="polygon3319" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="162,232.4 162,234 92.8,234 93.2,232.4 "
+                                                        id="polygon3321" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="163.2,226 162.8,227.2 94.4,227.2 94.8,226 "
+                                                        id="polygon3323" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="164,219.6 163.6,221.2 96,221.2 96.4,219.6 "
+                                                        id="polygon3325" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="164.8,213.2 164.8,214.8 97.2,214.8 97.6,213.2 "
+                                                        id="polygon3327" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="180,208.8 176,245.2 246.4,245.2 246.8,208.8 "
+                                                    id="polygon3331" />
+                                                <g id="g3353">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="235.6,208.8 238.4,208.8 237.6,245.2 234.4,245.2 "
+                                                        id="polygon3333" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="224,208.8 226.8,208.8 225.2,245.2 222,245.2 "
+                                                        id="polygon3335" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="212,208.8 214.8,208.8 212.4,245.2 209.6,245.2 "
+                                                        id="polygon3337" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="200,208.8 202.8,208.8 200,245.2 197.2,245.2 "
+                                                        id="polygon3339" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="188.4,208.8 191.2,208.8 187.6,245.2 184.4,245.2 "
+                                                        id="polygon3341" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.4,238.8 246.4,240.4 176.4,240.4 176.4,238.8 "
+                                                        id="polygon3343" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.4,232.4 246.4,234 177.2,234 177.2,232.4 "
+                                                        id="polygon3345" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.4,226 246.4,227.2 178,227.2 178,226 "
+                                                        id="polygon3347" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.4,219.6 246.4,221.2 178.8,221.2 178.8,219.6 "
+                                                        id="polygon3349" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="246.8,213.2 246.8,214.8 179.2,214.8 179.6,213.2 "
+                                                        id="polygon3351" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="261.2,208.8 261.6,245.2 332.4,245.2 328,208.8 "
+                                                    id="polygon3355" />
+                                                <g id="g3377">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="316.8,208.8 319.6,208.8 323.6,245.2 320.4,245.2 "
+                                                        id="polygon3357" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="305.2,208.8 308,208.8 310.8,245.2 308,245.2 "
+                                                        id="polygon3359" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="293.2,208.8 296,208.8 298.4,245.2 295.6,245.2 "
+                                                        id="polygon3361" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="281.6,208.8 284.4,208.8 286,245.2 283.2,245.2 "
+                                                        id="polygon3363" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="269.6,208.8 272.4,208.8 273.6,245.2 270.4,245.2 "
+                                                        id="polygon3365" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="331.6,238.8 331.6,240.4 261.6,240.4 261.6,238.8 "
+                                                        id="polygon3367" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="330.8,232.4 330.8,234 261.6,234 261.6,232.4 "
+                                                        id="polygon3369" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="330,226 330,227.2 261.6,227.2 261.6,226 "
+                                                        id="polygon3371" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="329.2,219.6 329.2,221.2 261.6,221.2 261.6,219.6 "
+                                                        id="polygon3373" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="328.4,213.2 328.4,214.8 261.2,214.8 261.2,213.2 "
+                                                        id="polygon3375" />
+                                                </g>
+                                                <polygon style="fill:#54c0eb"
+                                                    points="342.4,208.8 347.6,245.2 418,245.2 409.2,208.8 "
+                                                    id="polygon3379" />
+                                                <g id="g3401">
+                                                    <polygon style="fill:#84dbff"
+                                                        points="398,208.8 400.8,208.8 409.2,245.2 406.4,245.2 "
+                                                        id="polygon3381" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="386.4,208.8 389.2,208.8 396.8,245.2 394,245.2 "
+                                                        id="polygon3383" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="374.4,208.8 377.2,208.8 384.4,245.2 381.6,245.2 "
+                                                        id="polygon3385" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="362.8,208.8 365.6,208.8 372,245.2 368.8,245.2 "
+                                                        id="polygon3387" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="350.8,208.8 353.6,208.8 359.6,245.2 356.4,245.2 "
+                                                        id="polygon3389" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="416.4,238.8 416.8,240.4 346.8,240.4 346.8,238.8 "
+                                                        id="polygon3391" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="414.8,232.4 415.2,234 346,234 346,232.4 "
+                                                        id="polygon3393" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="413.2,226 413.6,227.2 345.2,227.2 344.8,226 "
+                                                        id="polygon3395" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="411.6,219.6 412,221.2 344.4,221.2 344,219.6 "
+                                                        id="polygon3397" />
+                                                    <polygon style="fill:#84dbff"
+                                                        points="410.4,213.2 410.4,214.8 343.2,214.8 343.2,213.2 "
+                                                        id="polygon3399" />
+                                                </g>
+                                                <g id="g3403">
+                                                </g>
+                                                <g id="g3405">
+                                                </g>
+                                                <g id="g3407">
+                                                </g>
+                                                <g id="g3409">
+                                                </g>
+                                                <g id="g3411">
+                                                </g>
+                                                <g id="g3413">
+                                                </g>
+                                                <g id="g3415">
+                                                </g>
+                                                <g id="g3417">
+                                                </g>
+                                                <g id="g3419">
+                                                </g>
+                                                <g id="g3421">
+                                                </g>
+                                                <g id="g3423">
+                                                </g>
+                                                <g id="g3425">
+                                                </g>
+                                                <g id="g3427">
+                                                </g>
+                                                <g id="g3429">
+                                                </g>
+                                                <g id="g3431">
+                                                </g>
+                                            </g>
+                                            <g id="g4654"
+                                                transform="matrix(0.03609743,0,0,0.03609743,22.679912,40.699697)">
+                                                <g id="g4494">
+                                                    <polygon style="fill:#207700"
+                                                        points="92.8,282.4 104.8,288.8 104.8,356 92.8,362.4 80.8,356 80.8,288.8 "
+                                                        id="polygon4490" />
+                                                    <polygon style="fill:#207700"
+                                                        points="44.8,282.4 56.8,288.8 56.8,356 44.8,362.4 32.8,356 32.8,288.8 "
+                                                        id="polygon4492" />
+                                                </g>
+                                                <rect x="40.799999" y="305.60001" style="fill:#239b02" width="56"
+                                                    height="16" id="rect4496" />
+                                                <g id="g4502">
+                                                    <polygon style="fill:#207700"
+                                                        points="452.8,282.4 464.8,288.8 464.8,356 452.8,362.4 440.8,356 440.8,288.8 "
+                                                        id="polygon4498" />
+                                                    <polygon style="fill:#207700"
+                                                        points="404.8,282.4 416.8,288.8 416.8,356 404.8,362.4 392.8,356 392.8,288.8 "
+                                                        id="polygon4500" />
+                                                </g>
+                                                <g id="g4508">
+                                                    <rect x="400.79999" y="305.60001" style="fill:#239b02" width="56"
+                                                        height="16" id="rect4504" />
+                                                    <path style="fill:#239b02"
+                                                        d="m 25.6,345.6 c 34.4,88 120.8,152 222.4,152 101.6,0 188,-64 222.4,-152 z"
+                                                        id="path4506" />
+                                                </g>
+                                                <rect x="120.8" y="177.60001" style="fill:#dddac3" width="256"
+                                                    height="168" id="rect4510" />
+                                                <polyline style="fill:#c9c5ad"
+                                                    points="120.8,177.6 376.8,177.6 376.8,345.6 " id="polyline4512" />
+                                                <path style="fill:#fca12a"
+                                                    d="M 232.8,337.6 V 220 c 0,-5.6 -2.4,-10.4 -8,-10.4 h -59.2 c -5.6,0 -12.8,4.8 -12.8,10.4 v 117.6 z"
+                                                    id="path4514" />
+                                                <path style="fill:#e58613"
+                                                    d="M 232.8,281.6 V 220 c 0,-5.6 -2.4,-10.4 -8,-10.4 h -59.2 c -5.6,0 -12.8,4.8 -12.8,10.4"
+                                                    id="path4516" />
+                                                <circle style="fill:#db5435" cx="214.39999" cy="274.39999" r="10.4"
+                                                    id="circle4518" />
+                                                <path style="fill:#c43d27"
+                                                    d="m 221.6,267.2 c 4,4 4,10.4 0,14.4 -4,4 -10.4,4 -14.4,0"
+                                                    id="path4520" />
+                                                <path style="fill:#008aaa"
+                                                    d="m 304.8,241.6 h 32 V 220 c 0,-5.6 -5.6,-10.4 -10.4,-10.4 h -21.6 z"
+                                                    id="path4522" />
+                                                <path style="fill:#00a1ad"
+                                                    d="m 288.8,241.6 v -32 h -22.4 c -5.6,0 -9.6,4.8 -9.6,10.4 v 21.6 z"
+                                                    id="path4524" />
+                                                <path style="fill:#008aaa"
+                                                    d="m 288.8,257.6 h -32 V 280 c 0,5.6 4,9.6 9.6,9.6 h 22.4 z"
+                                                    id="path4526" />
+                                                <path style="fill:#00a1ad"
+                                                    d="m 304.8,257.6 v 32 h 21.6 c 5.6,0 10.4,-4 10.4,-9.6 v -22.4 z"
+                                                    id="path4528" />
+                                                <polygon style="fill:#c43d27" points="248,44 77.6,177.6 418.4,177.6 "
+                                                    id="polygon4530" />
+                                                <polygon style="fill:#aa1e0f" points="248,44 160.8,177.6 418.4,177.6 "
+                                                    id="polygon4532" />
+                                                <path style="fill:#207700"
+                                                    d="m 435.2,406.4 -60,-60.8 h -252.8 -1.6 l 150.4,151.2 c 66.4,-7.2 124.8,-40.8 164,-90.4 z"
+                                                    id="path4534" />
+                                                <g id="g4540">
+                                                    <polygon style="fill:#c43d27"
+                                                        points="139.2,129.6 128.8,137.6 367.2,137.6 356.8,129.6 "
+                                                        id="polygon4536" />
+                                                    <polygon style="fill:#c43d27"
+                                                        points="190.4,89.6 180,97.6 316,97.6 305.6,89.6 "
+                                                        id="polygon4538" />
+                                                </g>
+                                                <g id="g4552">
+
+
+
+                                                </g>
+                                                <g id="g4566">
+                                                </g>
+                                                <g id="g4568">
+                                                </g>
+                                                <g id="g4570">
+                                                </g>
+                                                <g id="g4572">
+                                                </g>
+                                                <g id="g4574">
+                                                </g>
+                                                <g id="g4576">
+                                                </g>
+                                                <g id="g4578">
+                                                </g>
+                                                <g id="g4580">
+                                                </g>
+                                                <g id="g4582">
+                                                </g>
+                                                <g id="g4584">
+                                                </g>
+                                                <g id="g4586">
+                                                </g>
+                                                <g id="g4588">
+                                                </g>
+                                                <g id="g4590">
+                                                </g>
+                                                <g id="g4592">
+                                                </g>
+                                                <g id="g4594">
+                                                </g>
+                                            </g>
+                                            <g id="g5647" transform="matrix(0.03323098,0,0,0.03323098,2.3173897,4)">
+                                                <circle style="fill:#8e44ad;fill-opacity:0.68421054" cx="254" cy="254"
+                                                    r="254" id="circle5489" />
+                                                <path style="fill:#8e44ad;fill-opacity:1"
+                                                    d="m 66,424.8 c 46.4,51.2 113.6,83.2 188,83.2 74.4,0 141.6,-32 188,-83.2 z"
+                                                    id="path5491" />
+                                                <g id="g5499">
+                                                    <rect x="360.39999" y="170.39999" style="fill:#2b3b4e" width="14.4"
+                                                        height="6.8000002" id="rect5493" />
+                                                    <rect x="360.39999" y="186" style="fill:#2b3b4e" width="14.4"
+                                                        height="6.8000002" id="rect5495" />
+                                                    <path style="fill:#2b3b4e"
+                                                        d="m 360.4,201.2 h 14.4 v 0.8 c 0,4 -7.2,12.4 -7.2,12.4 0,0 -7.2,-8.4 -7.2,-12.4 z"
+                                                        id="path5497" />
+                                                </g>
+                                                <g id="g5507">
+                                                    <path style="fill:#324a5e"
+                                                        d="m 382.4,166.4 c 0,2.4 -2,4.4 -4.4,4.4 h -21.2 c -2.4,0 -4.4,-2 -4.4,-4.4 0,-2.4 2,-4.4 4.4,-4.4 H 378 c 2.4,0 4.4,2 4.4,4.4 z"
+                                                        id="path5501" />
+                                                    <path style="fill:#324a5e"
+                                                        d="m 382.4,181.6 c 0,2.4 -2,4.4 -4.4,4.4 h -21.2 c -2.4,0 -4.4,-2 -4.4,-4.4 0,-2.4 2,-4.4 4.4,-4.4 H 378 c 2.4,0 4.4,2 4.4,4.4 z"
+                                                        id="path5503" />
+                                                    <path style="fill:#324a5e"
+                                                        d="m 382.4,196.8 c 0,2.4 -2,4.4 -4.4,4.4 h -21.2 c -2.4,0 -4.4,-2 -4.4,-4.4 0,-2.4 2,-4.4 4.4,-4.4 H 378 c 2.4,0.4 4.4,2 4.4,4.4 z"
+                                                        id="path5505" />
+                                                </g>
+                                                <g id="g5515">
+                                                    <rect x="133.2" y="170.39999" style="fill:#2b3b4e" width="14.4"
+                                                        height="6.8000002" id="rect5509" />
+                                                    <rect x="133.2" y="186" style="fill:#2b3b4e" width="14.4"
+                                                        height="6.8000002" id="rect5511" />
+                                                    <path style="fill:#2b3b4e"
+                                                        d="m 133.2,201.2 h 14.4 v 0.8 c 0,4 -7.2,12.4 -7.2,12.4 0,0 -7.2,-8.4 -7.2,-12.4 z"
+                                                        id="path5513" />
+                                                </g>
+                                                <g id="g5523">
+                                                    <path style="fill:#324a5e"
+                                                        d="m 155.2,166.4 c 0,2.4 -2,4.4 -4.4,4.4 H 130 c -2.4,0 -4.4,-2 -4.4,-4.4 0,-2.4 2,-4.4 4.4,-4.4 h 21.2 c 2.4,0 4,2 4,4.4 z"
+                                                        id="path5517" />
+                                                    <path style="fill:#324a5e"
+                                                        d="m 155.2,181.6 c 0,2.4 -2,4.4 -4.4,4.4 H 130 c -2.4,0 -4.4,-2 -4.4,-4.4 0,-2.4 2,-4.4 4.4,-4.4 h 21.2 c 2.4,0 4,2 4,4.4 z"
+                                                        id="path5519" />
+                                                    <path style="fill:#324a5e"
+                                                        d="m 155.2,196.8 c 0,2.4 -2,4.4 -4.4,4.4 H 130 c -2.4,0 -4.4,-2 -4.4,-4.4 0,-2.4 2,-4.4 4.4,-4.4 h 21.2 c 2.4,0.4 4,2 4,4.4 z"
+                                                        id="path5521" />
+                                                </g>
+                                                <g id="g5553">
+                                                    <path style="fill:#ffffff"
+                                                        d="M 360,413.2 287.2,225.6 c -0.4,-0.8 -0.4,-1.6 0.4,-2.4 l 41.2,-64 -6.4,-36 c 0,-0.8 0,-1.6 0.4,-2 l 24.4,-27.2 -4.8,-6.8 -37.6,36.4 -1.6,37.2 c 0,0.8 -0.4,1.2 -0.8,1.6 l -46.8,42.4 c -0.8,0.8 -2.4,0.8 -3.2,0 L 205.6,162 c -0.4,-0.4 -0.8,-1.2 -0.8,-1.6 l -1.6,-37.2 -37.6,-36.4 -4.8,6.8 24.4,27.2 c 0.4,0.4 0.8,1.2 0.4,2 l -6.4,36 41.2,64 c 0.4,0.8 0.4,1.6 0.4,2.4 l -72.8,187.6 -4.8,-1.6 72.4,-186.4 -40.8,-64 c -0.4,-0.4 -0.4,-1.2 -0.4,-1.6 l 6.4,-35.6 -24.8,-28 c -0.8,-0.8 -0.8,-2 0,-3.2 l 7.6,-10.8 c 0.4,-0.4 1.2,-0.8 1.6,-1.2 0.8,0 1.6,0 2,0.8 l 40.4,38.8 c 0.4,0.4 0.8,1.2 0.8,1.6 l 1.6,36.8 44,40.8 44,-40.8 1.6,-36.8 c 0,-0.8 0.4,-1.2 0.8,-1.6 l 40.4,-38.8 c 0.4,-0.4 1.2,-0.8 2,-0.8 0.8,0 1.2,0.4 1.6,1.2 l 7.6,10.8 c 0.8,0.8 0.8,2.4 0,3.2 l -24.8,28 6.4,35.6 c 0,0.8 0,1.2 -0.4,1.6 l -40.8,64 72.4,186.4 z"
+                                                        id="path5525" />
+                                                    <path style="fill:#ffffff"
+                                                        d="M 308.4,274.4 H 199.6 c -0.8,0 -1.6,-0.8 -2,-1.6 -0.4,-0.8 0,-2 0.8,-2.4 L 250,243.6 217.6,226 c -0.8,-0.4 -1.2,-1.2 -0.8,-2.4 0.4,-0.8 1.2,-1.6 2,-1.6 h 70.8 c 0.8,0 1.6,0.8 2,1.6 0.4,0.8 0,2 -0.8,2.4 l -32.8,17.6 50.8,27.2 c 0.8,0.4 1.2,1.2 0.8,2.4 0.4,0.8 -0.4,1.2 -1.2,1.2 z m -100.8,-4 h 92.8 L 254,245.6 Z m 18.8,-44 27.6,14.8 27.6,-14.8 z"
+                                                        id="path5527" />
+                                                    <path style="fill:#ffffff"
+                                                        d="M 330,330.8 H 178 c -0.8,0 -1.6,-0.8 -2,-1.6 0,-0.8 0.4,-2 1.2,-2.4 l 72,-30.8 -50,-21.6 1.6,-3.6 53.2,22.8 53.6,-23.2 1.6,3.6 -50,21.6 72,30.8 c 0.8,0.4 1.2,1.2 1.2,2.4 -0.4,1.2 -1.2,2 -2.4,2 z m -142.4,-4 H 320.4 L 254,298 Z"
+                                                        id="path5529" />
+
+                                                    <rect x="168.75999" y="368.30801"
+                                                        transform="rotate(-155.71347,269.9599,370.30818)"
+                                                        style="fill:#ffffff" width="202.39999" height="4"
+                                                        id="rect5531" />
+
+                                                    <rect x="235.789" y="269.32401"
+                                                        transform="rotate(-114.28653,237.78937,370.52412)"
+                                                        style="fill:#ffffff" width="4" height="202.39999"
+                                                        id="rect5533" />
+                                                    <path style="fill:#ffffff"
+                                                        d="m 330,160.4 -28.8,-37.6 c -0.4,-0.4 -0.4,-0.8 -0.4,-1.2 0,-0.4 0.4,-0.8 0.8,-0.8 l 32.8,-11.6 6.8,-26.4 2.8,0.8 -6.8,27.2 c 0,0.4 -0.4,0.8 -0.8,1.2 l -31.6,11.2 27.6,36 z"
+                                                        id="path5535" />
+                                                    <path style="fill:#ffffff"
+                                                        d="m 177.6,160.4 -2.4,-2 27.6,-36 -31.6,-11.2 c -0.4,0 -0.8,-0.4 -0.8,-1.2 l -6.8,-27.2 2.8,-0.8 6.8,26.4 32.8,11.6 c 0.4,0 0.8,0.4 0.8,0.8 0,0.4 0,0.8 -0.4,1.2 z"
+                                                        id="path5537" />
+                                                    <path style="fill:#ffffff"
+                                                        d="M 404.4,162 H 103.6 v -2.4 c 0,-24 59.6,-40 79.2,-40 h 142 c 19.6,0 79.2,16 79.2,40 v 2.4 z m -295.2,-4.8 h 290 c -4.4,-17.2 -54,-32.4 -74,-32.4 H 182.8 c -19.6,0 -69.2,15.2 -73.6,32.4 z"
+                                                        id="path5539" />
+                                                    <path style="fill:#ffffff"
+                                                        d="m 256,159.6 h -4 V 122 c 0,-0.8 0.4,-1.6 1.2,-1.6 0.8,-0.4 1.6,-0.4 2,0 l 46.8,35.2 -2.4,3.2 -43.6,-32.4 z"
+                                                        id="path5541" />
+
+                                                    <rect x="228.681" y="111.254"
+                                                        transform="rotate(-129.01326,230.68125,141.25405)"
+                                                        style="fill:#ffffff" width="4" height="60" id="rect5543" />
+                                                    <path style="fill:#ffffff"
+                                                        d="m 369.2,161.6 v 0 c -0.8,0 -1.2,-0.4 -1.6,-1.2 l -17.2,-30.4 -17.6,30.4 -3.6,-2 19.2,-33.2 c 0.4,-0.8 1.2,-0.8 1.6,-0.8 v 0 c 0.8,0 1.2,0.4 1.6,1.2 l 17.6,30.8 12.8,-17.6 3.2,2.4 -14.8,20.4 c 0,-0.4 -0.4,0 -1.2,0 z"
+                                                        id="path5545" />
+                                                    <path style="fill:#ffffff"
+                                                        d="m 138.4,161.6 c -0.8,0 -1.2,-0.4 -1.6,-0.8 l -14.8,-20 3.2,-2.4 12.8,17.6 17.6,-30.8 c 0.4,-0.8 1.2,-0.8 1.6,-1.2 v 0 c 0.8,0 1.2,0.4 1.6,0.8 l 19.2,33.2 -3.6,2 -17.6,-30.4 -17.2,30.4 c 0.4,1.2 -0.4,1.6 -1.2,1.6 0.4,0 0.4,0 0,0 z"
+                                                        id="path5547" />
+                                                    <path style="fill:#ffffff"
+                                                        d="m 288.4,226.4 -35.6,-22 c -0.8,-0.4 -1.2,-1.2 -0.8,-2.4 0.4,-0.8 1.2,-1.6 2,-1.6 h 45.2 l -19.6,-21.2 c -0.4,-0.4 -0.8,-1.6 -0.4,-2 0.4,-0.8 1.2,-1.2 2,-1.2 h 33.6 l -15.2,-15.2 2.8,-2.8 18.4,18.4 c 0.4,0.4 0.8,1.6 0.4,2 -0.4,0.8 -1.2,1.2 -2,1.2 h -33.6 l 19.6,21.2 c 0.4,0.4 0.8,1.6 0.4,2 -0.4,0.8 -1.2,1.2 -2,1.2 h -42.4 l 29.6,18 z"
+                                                        id="path5549" />
+                                                    <path style="fill:#ffffff"
+                                                        d="m 219.6,226.4 -2,-3.2 29.6,-18 h -42.8 c -0.8,0 -1.6,-0.4 -2,-1.2 -0.4,-0.8 0,-1.6 0.4,-2 l 19.6,-21.2 h -33.6 c -0.8,0 -1.6,-0.4 -2,-1.2 -0.4,-0.8 0,-1.6 0.4,-2 l 18.4,-18.4 2.8,2.8 -15.2,15.2 h 33.6 c 0.8,0 1.6,0.4 2,1.2 0.4,0.8 0,1.6 -0.4,2 l -19.6,21.2 H 254 c 0.8,0 1.6,0.4 2,1.6 0.4,0.8 0,1.6 -0.8,2.4 z"
+                                                        id="path5551" />
+                                                </g>
+                                                <g id="g5559">
+                                                    <polygon style="fill:#e6e9ee"
+                                                        points="343.2,407.6 337.2,424.8 380.8,424.8 374.4,407.6 "
+                                                        id="polygon5555" />
+                                                    <polygon style="fill:#e6e9ee"
+                                                        points="130,407.6 124,424.8 167.2,424.8 161.2,407.6 "
+                                                        id="polygon5557" />
+                                                </g>
+                                                <g id="g5561">
+                                                </g>
+                                                <g id="g5563">
+                                                </g>
+                                                <g id="g5565">
+                                                </g>
+                                                <g id="g5567">
+                                                </g>
+                                                <g id="g5569">
+                                                </g>
+                                                <g id="g5571">
+                                                </g>
+                                                <g id="g5573">
+                                                </g>
+                                                <g id="g5575">
+                                                </g>
+                                                <g id="g5577">
+                                                </g>
+                                                <g id="g5579">
+                                                </g>
+                                                <g id="g5581">
+                                                </g>
+                                                <g id="g5583">
+                                                </g>
+                                                <g id="g5585">
+                                                </g>
+                                                <g id="g5587">
+                                                </g>
+                                                <g id="g5589">
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+
                                 </div>
                             </div>
                         </div>
 
                         <!-- Column Today -->
-                        <div class="col-xl-4">
+                        <div class="col-xl-6 col-xxl-3">
                             <div class="card mb-4">
                                 <div class="card-header h5">
                                     <span id="dash_card_today">Today</span>
@@ -187,7 +1069,7 @@
                         </div>
 
                         <!-- Column All Time -->
-                        <div class="col-xl-4">
+                        <div class="col-xl-6 col-xxl-3">
                             <div class="card mb-4">
                                 <div class="card-header h5">
                                     <span id="dash_card_all_time">All Time</span>
@@ -744,6 +1626,8 @@
     <script src="lib/chartjs-plugin-labels.min.js"></script>
     <script src="lib/chartjs-plugin-zoom.min.js"></script>
     <script src="js/chart_factory.js"></script>
+    <script src="lib/svg.min.js"></script>
+    <script src="js/info_graphic.js"></script>
     <script src="js/main.js"></script>
 </body>
 
