@@ -68,6 +68,9 @@ function updateCurrentStats() {
         document.getElementById("dash_all_time_consumed").innerHTML = numFormat(stats["all_time_consumed_kwh"], 0);
         document.getElementById("dash_all_time_fed_in").innerHTML = numFormat(stats["all_time_fed_in_kwh"], 0);
         document.getElementById("dash_all_time_earned").innerHTML = numFormat(stats["all_time_earned"], 2);
+
+        // Info graphic
+        updateInfoGraphic(stats["currently_produced_w"], stats["currently_consumed_grid_w"], stats["currently_fed_in_w"]);
     });
 }
 
