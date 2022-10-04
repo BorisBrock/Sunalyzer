@@ -42,11 +42,6 @@ let translations = [
     ["dash_card_all_time", "All Time", "Allzeit-Werte"],
     ["dash_card_24h", "Short Term History", "Aktueller Verlauf"],
 
-    ["dash_text_currently_produced", "Currently produced", "Aktuell erzeugt"],
-    ["dash_text_currently_consumed_grid", "Consumed from grid", "Netzbezug"],
-    ["dash_text_currently_consumed_pv", "Consumed from PV", "Direktverbrauch"],
-    ["dash_text_currently_fed_in", "Currently fed in", "Aktuell eingespeist"],
-
     ["dash_text_today_produced", "Produced today", "Heute erzeugt"],
     ["dash_text_today_consumed", "Consumed today", "Heute verbraucht"],
     ["dash_text_today_fed_in", "Fed in today", "Heute eingespeist"],
