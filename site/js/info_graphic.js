@@ -90,7 +90,7 @@ window.onload = function start() {
     if (gridConsumptionWh > 0) {
        gShowGridToHome = true;
        SVG('#txt_grid_home').opacity(1.0);
-       document.getElementById('txt_grid_home').textContent = gridConsumptionWh.toString();
+       document.getElementById('txt_grid_home').textContent = gridConsumptionWh.toString() + " Wh";
     }
     else {
        gShowGridToHome = false;
@@ -101,7 +101,7 @@ window.onload = function start() {
     if (pvConsumptionWh > 0) {
        gShowPvToHome = true;
        SVG('#txt_pv_home').opacity(1.0);
-       document.getElementById('txt_pv_home').textContent = pvConsumptionWh.toString();
+       document.getElementById('txt_pv_home').textContent = pvConsumptionWh.toString() + " Wh";
     }
     else {
        gShowPvToHome = false;
