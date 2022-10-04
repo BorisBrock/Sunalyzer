@@ -65,7 +65,10 @@ function updateCurrentStats() {
         document.getElementById("dash_all_time_earned").innerHTML = numFormat(stats["all_time_earned"], 2);
 
         // Info graphic
-        updateInfoGraphic(stats["currently_produced_w"], stats["currently_consumed_grid_w"], stats["currently_fed_in_w"]);
+        updateInfoGraphic(
+            Math.floor(stats["currently_produced_w"]), 
+            Math.floor(stats["currently_consumed_grid_w"]),
+            Math.floor(stats["currently_fed_in_w"]));
     });
 }
 
