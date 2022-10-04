@@ -336,6 +336,8 @@ function showViewHistory(mode) {
         case histories.TODAY:
             selectDate(new Date());
             document.getElementById("headline_history").innerHTML = getHistoryString("daily_data");
+            setElementVisible("selection_prev", true);
+            setElementVisible("selection_next", true);
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", true);
@@ -343,6 +345,8 @@ function showViewHistory(mode) {
             setElementVisible("history_card_high_res", true);
         case histories.DAY:
             document.getElementById("headline_history").innerHTML = getHistoryString("daily_data");
+            setElementVisible("selection_prev", true);
+            setElementVisible("selection_next", true);
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", true);
@@ -351,6 +355,8 @@ function showViewHistory(mode) {
             break;
         case histories.MONTH:
             document.getElementById("headline_history").innerHTML = getHistoryString("monthly_data");
+            setElementVisible("selection_prev", true);
+            setElementVisible("selection_next", true);
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", true);
             setElementVisible("selection_day", false);
@@ -360,6 +366,8 @@ function showViewHistory(mode) {
             break;
         case histories.YEAR:
             document.getElementById("headline_history").innerHTML = getHistoryString("yearly_data");
+            setElementVisible("selection_prev", true);
+            setElementVisible("selection_next", true);
             setElementVisible("selection_year", true);
             setElementVisible("selection_month", false);
             setElementVisible("selection_day", false);
@@ -369,6 +377,8 @@ function showViewHistory(mode) {
             break;
         case histories.ALL:
             document.getElementById("headline_history").innerHTML = getHistoryString("all_time_data");
+            setElementVisible("selection_prev", false);
+            setElementVisible("selection_next", false);
             setElementVisible("selection_year", false);
             setElementVisible("selection_month", false);
             setElementVisible("selection_day", false);
