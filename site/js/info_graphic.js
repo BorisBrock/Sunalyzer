@@ -5,7 +5,8 @@ var gShowPvToHome = false;
 var gShowGridToHome = false;
 
 window.onload = function start() {
-    updateInfoGraphic(0, 0, 0);  
+    updateInfoGraphic(0, 0, 0);
+    animateInfoGraphic();
  }
 
  function setInfoGraphicEnabled(enabled) {
