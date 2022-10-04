@@ -54,11 +54,6 @@ function updateCurrentStats() {
         const d = new Date();
         document.getElementById("dashboard_subtitle_time").innerHTML = d.toLocaleTimeString('de-DE');
 
-        document.getElementById("dash_currently_produced").innerHTML = numFormat(stats["currently_produced_w"], 0);
-        document.getElementById("dash_currently_consumed_grid").innerHTML = numFormat(stats["currently_consumed_grid_w"], 0);
-        document.getElementById("dash_currently_consumed_pv").innerHTML = numFormat(stats["currently_consumed_pv_w"], 0);
-        document.getElementById("dash_currently_fed_in").innerHTML = numFormat(stats["currently_fed_in_w"], 0);
-
         document.getElementById("dash_today_produced").innerHTML = numFormat(stats["today_produced_kwh"] * 1000.0, 0);
         document.getElementById("dash_today_consumed").innerHTML = numFormat(stats["today_consumed_kwh"] * 1000.0, 0);
         document.getElementById("dash_today_fed_in").innerHTML = numFormat(stats["today_fed_in_kwh"] * 1000.0, 0);
@@ -311,6 +306,7 @@ function showViewDashboard() {
     setElementVisible("view_statistics", false);
     setElementVisible("view_history", false);
     setElementVisible("view_csv", false);
+    setInfoGraphicEnabled(true);
     gDashboardVisible = true;
 }
 
@@ -319,6 +315,7 @@ function showViewStatistics() {
     setElementVisible("view_statistics", true);
     setElementVisible("view_history", false);
     setElementVisible("view_csv", false);
+    setInfoGraphicEnabled(false);
     gDashboardVisible = false;
     updateStatistics();
 }
@@ -328,6 +325,7 @@ function showViewHistory(mode) {
     setElementVisible("view_statistics", false);
     setElementVisible("view_history", true);
     setElementVisible("view_csv", false);
+    setInfoGraphicEnabled(false);
     gDashboardVisible = false;
     gCurHistory = mode;
 
@@ -384,6 +382,7 @@ function showViewCsv() {
     setElementVisible("view_statistics", false);
     setElementVisible("view_history", false);
     setElementVisible("view_csv", true);
+    setInfoGraphicEnabled(false);
     gDashboardVisible = false;
 }
 

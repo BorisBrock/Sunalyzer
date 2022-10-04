@@ -1,13 +1,26 @@
 var gAnimation;
+var gInfoGraphicEnabled = false;
 var gShowPvToGrid = false;
 var gShowPvToHome = false;
 var gShowGridToHome = false;
 
 window.onload = function start() {
+    updateInfoGraphic(0, 0, 0);  
+ }
 
-    updateInfoGraphic(0, 0, 0);
-    gAnimation = setInterval(animateInfoGraphic, 1000);
-
+ function setInfoGraphicEnabled(enabled) {
+    if(enabled) {
+        if(!gInfoGraphicEnabled) {
+            gInfoGraphicEnabled = true;
+            gAnimation = setInterval(animateInfoGraphic, 1000);
+        }
+    }
+    else {
+        if(gInfoGraphicEnabled) {
+            gInfoGraphicEnabled = false;
+            clearInterval(gAnimation);
+        }
+    }
  }
 
  function animateInfoGraphic() {
