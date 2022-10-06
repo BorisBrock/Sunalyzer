@@ -392,7 +392,7 @@ function createHistoryDetailsChartProduction(canvasId, data) {
                             var valueName = context.dataset.label;   
                             var value = Math.floor(context.parsed.y);
                             window.total += value;
-                            return valueName + ": " + value;
+                            return valueName + ": " + value + " kWh";
                         },
                         footer: function() {
                             return getChartString("chart_total") + ": " + window.total + " kWh";
@@ -408,13 +408,18 @@ function createHistoryDetailsChartProduction(canvasId, data) {
                 mode: 'index',
                 intersect: false
             },
+            locale: getLocale(),
             scales: {
                 x: {
                     stacked: true,
                 },
                 y: {
-                    stacked: true
-                }
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'kWh'
+                    }
+                },
             }
         }
     });
@@ -471,7 +476,7 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
                             var valueName = context.dataset.label;   
                             var value = Math.floor(context.parsed.y);
                             window.total += value;
-                            return valueName + ": " + value;
+                            return valueName + ": " + value + " kWh";
                         },
                         footer: function() {
                             return getChartString("chart_total") + ": " + window.total + " kWh";
@@ -483,12 +488,17 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
                 mode: 'index',
                 intersect: false
             },
+            locale: getLocale(),
             scales: {
                 x: {
                     stacked: true,
                 },
                 y: {
-                    stacked: true
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'kWh'
+                    }
                 }
             }
         }
