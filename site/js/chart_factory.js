@@ -29,7 +29,7 @@ function utilBeautifyDate(date) {
     if (date.length == 10) {
         // Must be a day
         let day = date.slice(8);
-        return parseInt(day).toString();
+        return parseInt(day).toString() + ".";
     }
     else if (date.length == 7) {
         // Must be a month
@@ -382,7 +382,27 @@ function createHistoryDetailsChartProduction(canvasId, data) {
                 display: false
             },
             plugins: {
-                labels: false
+                labels: false,
+                tooltip: {
+                    callbacks: {
+                        afterTitle: function() {
+                            window.total = 0;
+                        },
+                        label: function(context) {
+                            var valueName = context.dataset.label;   
+                            var value = Math.floor(context.parsed.y);
+                            window.total += value;
+                            return valueName + ": " + value;
+                        },
+                        footer: function() {
+                            return getChartString("chart_total") + ": " + window.total + " kWh";
+                        }
+                    }
+                },
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'label'
             },
             interaction: {
                 mode: 'index',
@@ -441,7 +461,23 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
                 display: false
             },
             plugins: {
-                labels: false
+                labels: false,
+                tooltip: {
+                    callbacks: {
+                        afterTitle: function() {
+                            window.total = 0;
+                        },
+                        label: function(context) {
+                            var valueName = context.dataset.label;   
+                            var value = Math.floor(context.parsed.y);
+                            window.total += value;
+                            return valueName + ": " + value;
+                        },
+                        footer: function() {
+                            return getChartString("chart_total") + ": " + window.total + " kWh";
+                        }
+                    }
+                },
             },
             interaction: {
                 mode: 'index',

@@ -130,6 +130,7 @@ let chartStrings = [
     ["chart_produced_grid_kwh", "Feed-in [kWh]", "Einspeisung [kWh]"],
     ["chart_consumed_pv_kwh", "From PV [kWh]", "Aus PV [kWh]"],
     ["chart_consumed_grid_kwh", "From grid [kWh]", "Netzbezug [kWh]"],
+    ["chart_total", "Total", "Gesamt"],
 ];
 
 let historyStrings = [
