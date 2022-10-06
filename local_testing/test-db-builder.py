@@ -174,7 +174,7 @@ def create_data(_date, _cursor, _is_a_call):
             hrdata += f"[\"{tstr}\",{str(round(prod, 3))},{str(round(con, 3))},{str(round(fed, 3))}],"
         # Create new row
         query = (f"INSERT INTO high_res (date,hrvalues) "
-                f"VALUES ('{day_string}', '{hrdata}');")
+                 f"VALUES ('{day_string}', '{hrdata}');")
         _cursor.execute(query)
 
 
