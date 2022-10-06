@@ -183,6 +183,10 @@ function createDashboardChart(canvasId, data) {
                     y: {
                         min: 0.0,
                         max: max,
+                        title: {
+                            display: true,
+                            text: 'Watt'
+                        }
                     }
                 },
                 locale: getLocale(),
@@ -201,7 +205,16 @@ function createDashboardChart(canvasId, data) {
                             enabled: true,
                             mode: 'x',
                         }
-                    }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                var valueName = context.dataset.label;   
+                                var value = Math.floor(context.parsed.y);
+                                return valueName + ": " + value + " W";
+                            },
+                        }
+                    },
                 }
             }
         });
@@ -295,6 +308,10 @@ function createHighResChart(canvasId, data) {
                     y: {
                         min: 0.0,
                         max: max,
+                        title: {
+                            display: true,
+                            text: 'Watt'
+                        }
                     }
                 },
                 locale: getLocale(),
@@ -313,7 +330,16 @@ function createHighResChart(canvasId, data) {
                             enabled: true,
                             mode: 'x',
                         }
-                    }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                var valueName = context.dataset.label;   
+                                var value = Math.floor(context.parsed.y);
+                                return valueName + ": " + value + " W";
+                            },
+                        }
+                    },
                 }
             }
         });

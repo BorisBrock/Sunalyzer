@@ -117,9 +117,9 @@ let translations = [
 
 let chartStrings = [
     // HTML element ID          English (1)             German (2)
-    ["chart_produced_w", "Production [W]", "Erzeugung [W]"],
-    ["chart_consumed_w", "Consumption [W]", "Verbrauch [W]"],
-    ["chart_fed_in_w", "Feed-in [W]", "Einspeisung [W]"],
+    ["chart_produced_w", "Production", "Erzeugung"],
+    ["chart_consumed_w", "Consumption", "Verbrauch"],
+    ["chart_fed_in_w", "Feed-in", "Einspeisung"],
     ["chart_from_grid", "From grid", "Aus dem Netz"],
     ["chart_from_pv", "From PV", "Aus PV"],
     ["chart_produced", "Produced", "Erzeugt"],
