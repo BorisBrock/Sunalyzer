@@ -104,12 +104,32 @@ def get_json_data_current():
     produced_total = rows_all[0][2] - rows_all[0][1]
     consumed_total = rows_all[0][4] - rows_all[0][3]
     fed_in_total = rows_all[0][6] - rows_all[0][5]
+
+    # Compute all time autarky
+    consumed_self_alltime = produced_total - fed_in_total
+    consumed_grid_alltime = consumed_total - consumed_self_alltime
+    consumed_total_alltime = consumed_self_alltime + consumed_grid_alltime
+    if consumed_total_alltime > 0:
+        consumed_self_rel_alltime = (consumed_self_alltime / consumed_total_alltime) * 100.0
+    else:
+        consumed_self_rel_alltime = 100.0
+
     # Today
     day_string = str(date.today())
     rows_today = db.execute(f"SELECT * FROM days WHERE date='{day_string}'")
     produced_today = rows_today[0][2] - rows_today[0][1]
     consumed_today = rows_today[0][4] - rows_today[0][3]
     fed_in_today = rows_today[0][6] - rows_today[0][5]
+
+    # Compute todays autarky
+    consumed_self_today = produced_today - fed_in_today
+    consumed_grid_today = consumed_today - consumed_self_today
+    consumed_total_today = consumed_self_today + consumed_grid_today
+    if consumed_today > 0:
+        consumed_self_rel_today = (consumed_self_today / consumed_total_today) * 100.0
+    else:
+        consumed_self_rel_today = 100.0
+
     # Compute earnings
     price = float(config.config_data['prices']['price_per_grid_kwh'])
     revenue = float(config.config_data['prices']['revenue_per_fed_in_kwh'])
@@ -129,10 +149,12 @@ def get_json_data_current():
         "all_time_consumed_kwh": consumed_total,
         "all_time_fed_in_kwh": fed_in_total,
         "all_time_earned": (earned_total + saved_total),
+        "all_time_autarky": consumed_self_rel_alltime,
         "today_produced_kwh": produced_today,
         "today_consumed_kwh": consumed_today,
         "today_fed_in_kwh": fed_in_today,
-        "today_earned": (earned_today + saved_today)
+        "today_earned": (earned_today + saved_today),
+        "today_autarky": consumed_self_rel_today
     }
     return json.dumps(data)
 

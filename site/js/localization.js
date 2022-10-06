@@ -45,11 +45,13 @@ let translations = [
     ["dash_text_today_produced", "Produced today", "Heute erzeugt"],
     ["dash_text_today_consumed", "Consumed today", "Heute verbraucht"],
     ["dash_text_today_fed_in", "Fed in today", "Heute eingespeist"],
+    ["dash_text_today_autarky", "Today's autarky", "Heutige Autarkie"],
     ["dash_text_today_earned", "Earned today", "Heute verdient"],
 
     ["dash_text_all_time_produced", "Produced in total", "Insgesamt erzeugt"],
     ["dash_text_all_time_consumed", "Consumed in total", "Insgesamt verbraucht"],
     ["dash_text_all_time_fed_in", "Fed in total", "Insgesamt eingespeist"],
+    ["dash_text_all_time_autarky", "Average autarky", "Durchschn. Autarkie"],
     ["dash_text_all_time_earned", "Earned in total", "Insgesamt verdient"],
 
     // History

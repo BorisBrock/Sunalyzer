@@ -58,11 +58,13 @@ function updateCurrentStats() {
         document.getElementById("dash_today_consumed").innerHTML = numFormat(stats["today_consumed_kwh"] * 1000.0, 0);
         document.getElementById("dash_today_fed_in").innerHTML = numFormat(stats["today_fed_in_kwh"] * 1000.0, 0);
         document.getElementById("dash_today_earned").innerHTML = numFormat(stats["today_earned"], 2);
+        document.getElementById("dash_today_autarky").innerHTML = numFormat(stats["today_autarky"], 0);
 
         document.getElementById("dash_all_time_produced").innerHTML = numFormat(stats["all_time_produced_kwh"], 0);
         document.getElementById("dash_all_time_consumed").innerHTML = numFormat(stats["all_time_consumed_kwh"], 0);
         document.getElementById("dash_all_time_fed_in").innerHTML = numFormat(stats["all_time_fed_in_kwh"], 0);
         document.getElementById("dash_all_time_earned").innerHTML = numFormat(stats["all_time_earned"], 2);
+        document.getElementById("dash_all_time_autarky").innerHTML = numFormat(stats["all_time_autarky"], 0);
 
         // Info graphic
         updateInfoGraphic(
