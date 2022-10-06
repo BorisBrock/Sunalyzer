@@ -117,19 +117,20 @@ let translations = [
 
 let chartStrings = [
     // HTML element ID          English (1)             German (2)
-    ["chart_produced_w", "Production [W]", "Erzeugung [W]"],
-    ["chart_consumed_w", "Consumption [W]", "Verbrauch [W]"],
-    ["chart_fed_in_w", "Feed-in [W]", "Einspeisung [W]"],
+    ["chart_produced_w", "Production", "Erzeugung"],
+    ["chart_consumed_w", "Consumption", "Verbrauch"],
+    ["chart_fed_in_w", "Feed-in", "Einspeisung"],
     ["chart_from_grid", "From grid", "Aus dem Netz"],
     ["chart_from_pv", "From PV", "Aus PV"],
     ["chart_produced", "Produced", "Erzeugt"],
     ["chart_consumed", "Consumed", "Verbraucht"],
     ["chart_fed_in", "Fed in", "Eingespeist"],
     ["chart_self_consumed", "Self consumed", "Eigenverbrauch"],
-    ["chart_produced_self_kwh", "Consumed directly [kWh]", "Direktverbrauch [kWh]"],
-    ["chart_produced_grid_kwh", "Feed-in [kWh]", "Einspeisung [kWh]"],
-    ["chart_consumed_pv_kwh", "From PV [kWh]", "Aus PV [kWh]"],
-    ["chart_consumed_grid_kwh", "From grid [kWh]", "Netzbezug [kWh]"],
+    ["chart_produced_self_kwh", "Consumed directly", "Direktverbrauch"],
+    ["chart_produced_grid_kwh", "Feed-in", "Einspeisung"],
+    ["chart_consumed_pv_kwh", "From PV", "Aus PV"],
+    ["chart_consumed_grid_kwh", "From grid", "Netzbezug"],
+    ["chart_total", "Total", "Gesamt"],
 ];
 
 let historyStrings = [

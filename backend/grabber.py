@@ -5,7 +5,6 @@ import importlib
 import signal
 from os.path import exists
 from datetime import date, datetime
-import traceback
 
 # Project imports
 from config import Config

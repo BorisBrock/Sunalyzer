@@ -29,7 +29,7 @@ function utilBeautifyDate(date) {
     if (date.length == 10) {
         // Must be a day
         let day = date.slice(8);
-        return parseInt(day).toString();
+        return parseInt(day).toString() + ".";
     }
     else if (date.length == 7) {
         // Must be a month
@@ -183,6 +183,10 @@ function createDashboardChart(canvasId, data) {
                     y: {
                         min: 0.0,
                         max: max,
+                        title: {
+                            display: true,
+                            text: 'Watt'
+                        }
                     }
                 },
                 locale: getLocale(),
@@ -201,7 +205,16 @@ function createDashboardChart(canvasId, data) {
                             enabled: true,
                             mode: 'x',
                         }
-                    }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                var valueName = context.dataset.label;   
+                                var value = Math.floor(context.parsed.y);
+                                return valueName + ": " + value + " W";
+                            },
+                        }
+                    },
                 }
             }
         });
@@ -295,6 +308,10 @@ function createHighResChart(canvasId, data) {
                     y: {
                         min: 0.0,
                         max: max,
+                        title: {
+                            display: true,
+                            text: 'Watt'
+                        }
                     }
                 },
                 locale: getLocale(),
@@ -313,7 +330,16 @@ function createHighResChart(canvasId, data) {
                             enabled: true,
                             mode: 'x',
                         }
-                    }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                var valueName = context.dataset.label;   
+                                var value = Math.floor(context.parsed.y);
+                                return valueName + ": " + value + " W";
+                            },
+                        }
+                    },
                 }
             }
         });
@@ -382,19 +408,44 @@ function createHistoryDetailsChartProduction(canvasId, data) {
                 display: false
             },
             plugins: {
-                labels: false
+                labels: false,
+                tooltip: {
+                    callbacks: {
+                        afterTitle: function() {
+                            window.total = 0;
+                        },
+                        label: function(context) {
+                            var valueName = context.dataset.label;   
+                            var value = Math.floor(context.parsed.y);
+                            window.total += value;
+                            return valueName + ": " + value + " kWh";
+                        },
+                        footer: function() {
+                            return getChartString("chart_total") + ": " + window.total + " kWh";
+                        }
+                    }
+                },
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'label'
             },
             interaction: {
                 mode: 'index',
                 intersect: false
             },
+            locale: getLocale(),
             scales: {
                 x: {
                     stacked: true,
                 },
                 y: {
-                    stacked: true
-                }
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'kWh'
+                    }
+                },
             }
         }
     });
@@ -441,18 +492,39 @@ function createHistoryDetailsChartConsumption(canvasId, data) {
                 display: false
             },
             plugins: {
-                labels: false
+                labels: false,
+                tooltip: {
+                    callbacks: {
+                        afterTitle: function() {
+                            window.total = 0;
+                        },
+                        label: function(context) {
+                            var valueName = context.dataset.label;   
+                            var value = Math.floor(context.parsed.y);
+                            window.total += value;
+                            return valueName + ": " + value + " kWh";
+                        },
+                        footer: function() {
+                            return getChartString("chart_total") + ": " + window.total + " kWh";
+                        }
+                    }
+                },
             },
             interaction: {
                 mode: 'index',
                 intersect: false
             },
+            locale: getLocale(),
             scales: {
                 x: {
                     stacked: true,
                 },
                 y: {
-                    stacked: true
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'kWh'
+                    }
                 }
             }
         }
