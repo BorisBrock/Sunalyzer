@@ -81,7 +81,7 @@ window.onload = function start() {
     if (fedInWh > 0) {
        gShowPvToGrid = true;
        SVG('#txt_pv_grid').opacity(1.0);
-       document.getElementById('txt_pv_grid').textContent = fedInWh.toString() + " Wh";
+       document.getElementById('txt_pv_grid').textContent = fedInWh.toString() + " W";
     }
     else {
        gShowPvToGrid = false;
@@ -91,7 +91,7 @@ window.onload = function start() {
     if (gridConsumptionWh > 0) {
        gShowGridToHome = true;
        SVG('#txt_grid_home').opacity(1.0);
-       document.getElementById('txt_grid_home').textContent = gridConsumptionWh.toString() + " Wh";
+       document.getElementById('txt_grid_home').textContent = gridConsumptionWh.toString() + " W";
     }
     else {
        gShowGridToHome = false;
@@ -102,7 +102,7 @@ window.onload = function start() {
     if (pvConsumptionWh > 0) {
        gShowPvToHome = true;
        SVG('#txt_pv_home').opacity(1.0);
-       document.getElementById('txt_pv_home').textContent = pvConsumptionWh.toString() + " Wh";
+       document.getElementById('txt_pv_home').textContent = pvConsumptionWh.toString() + " W";
     }
     else {
        gShowPvToHome = false;
