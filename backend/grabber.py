@@ -234,7 +234,44 @@ def set_time_zone(tz):
 
 
 # Updates data in the data base
-def update_data(device):
+def update_data(devices):
+    totals = load_device_plugin("Empty")  # start with an empty object
+
+    for device in devices:  # add available values from each device (will be zero if not available)
+        try:
+            device.update()
+        except Exception:
+            logging.debug(f"Device upate failed: {device.__class__ }")
+
+        totals.total_energy_produced_kwh += device.total_energy_produced_kwh
+        totals.total_energy_consumed_from_grid_kwh += device.total_energy_consumed_from_grid_kwh
+        totals.total_energy_fed_in_kwh += device.total_energy_fed_in_kwh
+        totals.current_power_produced_kw += device.current_power_produced_kw
+        totals.current_power_consumed_from_grid_kw += device.current_power_consumed_from_grid_kw
+        totals.current_power_fed_in_kw += device.current_power_fed_in_kw
+
+        # totals.total_energy_consumed_kwh += device.total_energy_consumed_kwh
+        # totals.current_power_consumed_from_pv_kw += device.current_power_consumed_from_pv_kw
+        # totals.current_power_consumed_total_kw += device.current_power_consumed_total_kw
+
+    totals.total_energy_consumed_kwh = \
+        totals.total_energy_produced_kwh + \
+        totals.total_energy_consumed_from_grid_kwh - \
+        totals.total_energy_fed_in_kwh
+
+    totals.current_power_consumed_from_pv_kw = \
+        totals.current_power_produced_kw - \
+        totals.current_power_fed_in_kw
+
+    totals.current_power_consumed_total_kw = \
+        totals.current_power_consumed_from_pv_kw + \
+        totals.current_power_consumed_from_grid_kw
+
+    store_data(totals)
+
+
+def store_data(device):
+
     '''Updates data in the data base.'''
     global real_time_seconds_counter
 
@@ -373,13 +410,26 @@ def main():
     # Set time zone
     set_time_zone(config.config_data.get("time_zone"))
 
-    # Dynamically load the device
-    try:
-        device_name = config.config_data['device']['type']
-        logging.info(f"Grabber: Loading device adapter '{device_name}'")
-        device = load_device_plugin(device_name)
-    except Exception:
-        logging.exception("creating the device adapter failed")
+    # Dynamically load the devices
+    devices = []
+    suffixes = ("", "2", "3", "4", "5")
+    for s in suffixes:
+        try:
+            section = "device" + s
+            device_name = config.config_data[section]['type']
+            if device_name in ("None", "Empty"):
+                logging.info(f"Grabber: skipping device adapter '{section}:{device_name}'")
+            else:
+                logging.info(f"Grabber: Loading device adapter '{section}:{device_name}'")
+                device = load_device_plugin(device_name)
+                # device.hostname = config.config_data[section]['hostname']
+                devices.append(device)
+        except KeyError:
+            logging.exception(f"Grabber: section {section} does not exist in config.yml")
+        except Exception:
+            logging.exception(f"creating the device adapter '{section}:{device_name}' failed")
+    if devices.count == 0:
+        logging.error("Grabber: no device adapters loaded. Exiting....")
         exit()
 
     # Prepare the data base
@@ -396,9 +446,9 @@ def main():
             logging.debug(f"Grabber: {time_string}: Updating device data")
 
         try:
-            update_data(device)
-        except Exception:
-            logging.exception("Updating data from device failed")
+            update_data(devices)
+        except Exception as e:
+            logging.exception(f"Updating data from device failed {e}")
 
         time.sleep(config.config_data['grabber']['interval_s'])
 
