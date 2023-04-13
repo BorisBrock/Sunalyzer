@@ -21,6 +21,8 @@ class Fronius:
         self.total_energy_produced_kwh = 0.0
         self.total_energy_consumed_kwh = 0.0
         self.total_energy_fed_in_kwh = 0.0
+        self.total_energy_consumed_from_grid_kwh = 0.0
+
         self.current_power_consumed_from_grid_kw = 0.0
         self.current_power_consumed_from_pv_kw = 0.0
         self.current_power_consumed_total_kw = 0.0
@@ -62,6 +64,7 @@ class Fronius:
         self.total_energy_produced_kwh = total_produced_kwh
         self.total_energy_consumed_kwh = total_consumption_kwh
         self.total_energy_fed_in_kwh = total_fed_in_kwh
+        self.total_energy_consumed_from_grid_kwh = total_consumed_from_grid_kwh
 
         # Now extract the momentary values
         str_cur_production_w = inverter_data["Body"]["Data"]["Site"]["P_PV"]
