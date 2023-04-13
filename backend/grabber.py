@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import logging
 import importlib
@@ -350,6 +351,11 @@ def main():
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S')
 
+    if "-debug" in sys.argv:
+        # also print to stderr
+        logging.getLogger().addHandler(logging.StreamHandler())
+        logging.getLogger().setLevel(logging.DEBUG)
+
     # Print version
     logging.info(f"Starting Sunalyzer grabber version {version.get_version()}")
 
@@ -360,8 +366,9 @@ def main():
     except Exception:
         exit()
 
-    # Set log level
-    logging.getLogger().setLevel(config.log_level)
+    # Set log level based on config file if not yet set with "-debug" command line option
+    if logging.getLogger().getEffectiveLevel() != logging.DEBUG:
+        logging.getLogger().setLevel(config.log_level)
 
     # Set time zone
     set_time_zone(config.config_data.get("time_zone"))
