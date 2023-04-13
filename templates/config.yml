@@ -11,6 +11,7 @@ time_zone: "Europe/Berlin"
 #  - Dummy: a simple dummy devices that can be used for testing
 #  - Fronius: supports Fronius Symo/GEN24 inverters + smar meter
 #  - GoodweDNS: supports Goodwe DNS series inverters
+#  - HomeWizardP1: supports HomeWizard Wi-Fi P1 meter
 device:
   type:        Dummy       # Name of the device to load (must match an existing device .py file/class)
   start_date:  2020-08-01  # The start of operation (YYYY-MM-DD)
@@ -40,6 +41,9 @@ device5:
 # Enable if you want to use Goodwe hardware
 #goodwe_dns:
 #  host_name: 192.168.178.200  # Host name/IP address of the GoodweDNS end point
+
+#homewizardp1:
+#  host_name: 192.168.178.200  # Host name/IP address of the HomeWizard Wi-Fi P1 meter end point
 
 # Electricity prices. Used to calculate earnings in the UI.
 prices:
