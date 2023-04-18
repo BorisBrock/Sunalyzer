@@ -213,10 +213,10 @@ def create_new_db():
 
 
 # Loads the device class with the given name
-def load_device_plugin(device_name):
-    '''Loads the device class with the given name.'''
-    module = importlib.import_module("devices." + device_name)
-    class_ = getattr(module, device_name)
+def load_device_plugin(device_type):
+    '''Loads the device class with the given type.'''
+    module = importlib.import_module("devices." + device_type)
+    class_ = getattr(module, device_type)
     device = class_(config)
     return device
 
@@ -420,18 +420,17 @@ def main():
     for s in suffixes:
         try:
             section = "device" + s
-            device_name = config.config_data[section]['type']
-            if device_name in ("None", "Empty"):
-                logging.info(f"Grabber: skipping device adapter '{section}:{device_name}'")
+            device_type = config.config_data[section]['type']
+            if device_type in ("None", "Empty"):
+                logging.info(f"Grabber: skipping device adapter '{section}:{device_type}'")
             else:
-                logging.info(f"Grabber: Loading device adapter '{section}:{device_name}'")
-                device = load_device_plugin(device_name)
-                # device.hostname = config.config_data[section]['hostname']
+                logging.info(f"Grabber: Loading device adapter '{section}:{device_type}'")
+                device = load_device_plugin(device_type, section)
                 devices.append(device)
         except KeyError:
-            logging.exception(f"Grabber: section {section} does not exist in config.yml")
+            logging.exception(f"Grabber: section '{section}' does not exist in config.yml")
         except Exception:
-            logging.exception(f"creating the device adapter '{section}:{device_name}' failed")
+            logging.exception(f"creating the device adapter '{section}:{device_type}' failed")
     if devices.count == 0:
         logging.error("Grabber: no device adapters loaded. Exiting....")
         exit()
