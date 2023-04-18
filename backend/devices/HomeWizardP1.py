@@ -4,16 +4,18 @@ import logging
 
 # HomeWizard P1 devices
 class HomeWizardP1:
-    def __init__(self, config):
+    def __init__(self, config, _id):
         # Demo code for config access
+        self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+
         logging.info(f"HomeWizard P1 device: "
                      f"configured host name is "
-                     f"{config.config_data['homewizardp1']['host_name']}")
-
-        self.host_name = config.config_data['homewizardp1']['host_name']
+                     f"{config.config_data[_id]['host_name']}")
 
         self.url_meter = (
             f"http://{self.host_name}/api/v1/data")
+
+        self.specific_option = config.config_data['goodwe_dns']['specific_option']  # not currently used
 
         # Initialize with default values
         self.total_energy_produced_kwh = 0.0

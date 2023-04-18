@@ -1,6 +1,6 @@
 # Empty device to allow adding values from multiple devices
 class Empty:
-    def __init__(self, config):
+    def __init__(self, config, _id):
         # Demo code for config access
         # print(f"""Dummy device: config test -
         #    foo={config.config_data['dummy']['foo']}

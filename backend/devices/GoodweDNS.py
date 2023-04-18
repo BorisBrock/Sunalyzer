@@ -11,15 +11,17 @@ import struct
 
 # Goodwe devices
 class GoodweDNS:
-    def __init__(self, config):
+    def __init__(self, config, _id):
         # Demo code for config access
-        logging.info(f"GoodweDNS device: "
-                     f"configured host name is "
-                     f"{config.config_data['goodwe_dns']['host_name']}")
-
-        self.host_name = config.config_data['goodwe_dns']['host_name']
+        self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
         self.goodwe_port = 8899
         self.last_response = datetime.now()
+
+        logging.info(f"GoodweDNS device: "
+                     f"configured host name is "
+                     f"{self.host_name}")
+
+        self.specific_option = config.config_data['goodwe_dns']['specific_option']  # not currently used
 
         # Initialize with default values
         self.total_energy_produced_kwh = 0.0

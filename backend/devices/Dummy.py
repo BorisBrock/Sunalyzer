@@ -1,6 +1,6 @@
 # Dummy device for testing purposes
 class Dummy:
-    def __init__(self, config):
+    def __init__(self, config, _id):
         # Demo code for config access
         # print(f"""Dummy device: config test -
         #    foo={config.config_data['dummy']['foo']}

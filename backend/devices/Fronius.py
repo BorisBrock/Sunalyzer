@@ -4,18 +4,20 @@ import logging
 
 # Fronius Symo/Gn24 devices
 class Fronius:
-    def __init__(self, config):
+    def __init__(self, config, _id):
         # Demo code for config access
+        self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+
         logging.info(f"Fronius device: "
                      f"configured host name is "
-                     f"{config.config_data['fronius']['host_name']}")
-
-        self.host_name = config.config_data['fronius']['host_name']
+                     f"{config.config_data[_id]['host_name']}")
 
         self.url_inverter = (
             f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi")
         self.url_meter = (
             f"http://{self.host_name}/solar_api/v1/GetMeterRealtimeData.cgi?Scope=System")
+
+        self.specific_option = config.config_data['fronius']['specific_option']  # not currently used
 
         # Initialize with default values
         self.total_energy_produced_kwh = 0.0

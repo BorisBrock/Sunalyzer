@@ -213,11 +213,11 @@ def create_new_db():
 
 
 # Loads the device class with the given name
-def load_device_plugin(device_type):
+def load_device_plugin(device_type, section):
     '''Loads the device class with the given type.'''
     module = importlib.import_module("devices." + device_type)
     class_ = getattr(module, device_type)
-    device = class_(config)
+    device = class_(config, section)
     return device
 
 
@@ -235,7 +235,7 @@ def set_time_zone(tz):
 
 # Updates data in the data base
 def update_data(devices):
-    totals = load_device_plugin("Empty")  # start with an empty object
+    totals = load_device_plugin("Empty", "none")  # start with an empty object
 
     for device in devices:  # add available values from each device (will be zero if not available)
         try:
