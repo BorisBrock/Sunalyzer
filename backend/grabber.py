@@ -272,6 +272,10 @@ def update_data(devices):
 
 def store_data(device):
 
+    if "-no_store" in sys.argv:
+        logging.debug("Grabber: skipping storage to database")
+        return
+
     '''Updates data in the data base.'''
     global real_time_seconds_counter
 
