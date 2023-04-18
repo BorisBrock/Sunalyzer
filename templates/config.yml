@@ -1,7 +1,7 @@
 ## User Settings
 
 # Logging configuration: normal or verbose.
-logging: verbose
+logging: normal
 
 # Sets the local time zone.
 time_zone: "Europe/Berlin"
