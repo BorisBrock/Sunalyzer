@@ -12,6 +12,7 @@ time_zone: "Europe/Berlin"
 #  - Fronius: supports Fronius Symo/GEN24 inverters + smar meter
 #  - GoodweDNS: supports Goodwe DNS series inverters
 #  - HomeWizardP1: supports HomeWizard Wi-Fi P1 meter
+# Please configure a device which measures PV production as 'device:'
 device:
   type:        Dummy       # Name of the device to load (must match an existing device .py file/class)
   start_date:  2020-08-01  # The start of operation (YYYY-MM-DD)
