@@ -6,7 +6,27 @@ import logging
 class Fronius:
     def __init__(self, config, _id):
         # Demo code for config access
-        self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+        hostname_configured = True
+        try:
+            self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+        except KeyError:
+            logging.info(f"Grabber: Fronius device does not have a hostname in the '{_id}:' section of config.yml")
+            hostname_configured = False
+        except Exception as e:
+            logging.exception(e)
+
+        if hostname_configured is False:
+            try:
+                self.host_name = config.config_data['fronius']['host_name']
+            except KeyError:
+                logging.info(f"Grabber: config.yml does not contain a hostname for "
+                             f"{config.config_data[_id]['type']} declared in section '{_id}:'")
+                raise
+            except Exception as e:
+                logging.exception(e)
+            else:
+                logging.info(f"Grabber: took host_name from the 'fronius:' section in config.yml."
+                             f" Please move option to the '{_id}:' section instead")
 
         logging.info(f"Fronius device: "
                      f"configured host name is "

@@ -13,7 +13,29 @@ import struct
 class GoodweDNS:
     def __init__(self, config, _id):
         # Demo code for config access
-        self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+        hostname_configured = False
+        try:
+            self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+        except KeyError:
+            logging.info(f"Grabber: Goodwe device does not have a hostname in the '{_id}:' section of config.yaml")
+        except Exception as e:
+            logging.exception(e)
+        else:
+            hostname_configured = True
+
+        if hostname_configured is False:
+            try:
+                self.host_name = config.config_data['goodwe_dns']['host_name']
+            except KeyError:
+                logging.info(f"Grabber: config.yaml does not contain a hostname for "
+                             f"{config.config_data[_id]['type']} declared in section '{_id}:'")
+                raise
+            except Exception as e:
+                logging.exception(e)
+            else:
+                logging.info(f"Grabber: took host_name from the 'goodwe_dns:' section in config.yaml."
+                             f" Please move option to the '{_id}:' section instead")
+
         self.goodwe_port = 8899
         self.last_response = datetime.now()
 

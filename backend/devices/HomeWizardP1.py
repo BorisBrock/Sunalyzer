@@ -6,7 +6,28 @@ import logging
 class HomeWizardP1:
     def __init__(self, config, _id):
         # Demo code for config access
-        self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+        hostname_configured = False
+        try:
+            self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+        except KeyError:
+            logging.info(f"Grabber: HomeWizard device does not have a hostname in the '{_id}:' section of config.yml")
+        except Exception as e:
+            logging.exception(e)
+        else:
+            hostname_configured = True
+
+        if hostname_configured is False:
+            try:
+                self.host_name = config.config_data['homewizardp1']['host_name']
+            except KeyError:
+                logging.info(f"Grabber: config.yml does not contain a hostname for "
+                             f"{config.config_data[_id]['type']} declared in section '{_id}:'")
+                raise
+            except Exception as e:
+                logging.exception(e)
+            else:
+                logging.info(f"Grabber: took host_name from the 'homewizardp1:' section in config.yml."
+                             f" Please move option to the '{_id}:' section instead")
 
         logging.info(f"HomeWizard P1 device: "
                      f"configured host name is "
