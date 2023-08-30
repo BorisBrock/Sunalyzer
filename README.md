@@ -32,6 +32,8 @@ Currently Sunalyzer provides an **English** and a **German** user interface. The
 
 Sunalyzer provides integrations for the following device types (inverters/smart meters):
 * Fronius (Symo/Gen24)
+* Goodwe D-NS series inverters (and possibly DT)
+* HomeWizard P1 Wifi devices for reading Smart Meter data
 * Dummy device (for testing purposes)
 
 Contributions for the support of additional devices are welcome. Please feel free to reach out to me or submit a pull request directly.
@@ -86,21 +88,14 @@ Sunalyzer is configured via a YAML file called *config.yml*. This file has to be
 | ----------------------------- | --------------------------------------------------------------------------------------------------- |
 | logging                       | Can be 'normal' (only basic logging) or 'verbose' (verbose logging for debug purposes).             |
 | time_zone                     | The time zone that will be used to generate time stamps for logged data. E.g. "Europe/Berlin".      |
-| device:type                   | Name of the device plugin to use. Currently "Fronius" and "Dummy" are supported.                    |
+| device:type                   | Name of the device plugin to use. "Fronius", "Goodwe", HomeWizardP1 and "Dummy" are supported.      |
 | device:start_date             | The date on which the inverter first started production (YYYY-MM-DD).                               |
+| device:host_name              |  IP address or host name of your device                                                             |
 | prices:price_per_grid_kwh     | Price for 1 kWh consumed from the grid (e.g. in €).                                                 |
 | prices:revenue_per_fed_in_kwh | Revenue for 1 fed in kWh (e.g. in €).                                                               |
 | server:ip                     | IP address of the web server. Should be set to 0.0.0.0.                                             |
 | server:port                   | Port of the web server. Should be set to 5000.                                                      |
 | grabber:interval_s            | Interval in seconds that the grabber will use to query the inverter/smart meter. Default is 3s.     |
-
-Additional settings are required depending on the selected device plugin:
-
-#### Fronius
-
-| Setting                       | Description                                                   |
-| ----------------------------- | ------------------------------------------------------------- |
-| fronius::host_name            | IP address or host name of your fronius inverter.             |
 
 ## Deveopment Environment
 

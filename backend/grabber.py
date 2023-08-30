@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import logging
 import importlib
@@ -212,11 +213,11 @@ def create_new_db():
 
 
 # Loads the device class with the given name
-def load_device_plugin(device_name):
-    '''Loads the device class with the given name.'''
-    module = importlib.import_module("devices." + device_name)
-    class_ = getattr(module, device_name)
-    device = class_(config)
+def load_device_plugin(device_type, section):
+    '''Loads the device class with the given type.'''
+    module = importlib.import_module("devices." + device_type)
+    class_ = getattr(module, device_type)
+    device = class_(config, section)
     return device
 
 
@@ -233,7 +234,48 @@ def set_time_zone(tz):
 
 
 # Updates data in the data base
-def update_data(device):
+def update_data(devices):
+    totals = load_device_plugin("Empty", "none")  # start with an empty object
+
+    for device in devices:  # add available values from each device (will be zero if not available)
+        try:
+            device.update()
+        except Exception:
+            logging.debug(f"Device upate failed: {device.__class__ }")
+
+        totals.total_energy_produced_kwh += device.total_energy_produced_kwh
+        totals.total_energy_consumed_from_grid_kwh += device.total_energy_consumed_from_grid_kwh
+        totals.total_energy_fed_in_kwh += device.total_energy_fed_in_kwh
+        totals.current_power_produced_kw += device.current_power_produced_kw
+        totals.current_power_consumed_from_grid_kw += device.current_power_consumed_from_grid_kw
+        totals.current_power_fed_in_kw += device.current_power_fed_in_kw
+
+        # totals.total_energy_consumed_kwh += device.total_energy_consumed_kwh
+        # totals.current_power_consumed_from_pv_kw += device.current_power_consumed_from_pv_kw
+        # totals.current_power_consumed_total_kw += device.current_power_consumed_total_kw
+
+    totals.total_energy_consumed_kwh = \
+        totals.total_energy_produced_kwh + \
+        totals.total_energy_consumed_from_grid_kwh - \
+        totals.total_energy_fed_in_kwh
+
+    totals.current_power_consumed_from_pv_kw = \
+        totals.current_power_produced_kw - \
+        totals.current_power_fed_in_kw
+
+    totals.current_power_consumed_total_kw = \
+        totals.current_power_consumed_from_pv_kw + \
+        totals.current_power_consumed_from_grid_kw
+
+    store_data(totals)
+
+
+def store_data(device):
+
+    if "-no_store" in sys.argv:
+        logging.debug("Grabber: skipping storage to database")
+        return
+
     '''Updates data in the data base.'''
     global real_time_seconds_counter
 
@@ -350,6 +392,11 @@ def main():
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S')
 
+    if "-debug" in sys.argv:
+        # also print to stderr
+        logging.getLogger().addHandler(logging.StreamHandler())
+        logging.getLogger().setLevel(logging.DEBUG)
+
     # Print version
     logging.info(f"Starting Sunalyzer grabber version {version.get_version()}")
 
@@ -360,19 +407,32 @@ def main():
     except Exception:
         exit()
 
-    # Set log level
-    logging.getLogger().setLevel(config.log_level)
+    # Set log level based on config file if not yet set with "-debug" command line option
+    if logging.getLogger().getEffectiveLevel() != logging.DEBUG:
+        logging.getLogger().setLevel(config.log_level)
 
     # Set time zone
     set_time_zone(config.config_data.get("time_zone"))
 
-    # Dynamically load the device
-    try:
-        device_name = config.config_data['device']['type']
-        logging.info(f"Grabber: Loading device adapter '{device_name}'")
-        device = load_device_plugin(device_name)
-    except Exception:
-        logging.exception("creating the device adapter failed")
+    # Dynamically load the devices
+    devices = []
+    suffixes = ("", "2", "3", "4", "5")
+    for s in suffixes:
+        try:
+            section = "device" + s
+            device_type = config.config_data[section]['type']
+            if device_type in ("None", "Empty"):
+                logging.info(f"Grabber: skipping device adapter '{section}:{device_type}'")
+            else:
+                logging.info(f"Grabber: Loading device adapter '{section}:{device_type}'")
+                device = load_device_plugin(device_type, section)
+                devices.append(device)
+        except KeyError:
+            logging.exception(f"Grabber: section '{section}' does not exist in config.yml")
+        except Exception:
+            logging.exception(f"creating the device adapter '{section}:{device_type}' failed")
+    if devices.count == 0:
+        logging.error("Grabber: no device adapters loaded. Exiting....")
         exit()
 
     # Prepare the data base
@@ -389,9 +449,9 @@ def main():
             logging.debug(f"Grabber: {time_string}: Updating device data")
 
         try:
-            update_data(device)
-        except Exception:
-            logging.exception("Updating data from device failed")
+            update_data(devices)
+        except Exception as e:
+            logging.exception(f"Updating data from device failed {e}")
 
         time.sleep(config.config_data['grabber']['interval_s'])
 

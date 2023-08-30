@@ -1,7 +1,7 @@
 ## User Settings
 
 # Logging configuration: normal or verbose.
-logging: verbose
+logging: normal
 
 # Sets the local time zone.
 time_zone: "Europe/Berlin"
@@ -10,14 +10,43 @@ time_zone: "Europe/Berlin"
 # Currently the following devices are available
 #  - Dummy: a simple dummy devices that can be used for testing
 #  - Fronius: supports Fronius Symo/GEN24 inverters + smar meter
+#  - GoodweDNS: supports Goodwe DNS series inverters
+#  - HomeWizardP1: supports HomeWizard Wi-Fi P1 meter
+# Please configure a device which measures PV production as 'device:'
 device:
   type:        Dummy       # Name of the device to load (must match an existing device .py file/class)
   start_date:  2020-08-01  # The start of operation (YYYY-MM-DD)
+  host_name:   192.168.178.200  # Host name/IP address of the end point
+
+device2:
+  type:        None       # Name of the device to load (must match an existing device .py file/class)
+  start_date:  2020-01-01  # The start of operation (YYYY-MM-DD)
+  host_name:   192.168.178.200  # Host name/IP address of the end point
+
+device3:
+  type:        None       # Name of the device to load (must match an existing device .py file/class)
+  start_date:  2020-01-01  # The start of operation (YYYY-MM-DD)
+  host_name:   192.168.178.200  # Host name/IP address of the end point
+
+device4:
+  type:        None       # Name of the device to load (must match an existing device .py file/class)
+  start_date:  2020-01-01  # The start of operation (YYYY-MM-DD)
+  host_name:   192.168.178.200  # Host name/IP address of the end point
+
+device5:
+  type:        None       # Name of the device to load (must match an existing device .py file/class)
+  start_date:  2020-01-01  # The start of operation (YYYY-MM-DD)
+  host_name:   192.168.178.200  # Host name/IP address of the end point
 
 # Device specific settings. These depend on the selected device adapter
-# Enable if you want to use Fronius hardware
-#fronius:
-#  host_name: 192.168.178.200  # Host name/IP address of the Fronius end point
+fronius:
+  specific_option: None  # allows for further passing of options, currently not used
+
+goodwe_dns:
+  specific_option: None  # allows for further passing of options, currently not used
+
+homewizardp1:
+  specific_option: None  # allows for further passing of options, currently not used
 
 # Electricity prices. Used to calculate earnings in the UI.
 prices:
