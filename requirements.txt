@@ -1,7 +1,7 @@
-flask==2.3.3
+flask==3.0.3
 PyYAML==6.0.1
-pytest==7.4.0
+pytest==8.2.2
 supervisor==4.2.5
-requests==2.31.0
-waitress==2.1.2
-Flask-Compress==1.13
+requests==2.32.3
+waitress==3.0.0
+Flask-Compress==1.15

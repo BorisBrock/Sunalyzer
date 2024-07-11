@@ -105,7 +105,7 @@ Additional settings are required depending on the selected device plugin:
 ## Deveopment Environment
 
 Sunalyzer is currently being developed using the following tools and libraries:
-* **Operating system**: Manjaro Linux
+* **Operating system**: Arch Linux
 * **Development Environment**: Visual Studio Code
 * **Programming languages**: Python 3.10, JavaScript, HTML
 * **Database**: SQlite
