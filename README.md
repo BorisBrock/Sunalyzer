@@ -107,7 +107,7 @@ Additional settings are required depending on the selected device plugin:
 Sunalyzer is currently being developed using the following tools and libraries:
 * **Operating system**: Arch Linux
 * **Development Environment**: Visual Studio Code
-* **Programming languages**: Python 3.10, JavaScript, HTML
+* **Programming languages**: Python 3.12, JavaScript, HTML
 * **Database**: SQlite
 * **Frameworks**: Bootstrap, Chart.js, hammer.js, Fontawesome
 * **DevOps**: flake8, pytest, htmlhint, ESlint
