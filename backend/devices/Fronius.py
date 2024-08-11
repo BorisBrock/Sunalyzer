@@ -4,23 +4,47 @@ import logging
 
 # Fronius Symo/Gn24 devices
 class Fronius:
-    def __init__(self, config):
+    def __init__(self, config, _id):
         # Demo code for config access
+        hostname_configured = True
+        try:
+            self.host_name = config.config_data[_id]['host_name']  # use _id to get the "device2" section
+        except KeyError:
+            logging.info(f"Grabber: Fronius device does not have a hostname in the '{_id}:' section of config.yml")
+            hostname_configured = False
+        except Exception as e:
+            logging.exception(e)
+
+        if hostname_configured is False:
+            try:
+                self.host_name = config.config_data['fronius']['host_name']
+            except KeyError:
+                logging.info(f"Grabber: config.yml does not contain a hostname for "
+                             f"{config.config_data[_id]['type']} declared in section '{_id}:'")
+                raise
+            except Exception as e:
+                logging.exception(e)
+            else:
+                logging.info(f"Grabber: took host_name from the 'fronius:' section in config.yml."
+                             f" Please move option to the '{_id}:' section instead")
+
         logging.info(f"Fronius device: "
                      f"configured host name is "
-                     f"{config.config_data['fronius']['host_name']}")
-
-        self.host_name = config.config_data['fronius']['host_name']
+                     f"{config.config_data[_id]['host_name']}")
 
         self.url_inverter = (
             f"http://{self.host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi")
         self.url_meter = (
             f"http://{self.host_name}/solar_api/v1/GetMeterRealtimeData.cgi?Scope=System")
 
+        self.specific_option = config.config_data['fronius']['specific_option']  # not currently used
+
         # Initialize with default values
         self.total_energy_produced_kwh = 0.0
         self.total_energy_consumed_kwh = 0.0
         self.total_energy_fed_in_kwh = 0.0
+        self.total_energy_consumed_from_grid_kwh = 0.0
+
         self.current_power_consumed_from_grid_kw = 0.0
         self.current_power_consumed_from_pv_kw = 0.0
         self.current_power_consumed_total_kw = 0.0
@@ -62,6 +86,7 @@ class Fronius:
         self.total_energy_produced_kwh = total_produced_kwh
         self.total_energy_consumed_kwh = total_consumption_kwh
         self.total_energy_fed_in_kwh = total_fed_in_kwh
+        self.total_energy_consumed_from_grid_kwh = total_consumed_from_grid_kwh
 
         # Now extract the momentary values
         str_cur_production_w = inverter_data["Body"]["Data"]["Site"]["P_PV"]
