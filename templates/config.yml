@@ -18,7 +18,7 @@ device:
 # Enable if you want to use Fronius hardware
 #fronius:
 #  host_name: 192.168.178.200  # Host name/IP address of the Fronius end point
-#  meter: False # Is smart meter present?
+#  has_meter: False # Is smart meter present?
 
 # Electricity prices. Used to calculate earnings in the UI.
 prices:
