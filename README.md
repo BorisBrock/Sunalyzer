@@ -102,6 +102,7 @@ Additional settings are required depending on the selected device plugin:
 | Setting                       | Description                                                   |
 | ----------------------------- | ------------------------------------------------------------- |
 | fronius::host_name            | IP address or host name of your fronius inverter.             |
+| fronius::has_meter            | True/False - Is there a Fronius smart meter present?          |
 
 ## Deveopment Environment
 
