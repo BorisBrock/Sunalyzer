@@ -17,7 +17,7 @@ class Fronius:
         self.url_meter = (
             f"http://{self.host_name}/solar_api/v1/GetMeterRealtimeData.cgi?Scope=System")
 
-        self.meter = config.config_data['fronius']['meter'] # True / False - Smart Meter active?
+        self.has_meter = config.config_data['fronius']['has_meter'] # True / False - Smart Meter active?
 
         # Initialize with default values
         self.total_energy_produced_kwh = 0.0
@@ -42,7 +42,7 @@ class Fronius:
         str_total_produced_wh = inverter_data["Body"]["Data"]["Site"]["E_Total"]
         total_produced_kwh = float(str_total_produced_wh) * 0.001
         # Meter data
-        if self.meter:
+        if self.has_meter:
             str_total_consumed_from_grid_wh = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
             total_consumed_from_grid_kwh = float(
                 str_total_consumed_from_grid_wh) * 0.001
@@ -107,7 +107,7 @@ class Fronius:
             r_inverter = requests.get(self.url_inverter, timeout=5)
             r_inverter.raise_for_status()
             # Query smart meter data
-            if self.meter:
+            if self.has_meter:
                 r_meter = requests.get(self.url_meter, timeout=5)
                 r_meter.raise_for_status()
                 # Extract and process relevant data
