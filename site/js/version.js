@@ -1,6 +1,5 @@
-
-const Version = "0.31.0";
+const Version = "0.32.0";
 
 function setVersion() {
-    document.getElementById("version").innerHTML = "Version " + Version;
+  document.getElementById("version").innerHTML = "Version " + Version;
 }
