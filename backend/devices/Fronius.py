@@ -17,6 +17,8 @@ class Fronius:
         self.url_meter = (
             f"http://{self.host_name}/solar_api/v1/GetMeterRealtimeData.cgi?Scope=System")
 
+        self.has_meter = config.config_data['fronius']['has_meter'] # True / False - Smart Meter active?
+
         # Initialize with default values
         self.total_energy_produced_kwh = 0.0
         self.total_energy_consumed_kwh = 0.0
@@ -40,11 +42,17 @@ class Fronius:
         str_total_produced_wh = inverter_data["Body"]["Data"]["Site"]["E_Total"]
         total_produced_kwh = float(str_total_produced_wh) * 0.001
         # Meter data
-        str_total_consumed_from_grid_wh = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
-        total_consumed_from_grid_kwh = float(
-            str_total_consumed_from_grid_wh) * 0.001
-        str_total_fed_in_wh = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Minus_Absolute"]
-        total_fed_in_kwh = float(str_total_fed_in_wh) * 0.001
+        if self.has_meter:
+            str_total_consumed_from_grid_wh = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Plus_Absolute"]
+            total_consumed_from_grid_kwh = float(
+                str_total_consumed_from_grid_wh) * 0.001
+            str_total_fed_in_wh = meter_data["Body"]["Data"]["0"]["EnergyReal_WAC_Minus_Absolute"]
+            total_fed_in_kwh = float(str_total_fed_in_wh) * 0.001
+        else:
+            str_total_consumed_from_grid_wh = 0
+            total_consumed_from_grid_kwh = 0
+            str_total_fed_in_wh = 0
+            total_fed_in_kwh = 0
         # Compute other values
         total_self_consumption_kwh = total_produced_kwh - total_fed_in_kwh
         total_consumption_kwh = total_consumed_from_grid_kwh + total_self_consumption_kwh
@@ -67,7 +75,7 @@ class Fronius:
         str_cur_production_w = inverter_data["Body"]["Data"]["Site"]["P_PV"]
         cur_production_kw = 0.0 if str_cur_production_w is None else float(
             str_cur_production_w) * 0.001
-        str_grid_power_w = inverter_data["Body"]["Data"]["Site"]["P_Grid"]
+        str_grid_power_w = inverter_data["Body"]["Data"]["Site"]["P_Grid"] or 0
         grid_power_kw = float(str_grid_power_w) * 0.001
         cur_feed_in_kw = (-grid_power_kw) if grid_power_kw < 0.0 else 0.0
         cur_consumption_from_grid = grid_power_kw if grid_power_kw > 0.0 else 0.0
@@ -99,10 +107,13 @@ class Fronius:
             r_inverter = requests.get(self.url_inverter, timeout=5)
             r_inverter.raise_for_status()
             # Query smart meter data
-            r_meter = requests.get(self.url_meter, timeout=5)
-            r_meter.raise_for_status()
-            # Extract and process relevant data
-            self.copy_data(r_inverter.json(), r_meter.json())
+            if self.has_meter:
+                r_meter = requests.get(self.url_meter, timeout=5)
+                r_meter.raise_for_status()
+                # Extract and process relevant data
+                self.copy_data(r_inverter.json(), r_meter.json())
+            else:
+                self.copy_data(r_inverter.json(), "{}") # Null meter data
         except requests.exceptions.Timeout:
             logging.error(f"Fronius device: Timeout requesting "
                           f"'{self.url_inverter}' or '{self.url_meter}'")
