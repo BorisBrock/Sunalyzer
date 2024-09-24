@@ -257,8 +257,8 @@ function prettyPrintDateString(date) {
     var d = new Date(date)
     let localeDate = d.toLocaleString(getLocale(), {
         weekday: "long",
-        day: "Numberic",
-        year: "Numberic",
+        day: "numeric",
+        year: "numeric",
         month: "long",
     });
     return localeDate;
@@ -267,7 +267,7 @@ function prettyPrintDateString(date) {
 function prettyPrintDateStringWithoutDay(date) {
     var d = new Date(date)
     let localeDate = d.toLocaleString(getLocale(), {
-        year: "Numberic",
+        year: "numeric",
         month: "long",
     });
     return localeDate;
