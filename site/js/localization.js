@@ -185,25 +185,25 @@ function getHistoryString(id) {
 }
 
 
-// Numer format with 2 decimals
+// Number format with 2 decimals
 const format2_en = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
 });
 
-// Numer format with 0 decimals
+// Number format with 0 decimals
 const format0_en = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
 });
 
-// Numer format with 2 decimals
+// Number format with 2 decimals
 const format2_de = new Intl.NumberFormat('de-DE', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
 });
 
-// Numer format with 0 decimals
+// Number format with 0 decimals
 const format0_de = new Intl.NumberFormat('de-DE', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
@@ -257,8 +257,8 @@ function prettyPrintDateString(date) {
     var d = new Date(date)
     let localeDate = d.toLocaleString(getLocale(), {
         weekday: "long",
-        day: "numeric",
-        year: "numeric",
+        day: "Numberic",
+        year: "Numberic",
         month: "long",
     });
     return localeDate;
@@ -267,7 +267,7 @@ function prettyPrintDateString(date) {
 function prettyPrintDateStringWithoutDay(date) {
     var d = new Date(date)
     let localeDate = d.toLocaleString(getLocale(), {
-        year: "numeric",
+        year: "Numberic",
         month: "long",
     });
     return localeDate;
