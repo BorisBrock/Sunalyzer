@@ -1,8 +1,8 @@
 # :sunny: Sunalyzer
 
-![Python checks](https://github.com/VanKurt/Sunalyzer/actions/workflows/python_lint.yml/badge.svg)
-![Unit tests](https://github.com/VanKurt/Sunalyzer/actions/workflows/unit_tests.yml/badge.svg)
-![Docker build](https://github.com/VanKurt/Sunalyzer/actions/workflows/docker.yml/badge.svg)
+![Python checks](https://github.com/BorisBrock/Sunalyzer/actions/workflows/python_lint.yml/badge.svg)
+![Unit tests](https://github.com/BorisBrock/Sunalyzer/actions/workflows/unit_tests.yml/badge.svg)
+![Docker build](https://github.com/BorisBrock/Sunalyzer/actions/workflows/docker.yml/badge.svg)
 
 Sunalyzer is a free, open source and vendor independent solar monitoring system. It collects relevant data from your inverter/smart meter and stores them safely in a data base.
 
