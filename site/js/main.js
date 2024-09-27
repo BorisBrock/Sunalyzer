@@ -37,7 +37,21 @@ window.addEventListener('DOMContentLoaded', event => {
     initSelectionBoxes();
     updateCsvDateSelector();
     setVersion();
+    setName();
 });
+
+function setName() {
+    fetchNameJSON().then(name =>{
+        document.getElementById("instance-name").innerHTML = "Sunalyzer "+name;
+        document.title ="Sunalyzer "+ name;
+    })    
+  }
+
+  async function fetchNameJSON() {
+    const response = await fetch(gBaseUrl + 'name');
+    const name = await response.json();
+    return name;
+}
 
 function restoreSettings() {
     var ts = localStorage.getItem("dash_time_span");
