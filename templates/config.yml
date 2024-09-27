@@ -25,7 +25,10 @@ prices:
   price_per_grid_kwh:     0.325  # Price for 1 kWh from the grid in Euro
   revenue_per_fed_in_kwh: 0.085  # Revenue for one fed in kWh in Euro
 
-
+# General Sunalyzer Config
+sunalyzer:
+  name: "My Site" # Name of the Sunalyzer instance
+  
 ## Internal Settings. Do not modify!
 
 # Web server configuration. Do not modify!

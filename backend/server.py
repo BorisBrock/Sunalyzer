@@ -368,6 +368,17 @@ def handle_request():
         data = {"state": "error"}
         return json.dumps(data)
 
+@app.route("/name", methods=['GET'])
+def handle_name():
+    
+    try:
+        return json.dumps(config.config_data['sunalyzer']['name'])
+        logging.debug(f"Server: REST request of type 'name' received")
+    except Exception:
+        logging.exception("Error while handling HTTP request")
+        data = {"state": "error"}
+        return json.dumps(data)
+
 
 # Main loop
 def main():
