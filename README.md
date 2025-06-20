@@ -10,6 +10,8 @@ A modern and beautiful web frontend allows you to visualize the data on any devi
 
 Sunalyzer can easily be self hosted on a Raspberry Pi or a NAS by using Docker. It works 100% offline, no cloud is involved. All your data stays under your control.
 
+<a href="https://www.buymeacoffee.com/borisbrock" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ![Screenshot](doc/screenshot.png)
 
 ## Main Features
