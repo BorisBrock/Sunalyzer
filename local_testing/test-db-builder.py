@@ -117,10 +117,6 @@ def create_new_db():
 
 
 def create_data(_date, _cursor, _is_a_call):
-    global global_ctr_produced
-    global global_ctr_consumed
-    global global_ctr_fed_in
-
     # Time strings
     year_string = _date.strftime("%Y")
     month_string = year_string + "-" + _date.strftime("%m")

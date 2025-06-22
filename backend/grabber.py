@@ -337,7 +337,6 @@ def handler_stop_signals(signum, frame):
 def main():
     '''Main loop.'''
     global config
-    global run
 
     # Set up signal handlers
     signal.signal(signal.SIGINT, handler_stop_signals)
