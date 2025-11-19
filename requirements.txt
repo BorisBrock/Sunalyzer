@@ -2,6 +2,6 @@ flask==3.0.3
 PyYAML==6.0.2
 pytest==8.3.3
 supervisor==4.2.5
-requests==2.32.3
+requests==2.32.4
 waitress==3.0.1
 Flask-Compress==1.17
