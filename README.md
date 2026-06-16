@@ -35,6 +35,7 @@ Currently Sunalyzer provides an **English** and a **German** user interface. The
 
 Sunalyzer provides integrations for the following device types (inverters/smart meters):
 * Fronius (Symo/Gen24)
+* Sunsynk/Deye (single-phase hybrid inverters, via WiFi/LAN dongle or RS485)
 * Dummy device (for testing purposes)
 
 Contributions for the support of additional devices are welcome. Please feel free to reach out to me or submit a pull request directly.
@@ -89,7 +90,7 @@ Sunalyzer is configured via a YAML file called *config.yml*. This file has to be
 | ----------------------------- | --------------------------------------------------------------------------------------------------- |
 | logging                       | Can be 'normal' (only basic logging) or 'verbose' (verbose logging for debug purposes).             |
 | time_zone                     | The time zone that will be used to generate time stamps for logged data. E.g. "Europe/Berlin".      |
-| device:type                   | Name of the device plugin to use. Currently "Fronius" and "Dummy" are supported.                    |
+| device:type                   | Name of the device plugin to use. Currently "Fronius", "Sunsynk" and "Dummy" are supported.         |
 | device:start_date             | The date on which the inverter first started production (YYYY-MM-DD).                               |
 | prices:price_per_grid_kwh     | Price for 1 kWh consumed from the grid (e.g. in €).                                                 |
 | prices:revenue_per_fed_in_kwh | Revenue for 1 fed in kWh (e.g. in €).                                                               |
@@ -105,6 +106,30 @@ Additional settings are required depending on the selected device plugin:
 | ----------------------------- | ------------------------------------------------------------- |
 | fronius::host_name            | IP address or host name of your fronius inverter.             |
 | fronius::has_meter            | True/False - Is there a Fronius smart meter present?          |
+
+#### Sunsynk
+
+Sunsynk/Deye single-phase hybrid inverters are read locally (no cloud) over Modbus. Two transports are supported, selected via `sunsynk::connection`:
+
+* `solarman` – talks to the inverter's WiFi/LAN data logger (the "dongle") over TCP using the Solarman V5 protocol. This is the default and needs no extra hardware.
+* `modbus_rtu` – talks directly to the inverter's RS485 port via a USB-RS485 adapter. The host serial device must be passed into the container (see below).
+
+| Setting                       | Description                                                                                  |
+| ----------------------------- | -------------------------------------------------------------------------------------------- |
+| sunsynk::connection           | Transport to use: "solarman" (WiFi/LAN dongle) or "modbus_rtu" (RS485). Default "solarman".   |
+| sunsynk::mb_slave_id          | Modbus slave/unit id of the inverter. Default 1.                                             |
+| sunsynk::host_name            | (solarman) IP address or host name of the WiFi/LAN data logger.                              |
+| sunsynk::logger_serial        | (solarman) Serial number of the data logger (printed on the dongle).                         |
+| sunsynk::port                 | (solarman) Solarman V5 TCP port. Default 8899.                                               |
+| sunsynk::serial_port          | (modbus_rtu) Host serial device, e.g. /dev/ttyUSB0 (prefer /dev/serial/by-id/...).           |
+| sunsynk::baudrate             | (modbus_rtu) Serial baud rate. Sunsynk default 9600.                                         |
+| sunsynk::parity               | (modbus_rtu) Serial parity: N, E or O. Default N.                                            |
+| sunsynk::stopbits             | (modbus_rtu) Serial stop bits. Default 1.                                                    |
+| sunsynk::bytesize             | (modbus_rtu) Serial byte size. Default 8.                                                    |
+
+> **Note on registers:** Sunsynk/Deye Modbus register addresses and scales vary by model and firmware. Sunalyzer ships with the de-facto-standard single-phase-hybrid map, but you should verify the values against your own inverter (run with `logging: verbose` to see every decoded value). The register map and references are documented at the top of [backend/devices/Sunsynk.py](backend/devices/Sunsynk.py).
+
+> **RS485 (modbus_rtu) and Docker:** the published image does not include `pymodbus`, so build the image locally instead of pulling it (uncomment `build: .` in your compose file), pass the serial device into the container (`devices: ["/dev/ttyUSB0:/dev/ttyUSB0"]`), and grant access to it (`group_add: ["dialout"]`). See the commented RS485 section in [templates/docker-compose.yml](templates/docker-compose.yml).
 
 ## Deveopment Environment
 

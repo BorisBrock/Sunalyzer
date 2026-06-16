@@ -5,3 +5,5 @@ supervisor==4.3.0
 requests==2.34.2
 waitress==3.0.2
 Flask-Compress==1.24
+pysolarmanv5==3.0.6
+pymodbus==3.7.4

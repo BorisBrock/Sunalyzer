@@ -10,6 +10,8 @@ time_zone: "Europe/Berlin"
 # Currently the following devices are available
 #  - Dummy: a simple dummy devices that can be used for testing
 #  - Fronius: supports Fronius Symo/GEN24 inverters + smar meter
+#  - Sunsynk: supports Sunsynk/Deye single-phase hybrid inverters via the
+#             WiFi/LAN data logger (Solarman V5 protocol, local, no cloud)
 device:
   type:        Dummy       # Name of the device to load (must match an existing device .py file/class)
   start_date:  2020-08-01  # The start of operation (YYYY-MM-DD)
@@ -19,6 +21,22 @@ device:
 #fronius:
 #  host_name: 192.168.178.200  # Host name/IP address of the Fronius end point
 #  has_meter: False # Is smart meter present?
+
+# Enable if you want to use Sunsynk/Deye hardware (set device.type to Sunsynk)
+# Choose one transport via "connection": solarman (WiFi/LAN dongle) or modbus_rtu (RS485).
+#sunsynk:
+#  connection:    solarman         # solarman | modbus_rtu
+#  mb_slave_id:   1                # Modbus slave/unit id (default 1)
+#  # --- connection: solarman (WiFi/LAN data logger) ---
+#  host_name:     192.168.178.201  # IP address of the Sunsynk WiFi/LAN logger (dongle)
+#  logger_serial: 1234567890       # Serial number of the data logger (printed on the dongle)
+#  port:          8899             # Solarman V5 TCP port (default 8899)
+#  # --- connection: modbus_rtu (USB-RS485 adapter on the inverter's 485 port) ---
+#  # serial_port: /dev/ttyUSB0     # Host serial device (pass into the container via docker "devices:")
+#  # baudrate:    9600             # Serial baud rate (Sunsynk default 9600)
+#  # parity:      N                # N | E | O
+#  # stopbits:    1
+#  # bytesize:    8
 
 # Electricity prices. Used to calculate earnings in the UI.
 prices:

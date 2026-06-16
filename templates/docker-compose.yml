@@ -7,3 +7,18 @@ services:
       - "8020:5000"
     volumes:
       - /volume1/docker/sunalyzer:/data
+
+    # --- RS485 (Sunsynk connection: modbus_rtu) ------------------------------
+    # The published image does NOT include pymodbus, so build locally instead
+    # of pulling the image: comment out "image:" above and uncomment "build:".
+    #build: .
+    #
+    # Pass the host USB-RS485 adapter into the container and grant access to it.
+    # Prefer the stable /dev/serial/by-id/... symlink over /dev/ttyUSB0, which
+    # can renumber across reboots. Map it to whatever serial_port is set in
+    # config.yml (e.g. /dev/ttyUSB0).
+    #devices:
+    #  - "/dev/ttyUSB0:/dev/ttyUSB0"
+    #group_add:
+    #  - dialout
+    # -------------------------------------------------------------------------
