@@ -38,9 +38,9 @@ def validate_history_date(table, value):
         return
 
     patterns = {
-        "days": r"\d{4}-\d{2}-\d{2}",
-        "months": r"\d{4}-\d{2}",
-        "years": r"\d{4}",
+        "days": r"[0-9]{4}-[0-9]{2}-[0-9]{2}",
+        "months": r"[0-9]{4}-[0-9]{2}",
+        "years": r"[0-9]{4}",
     }
     if not re.fullmatch(patterns[table], value):
         raise RequestValidationError("invalid date")

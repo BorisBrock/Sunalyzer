@@ -122,12 +122,16 @@ def test_daily_history_preserves_public_response(client):
     }
 
 
-def test_historical_query_rejects_unsupported_table(client):
+@pytest.mark.parametrize(
+    "table",
+    ["sqlite_master", "days WHERE 1=1 --"],
+)
+def test_historical_query_rejects_unsupported_table(client, table):
     response = client.get(
         "/query",
         query_string={
             "type": "historical",
-            "table": "sqlite_master",
+            "table": table,
             "date": "2026-07-24",
         },
     )
@@ -181,6 +185,24 @@ def test_monthly_yearly_and_all_time_history_preserve_public_response(
 
     assert response.status_code == 200
     body = json.loads(response.get_data(as_text=True))
+    assert set(body) == {
+        "state",
+        "produced_kwh",
+        "consumed_total_kwh",
+        "consumed_from_pv_kwh",
+        "consumed_from_grid_kwh",
+        "consumed_from_pv_percent",
+        "consumed_from_grid_percent",
+        "usage_fed_in_kwh",
+        "usage_self_consumed_kwh",
+        "usage_fed_in_percent",
+        "usage_self_consumed_percent",
+        "earned_feedin",
+        "earned_savings",
+        "earned_total",
+        "autarky",
+        "high_res",
+    }
     assert body["state"] == "ok"
     assert body["produced_kwh"] == expected_production
     assert body["high_res"] == ""
@@ -195,6 +217,7 @@ def test_monthly_yearly_and_all_time_history_preserve_public_response(
         ("months", "2026-7"),
         ("years", "26"),
         ("years", "202A"),
+        ("years", "٢٠٢٦"),
         ("all_time", "2026"),
         ("all_time", "all_time' OR '1'='1"),
     ],
@@ -221,18 +244,48 @@ def test_historical_query_rejects_malformed_or_impossible_dates(
 
 
 @pytest.mark.parametrize(
-    ("query_type", "date_value", "expected_date"),
+    ("query_type", "date_value", "expected_body"),
     [
-        ("days_in_month", "2026-07", "2026-07-24"),
-        ("months_in_year", "2026", "2026-07"),
-        ("years_in_all_time", None, "2026"),
+        (
+            "days_in_month",
+            "2026-07",
+            {
+                "date": "2026-07-24",
+                "produced_self": 4.0,
+                "produced_feed_in": 1.0,
+                "consumed_from_pv": 4.0,
+                "consumed_from_grid": 0.0,
+            },
+        ),
+        (
+            "months_in_year",
+            "2026",
+            {
+                "date": "2026-07",
+                "produced_self": 40.0,
+                "produced_feed_in": 10.0,
+                "consumed_from_pv": 40.0,
+                "consumed_from_grid": 0.0,
+            },
+        ),
+        (
+            "years_in_all_time",
+            None,
+            {
+                "date": "2026",
+                "produced_self": 400.0,
+                "produced_feed_in": 100.0,
+                "consumed_from_pv": 400.0,
+                "consumed_from_grid": 0.0,
+            },
+        ),
     ],
 )
 def test_history_detail_queries_preserve_public_response(
     client,
     query_type,
     date_value,
-    expected_date,
+    expected_body,
 ):
     query_string = {"type": query_type}
     if date_value is not None:
@@ -242,8 +295,7 @@ def test_history_detail_queries_preserve_public_response(
 
     assert response.status_code == 200
     body = json.loads(response.get_data(as_text=True))
-    assert len(body) == 1
-    assert body[0]["date"] == expected_date
+    assert body == [expected_body]
 
 
 @pytest.mark.parametrize(
@@ -273,24 +325,24 @@ def test_history_detail_queries_reject_invalid_dates(
 
 
 @pytest.mark.parametrize(
-    ("table", "date_value", "expected_date"),
+    ("table", "date_value", "expected_row"),
     [
-        ("days", "", "2026-07-24"),
-        ("days", "2026", "2026-07-24"),
-        ("days", "2026-07", "2026-07-24"),
-        ("days", "2026-07-24", "2026-07-24"),
-        ("months", "", "2026-07"),
-        ("months", "2026", "2026-07"),
-        ("months", "2026-07", "2026-07"),
-        ("years", "", "2026"),
-        ("years", "2026", "2026"),
+        ("days", "", "2026-07-24;5.0;4.0;1.0"),
+        ("days", "2026", "2026-07-24;5.0;4.0;1.0"),
+        ("days", "2026-07", "2026-07-24;5.0;4.0;1.0"),
+        ("days", "2026-07-24", "2026-07-24;5.0;4.0;1.0"),
+        ("months", "", "2026-07;50.0;40.0;10.0"),
+        ("months", "2026", "2026-07;50.0;40.0;10.0"),
+        ("months", "2026-07", "2026-07;50.0;40.0;10.0"),
+        ("years", "", "2026;500.0;400.0;100.0"),
+        ("years", "2026", "2026;500.0;400.0;100.0"),
     ],
 )
 def test_csv_export_preserves_supported_tables_and_date_prefixes(
     client,
     table,
     date_value,
-    expected_date,
+    expected_row,
 ):
     response = client.get(
         "/csv",
@@ -305,8 +357,10 @@ def test_csv_export_preserves_supported_tables_and_date_prefixes(
         else "attachment; filename=Sunalyzer_All.csv"
     )
     lines = response.get_data(as_text=True).splitlines()
-    assert lines[0] == "date;production;consumption;feed_in"
-    assert lines[1].startswith(expected_date + ";")
+    assert lines == [
+        "date;production;consumption;feed_in",
+        expected_row,
+    ]
 
 
 @pytest.mark.parametrize(
