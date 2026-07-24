@@ -20,7 +20,7 @@ class Database:
         self.connection.commit()
         self.connection.close()
 
-    def execute(self, query):
+    def execute(self, query, parameters=()):
         '''Executes a query and returns resulting rows.'''
-        self.cursor.execute(query)
+        self.cursor.execute(query, parameters)
         return self.cursor.fetchall()
