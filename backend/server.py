@@ -1,8 +1,8 @@
 import json
 from datetime import date
 import logging
-import traceback
-from flask import Flask, request, send_from_directory, make_response
+import re
+from flask import Flask, request, send_from_directory, make_response, jsonify
 from flask_compress import Compress
 
 # Project imports
@@ -13,6 +13,72 @@ import version
 
 # Globals
 config = None
+
+HISTORY_TABLES = {"days", "months", "years", "all_time"}
+CSV_TABLES = {"days", "months", "years"}
+
+
+class RequestValidationError(Exception):
+    '''Raised when public request parameters are invalid.'''
+
+
+def required_parameter(name):
+    '''Returns a required query parameter or raises a client error.'''
+    value = request.args.get(name)
+    if value is None:
+        raise RequestValidationError(f"missing parameter: {name}")
+    return value
+
+
+def validate_history_date(table, value):
+    '''Validates the date key required by a history table.'''
+    if table == "all_time":
+        if value != "all_time":
+            raise RequestValidationError("invalid date")
+        return
+
+    patterns = {
+        "days": r"\d{4}-\d{2}-\d{2}",
+        "months": r"\d{4}-\d{2}",
+        "years": r"\d{4}",
+    }
+    if not re.fullmatch(patterns[table], value):
+        raise RequestValidationError("invalid date")
+
+    try:
+        if table == "days":
+            date.fromisoformat(value)
+        elif table == "months":
+            date.fromisoformat(value + "-01")
+        elif int(value) == 0:
+            raise ValueError
+    except ValueError as error:
+        raise RequestValidationError("invalid date") from error
+
+
+def validate_csv_date_prefix(table, value):
+    '''Validates an optional date prefix supported by a CSV table.'''
+    if value == "":
+        return
+    allowed_prefixes = {
+        "days": {4: "years", 7: "months", 10: "days"},
+        "months": {4: "years", 7: "months"},
+        "years": {4: "years"},
+    }
+    date_table = allowed_prefixes[table].get(len(value))
+    if date_table is None:
+        raise RequestValidationError("invalid date")
+    validate_history_date(date_table, value)
+
+
+def validate_hours(value):
+    '''Validates and converts the requested real-time history window.'''
+    if not re.fullmatch(r"[1-9]\d*", value):
+        raise RequestValidationError("invalid hours")
+    hours = int(value)
+    if hours > 24:
+        raise RequestValidationError("invalid hours")
+    return hours
 
 
 # Main Flask web server application
@@ -58,8 +124,11 @@ def get_csv():
     '''Returns a .csv export from the database.'''
     try:
         # Gather parameters
-        _table = request.args['table']
+        _table = required_parameter("table")
         _date = request.args.get('date', "")
+        if _table not in CSV_TABLES:
+            raise RequestValidationError("unsupported table")
+        validate_csv_date_prefix(_table, _date)
 
         # Gather CSV contents
         rows = None
@@ -67,9 +136,11 @@ def get_csv():
 
         # Build and execute query
         query = f"SELECT * FROM {_table}"
+        parameters = ()
         if len(_date) > 0:
-            query += f" WHERE date LIKE '{_date}%'"
-        rows = db.execute(query)
+            query += " WHERE date LIKE ?"
+            parameters = (_date + "%",)
+        rows = db.execute(query, parameters)
 
         # Build file name
         file_name = (
@@ -86,11 +157,14 @@ def get_csv():
         response.mimetype = "text/csv"
         return response
 
+    except RequestValidationError as error:
+        return jsonify(state="error", message=str(error)), 400
     except Exception:
         logging.exception("Bad CSV request")
-        exception_string = traceback.print_exc()
-        data = {"state": "error", "message": exception_string}
-        return json.dumps(data), 404
+        return jsonify(
+            state="error",
+            message="internal server error",
+        ), 500
 
 
 # Returns JSON response containing current data
@@ -219,7 +293,9 @@ def get_json_data_history_details(table, date_search_string):
     db = Database("data/db.sqlite")
     if len(date_search_string) > 0:
         rows = db.execute(
-            f"SELECT * FROM {table} WHERE date LIKE '{date_search_string}%'")
+            f"SELECT * FROM {table} WHERE date LIKE ?",
+            (date_search_string + "%",),
+        )
     else:
         rows = db.execute(
             f"SELECT * FROM {table}")
@@ -242,10 +318,12 @@ def get_json_data_history_details(table, date_search_string):
 # Returns JSON response containing monthly data for a year
 def get_json_data_real_time(hours):
     '''Returns JSON response containing monthly data for a year.'''
-    num_results = int(hours) * 60
+    num_results = hours * 60
     db = Database("data/db.sqlite")
-    rows = db.execute(f"SELECT * FROM real_time "
-                      f"ORDER BY ID DESC LIMIT {num_results}")
+    rows = db.execute(
+        "SELECT * FROM real_time ORDER BY ID DESC LIMIT ?",
+        (num_results,),
+    )
     return json.dumps(rows)
 
 
@@ -253,7 +331,10 @@ def get_json_data_real_time(hours):
 def get_json_data_history(table, search_date):
     '''Returns JSON response containing historical data.'''
     db = Database("data/db.sqlite")
-    rows = db.execute(f"SELECT * FROM {table} WHERE date='{search_date}'")
+    rows = db.execute(
+        f"SELECT * FROM {table} WHERE date = ?",
+        (search_date,),
+    )
     # No data?
     if not rows:
         data = {
@@ -293,7 +374,10 @@ def get_json_data_history(table, search_date):
     # High resolution data (only for days)
     daily_high_res_data = ""
     if table == "days":
-        rows = db.execute(f"SELECT * FROM high_res WHERE date='{search_date}'")
+        rows = db.execute(
+            "SELECT * FROM high_res WHERE date = ?",
+            (search_date,),
+        )
         if rows:
             hrdata = rows[0][1]
             if hrdata[-1] == ',':
@@ -330,7 +414,7 @@ def get_json_data_history(table, search_date):
 def handle_request():
     '''Answers all query requests.'''
     try:
-        _type = request.args['type']
+        _type = required_parameter("type")
         logging.debug(f"Server: REST request of type '{_type}' received")
 
         if _type == "current":
@@ -340,20 +424,25 @@ def handle_request():
             data = get_json_data_dates()
             return data
         elif _type == "historical":
-            table = request.args['table']
-            _date = request.args['date']
+            table = required_parameter("table")
+            _date = required_parameter("date")
+            if table not in HISTORY_TABLES:
+                raise RequestValidationError("unsupported table")
+            validate_history_date(table, _date)
             data = get_json_data_history(table, _date)
             return data
         elif _type == "real_time":
-            hours = request.args['h']
+            hours = validate_hours(required_parameter("h"))
             data = get_json_data_real_time(hours)
             return data
         elif _type == "days_in_month":
-            _month = request.args['date']
+            _month = required_parameter("date")
+            validate_history_date("months", _month)
             data = get_json_data_history_details("days", _month)
             return data
         elif _type == "months_in_year":
-            _year = request.args['date']
+            _year = required_parameter("date")
+            validate_history_date("years", _year)
             data = get_json_data_history_details("months", _year)
             return data
         elif _type == "years_in_all_time":
@@ -362,11 +451,17 @@ def handle_request():
         elif _type == "statistics":
             data = get_json_data_statistics()
             return data
+        else:
+            raise RequestValidationError("unsupported query type")
 
+    except RequestValidationError as error:
+        return jsonify(state="error", message=str(error)), 400
     except Exception:
         logging.exception("Error while handling HTTP request")
-        data = {"state": "error"}
-        return json.dumps(data)
+        return jsonify(
+            state="error",
+            message="internal server error",
+        ), 500
 
 @app.route("/name", methods=['GET'])
 def handle_name():
