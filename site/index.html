@@ -33,6 +33,7 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item" href="javascript:switchLanguageToEnglish();">English</a></li>
                     <li><a class="dropdown-item" href="javascript:switchLanguageToGerman();">Deutsch</a></li>
+                    <li><a class="dropdown-item" href="javascript:switchLanguageToFrench();">Français</a></li>
                 </ul>
             </li>
         </ul>
@@ -50,7 +51,7 @@
                         <div class="sb-sidenav-menu-heading" id="sidebar_headline_overview">Overview</div>
                         <a class="nav-link" href="javascript:showViewDashboard();collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-grip"></i></div>
-                            Dashboard
+                            <div id="sidebar_dashboard">Dashboard</div>
                         </a>
                         <a class="nav-link" href="javascript:showViewStatistics();collapseSidebar();">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-simple"></i></div>
@@ -100,7 +101,7 @@
 
                 <!-- Dashbord View -->
                 <div class="container-fluid px-4" id="view_dashboard">
-                    <h1 class="mt-4">Dashboard</h1>
+                    <h1 class="mt-4" id="headline_dashboard">Dashboard</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><span id="dashboard_subtitle">Last updated:</span><span
                                 id="dashboard_subtitle_time">...</span></li>
